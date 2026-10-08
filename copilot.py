@@ -1,23 +1,28 @@
-"""Core logic: turn an escalated chat into a structured analysis.
+"""Core logic: turn a bot-to-customer chat that was handed over to a human into a structured analysis.
 
-Uses Gemini with structured JSON output when GEMINI_API_KEY is set, and a simple
-keyword-based fallback otherwise so the UI and eval still run offline.
+Personal data is masked first (privacy.py), then the chat goes to Gemini with structured JSON output
+when GEMINI_API_KEY is set. Without a key, a keyword-based fallback keeps the UI and eval running offline.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
 import time
+from pathlib import Path
 from typing import Literal
 
 from pydantic import BaseModel, Field
 
 from labels_az import CATEGORY
+from privacy import mask
 from prompts import FEW_SHOT, SYSTEM_PROMPT
 
 MODEL = os.getenv("COPILOT_MODEL", "gemini-2.5-flash")
+PROMPT_VERSION = "v3"  # bump when the prompt or schema changes so old cached answers are ignored
+CACHE_FILE = Path(__file__).parent / ".cache" / "analyses.json"
 
 
 class Analysis(BaseModel):
@@ -34,12 +39,18 @@ class Analysis(BaseModel):
         "refund", "tariff_change", "escalate_to_tech", "unblock_sim",
         "explain_charges", "retention_offer", "no_action",
     ]
+    bot_failure: Literal["not_understood", "loop", "wrong_answer", "missing_knowledge", "no_permission"]
+    bot_failure_reason: str
+    faq_question: str
+    faq_answer: str
 
 
 class AnalysisResult(BaseModel):
     analysis: Analysis
     seconds: float
-    mode: Literal["llm", "offline"]
+    mode: Literal["llm", "offline", "cache"]
+    masked_chat: str
+    masked: dict[str, int]
 
 
 def llm_available() -> bool:
@@ -55,26 +66,57 @@ def _build_contents(chat: str) -> list[dict]:
     return contents
 
 
-def analyze_llm(chat: str) -> Analysis:
+def _retry_delay(exc: Exception, attempt: int) -> float:
+    """Seconds to wait after a rate-limit error: the API's own hint if present, else back off."""
+    m = re.search(r"retry(?:Delay| in)\W+(\d+(?:\.\d+)?)", str(exc), re.IGNORECASE)
+    return min(60.0, float(m.group(1)) + 1 if m else 5.0 * 2 ** attempt)
+
+
+def analyze_llm(chat: str, retries: int = 3) -> Analysis:
     from google import genai
-    from google.genai import types
+    from google.genai import errors, types
 
     client = genai.Client()  # reads GEMINI_API_KEY (or GOOGLE_API_KEY)
-    response = client.models.generate_content(
-        model=MODEL,
-        contents=_build_contents(chat),
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            response_mime_type="application/json",
-            response_schema=Analysis,
-            temperature=0.2,
-        ),
-    )
+    for attempt in range(retries + 1):
+        try:
+            response = client.models.generate_content(
+                model=MODEL,
+                contents=_build_contents(chat),
+                config=types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                    response_mime_type="application/json",
+                    response_schema=Analysis,
+                    temperature=0.2,
+                ),
+            )
+            break
+        except errors.APIError as exc:  # 429 = free-tier rate limit, 503 = overloaded
+            if exc.code not in (429, 503) or attempt == retries:
+                raise
+            time.sleep(_retry_delay(exc, attempt))
     if isinstance(response.parsed, Analysis):
         return response.parsed
     if response.text:
         return Analysis.model_validate_json(response.text)
     raise RuntimeError("Model returned no analysis (empty or blocked response)")
+
+
+def _cache_key(masked_chat: str) -> str:
+    return hashlib.sha256(f"{MODEL}|{PROMPT_VERSION}|{masked_chat}".encode()).hexdigest()
+
+
+def _cache_load() -> dict:
+    try:
+        return json.loads(CACHE_FILE.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def _cache_save(key: str, analysis: Analysis) -> None:
+    data = _cache_load()
+    data[key] = analysis.model_dump()
+    CACHE_FILE.parent.mkdir(exist_ok=True)
+    CACHE_FILE.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
 
 
 # --- Offline fallback -------------------------------------------------------
@@ -128,6 +170,45 @@ _ACTIONS = {
 }
 
 
+_HANDOFF_WORDS = ("operator", "оператор", "agent")
+
+
+def _bot_failure_offline(chat: str, category: str) -> tuple[str, str]:
+    lines = [l.strip() for l in chat.splitlines() if l.strip()]
+    if lines and lines[-1].lower().startswith("bot:") and any(w in lines[-1].lower() for w in _HANDOFF_WORDS):
+        lines = lines[:-1]  # the handoff itself is not the failure
+    bot = [l.split(":", 1)[-1].strip() for l in lines if l.lower().startswith("bot:")]
+    bot_text = " ".join(bot).lower()
+    text = chat.lower()
+    if any(k in bot_text for k in ("başa düşmədim", "не понял", "understand", "уточните", "bir mövzu", "choose one")):
+        return "not_understood", "Bot müştərinin sualını başa düşmədiyini dedi və məsələni həll etmədi."
+    if len(bot) != len(set(bot)) or any(k in text for k in ("eyni cavab", "same answer", "yenə", "опять", "снова", "again", "sayt sayt")):
+        return "loop", "Bot eyni və ya ümumi cavabı təkrarladı, müştəri dövrəyə düşdü."
+    if category in ("refund", "network_coverage", "internet_speed") or any(k in text for k in ("qaytar", "верните", "refund", "unblock")):
+        return "no_permission", "Həll üçün hesaba giriş və ya botun edə bilmədiyi əməliyyat lazımdır."
+    return "missing_knowledge", "Botun bilik bazasında bu suala dəqiq cavab yox idi."
+
+
+_FAQ = {
+    "billing": ("Hesabımda naməlum 'əlavə xidmət' ödənişi var, bu nədir?",
+                "Hesabdakı hər xidmətin adı və qiyməti Kabinetdə 'Xərclər' bölməsində görünür. Xidməti tanımırsınızsa, sizi dərhal operatora yönləndiririk."),
+    "roaming": ("Rouminq paketim hansı ölkələrdə işləyir və necə qoşulur?",
+                "Ölkələrin siyahısı və qiymətlər *150# menyusunda və saytda var. Ölkəni yazsanız, sizə uyğun paketi göstərərik."),
+    "tariff": ("Tarifimi dəyişsəm, bonus dəqiqələrim və internetim qalır?",
+               "Tarif dəyişəndə qalıq bonuslar yeni tarifə keçmir. Dəqiq müqayisə üçün sizi operatora yönləndiririk."),
+    "internet_speed": ("Telefonu yenidən başlatdım, internet hələ də yavaşdır, nə edim?",
+                       "Problem davam edirsə, ünvanınız üzrə şəbəkə yoxlaması üçün texniki müraciət açılır və sizi operatora yönləndiririk."),
+    "network_coverage": ("Evdə siqnal yoxdur və zənglər kəsilir, nə etməliyəm?",
+                         "Ünvanınızı yazın, texniki şöbə üçün müraciət açaq. Gözləmədən operatorla danışmaq üçün sizi yönləndiririk."),
+    "sim_card": ("SIM kartım bloklanıb və PUK kodum yoxdur, onlayn bərpa etmək olar?",
+                 "PUK kodu şəxsiyyət təsdiqindən sonra operator tərəfindən verilir. Sizi dərhal operatora yönləndiririk."),
+    "refund": ("Qoşmadığım xidmət üçün pul çıxılıb, necə geri ala bilərəm?",
+               "Xidməti dərhal deaktiv edirik və geri ödəniş üçün sizi operatora yönləndiririk. Nəticə SMS ilə bildiriləcək."),
+    "other": ("Bu məsələ ilə bağlı kimə müraciət edim?",
+              "Sualınızı qısa yazın, sizi uyğun mütəxəssisə yönləndirək."),
+}
+
+
 def analyze_offline(chat: str) -> Analysis:
     text = chat.lower()
     scores = {cat: sum(text.count(k) for k in kws) for cat, kws in _CATEGORY_KEYWORDS.items()}
@@ -149,9 +230,10 @@ def analyze_offline(chat: str) -> Analysis:
     last = customer_lines[-1] if customer_lines else first
     summary = "\n".join([
         f"Problem ({CATEGORY[category]}): {first[:110]}",
-        f"Söhbətdə {len(chat.splitlines())} mesaj var; bot məsələni həll etməyib.",
+        f"Söhbətdə {len(chat.splitlines())} mesaj var; bot məsələni həll edə bilməyib və operatora ötürüb.",
         f"Müştərinin son mesajı: {last[:110]}",
     ])
+    failure, failure_reason = _bot_failure_offline(chat, category)
     action = "retention_offer" if risk == "high" and _ACTIONS[category] == "no_action" else _ACTIONS[category]
     return Analysis(
         summary=summary,
@@ -161,17 +243,37 @@ def analyze_offline(chat: str) -> Analysis:
         risk_reason=reason,
         suggested_reply_az=_REPLIES[category],
         next_action=action,
+        bot_failure=failure,
+        bot_failure_reason=failure_reason,
+        faq_question=_FAQ[category][0],
+        faq_answer=_FAQ[category][1],
     )
 
 
-def analyze(chat: str, force_offline: bool = False) -> AnalysisResult:
-    """Analyze one chat. Falls back to offline rules if no API key is configured."""
+def analyze(
+    chat: str,
+    force_offline: bool = False,
+    known_names: list[str] | None = None,
+    use_cache: bool = False,
+) -> AnalysisResult:
+    """Mask personal data, then analyze. Falls back to offline rules if no API key is configured."""
     start = time.perf_counter()
+    masked_chat, masked = mask(chat, known_names)
     if llm_available() and not force_offline:
-        analysis, mode = analyze_llm(chat), "llm"
+        key = _cache_key(masked_chat)
+        cached = _cache_load().get(key) if use_cache else None
+        if cached:
+            analysis, mode = Analysis.model_validate(cached), "cache"
+        else:
+            analysis, mode = analyze_llm(masked_chat), "llm"
+            if use_cache:
+                _cache_save(key, analysis)
     else:
-        analysis, mode = analyze_offline(chat), "offline"
-    return AnalysisResult(analysis=analysis, seconds=round(time.perf_counter() - start, 2), mode=mode)
+        analysis, mode = analyze_offline(masked_chat), "offline"
+    return AnalysisResult(
+        analysis=analysis, seconds=round(time.perf_counter() - start, 2), mode=mode,
+        masked_chat=masked_chat, masked=masked,
+    )
 
 
 if __name__ == "__main__":
