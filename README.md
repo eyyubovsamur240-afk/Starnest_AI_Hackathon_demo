@@ -16,7 +16,7 @@ _Link TBD_
 
 ```bash
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=...
+export GEMINI_API_KEY=...   # free key from Google AI Studio
 ```
 
 ## Testing
@@ -29,6 +29,7 @@ Required by section 5 of the Terms & Conditions. List every model, library, data
 
 | What | Used for | Licence / terms |
 |---|---|---|
+| Google Gemini API (free tier, via `google-genai`) | Chat analysis and reply generation | Gemini API terms. Free-tier inputs may be used by Google to improve its models, so only synthetic chats are sent. |
 | | | |
 
 ## Known limitations
