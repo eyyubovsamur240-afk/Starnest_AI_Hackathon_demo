@@ -1,0 +1,414 @@
+{
+  "summary": {
+    "mode": "offline",
+    "tickets": 20,
+    "errors": 0,
+    "category_accuracy": 95.0,
+    "churn_risk_accuracy": 75.0,
+    "sentiment_within_1": 90.0,
+    "avg_seconds": 0.0,
+    "max_seconds": 0.0
+  },
+  "rows": [
+    {
+      "id": "T01",
+      "note": "",
+      "label": {
+        "category": "roaming",
+        "churn_risk": "low",
+        "sentiment": 1
+      },
+      "predicted": {
+        "category": "roaming",
+        "churn_risk": "low",
+        "sentiment": 1
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+    },
+    {
+      "id": "T02",
+      "note": "",
+      "label": {
+        "category": "tariff",
+        "churn_risk": "low",
+        "sentiment": 1
+      },
+      "predicted": {
+        "category": "tariff",
+        "churn_risk": "low",
+        "sentiment": 1
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm."
+    },
+    {
+      "id": "T03",
+      "note": "",
+      "label": {
+        "category": "sim_card",
+        "churn_risk": "low",
+        "sentiment": 1
+      },
+      "predicted": {
+        "category": "sim_card",
+        "churn_risk": "low",
+        "sentiment": 2
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik."
+    },
+    {
+      "id": "T04",
+      "note": "",
+      "label": {
+        "category": "billing",
+        "churn_risk": "low",
+        "sentiment": 2
+      },
+      "predicted": {
+        "category": "billing",
+        "churn_risk": "low",
+        "sentiment": 1
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq."
+    },
+    {
+      "id": "T05",
+      "note": "",
+      "label": {
+        "category": "internet_speed",
+        "churn_risk": "low",
+        "sentiment": 2
+      },
+      "predicted": {
+        "category": "internet_speed",
+        "churn_risk": "low",
+        "sentiment": 1
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək."
+    },
+    {
+      "id": "T06",
+      "note": "",
+      "label": {
+        "category": "billing",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "predicted": {
+        "category": "billing",
+        "churn_risk": "low",
+        "sentiment": 2
+      },
+      "category_ok": true,
+      "risk_ok": false,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq."
+    },
+    {
+      "id": "T07",
+      "note": "",
+      "label": {
+        "category": "roaming",
+        "churn_risk": "medium",
+        "sentiment": 4
+      },
+      "predicted": {
+        "category": "roaming",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+    },
+    {
+      "id": "T08",
+      "note": "",
+      "label": {
+        "category": "internet_speed",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "predicted": {
+        "category": "internet_speed",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək."
+    },
+    {
+      "id": "T09",
+      "note": "",
+      "label": {
+        "category": "sim_card",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "predicted": {
+        "category": "sim_card",
+        "churn_risk": "low",
+        "sentiment": 1
+      },
+      "category_ok": true,
+      "risk_ok": false,
+      "sentiment_within_1": false,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik."
+    },
+    {
+      "id": "T10",
+      "note": "",
+      "label": {
+        "category": "tariff",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "predicted": {
+        "category": "tariff",
+        "churn_risk": "low",
+        "sentiment": 2
+      },
+      "category_ok": true,
+      "risk_ok": false,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm."
+    },
+    {
+      "id": "T11",
+      "note": "",
+      "label": {
+        "category": "network_coverage",
+        "churn_risk": "medium",
+        "sentiment": 4
+      },
+      "predicted": {
+        "category": "network_coverage",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Şəbəkə ilə bağlı narahatçılığa görə üzr istəyirik. Ünvanınız üzrə siqnal problemini texniki şöbəyə ötürürəm, onlar sizinlə əlaqə saxlayacaq."
+    },
+    {
+      "id": "T12",
+      "note": "",
+      "label": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "predicted": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Tutulan məbləğin geri qaytarılması üçün müraciət açıram və nəticə barədə sizə SMS ilə məlumat veriləcək."
+    },
+    {
+      "id": "T13",
+      "note": "",
+      "label": {
+        "category": "roaming",
+        "churn_risk": "medium",
+        "sentiment": 4
+      },
+      "predicted": {
+        "category": "roaming",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+    },
+    {
+      "id": "T14",
+      "note": "tricky: sarcasm",
+      "label": {
+        "category": "internet_speed",
+        "churn_risk": "medium",
+        "sentiment": 4
+      },
+      "predicted": {
+        "category": "internet_speed",
+        "churn_risk": "low",
+        "sentiment": 1
+      },
+      "category_ok": true,
+      "risk_ok": false,
+      "sentiment_within_1": false,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək."
+    },
+    {
+      "id": "T15",
+      "note": "tricky: two issues in one chat",
+      "label": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3
+      },
+      "predicted": {
+        "category": "billing",
+        "churn_risk": "low",
+        "sentiment": 2
+      },
+      "category_ok": false,
+      "risk_ok": false,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq."
+    },
+    {
+      "id": "T16",
+      "note": "tricky: threatens to switch operator",
+      "label": {
+        "category": "internet_speed",
+        "churn_risk": "high",
+        "sentiment": 5
+      },
+      "predicted": {
+        "category": "internet_speed",
+        "churn_risk": "high",
+        "sentiment": 5
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək."
+    },
+    {
+      "id": "T17",
+      "note": "",
+      "label": {
+        "category": "roaming",
+        "churn_risk": "high",
+        "sentiment": 5
+      },
+      "predicted": {
+        "category": "roaming",
+        "churn_risk": "high",
+        "sentiment": 5
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+    },
+    {
+      "id": "T18",
+      "note": "",
+      "label": {
+        "category": "sim_card",
+        "churn_risk": "high",
+        "sentiment": 5
+      },
+      "predicted": {
+        "category": "sim_card",
+        "churn_risk": "high",
+        "sentiment": 5
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik."
+    },
+    {
+      "id": "T19",
+      "note": "",
+      "label": {
+        "category": "tariff",
+        "churn_risk": "high",
+        "sentiment": 5
+      },
+      "predicted": {
+        "category": "tariff",
+        "churn_risk": "high",
+        "sentiment": 5
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm."
+    },
+    {
+      "id": "T20",
+      "note": "",
+      "label": {
+        "category": "network_coverage",
+        "churn_risk": "high",
+        "sentiment": 5
+      },
+      "predicted": {
+        "category": "network_coverage",
+        "churn_risk": "high",
+        "sentiment": 5
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "seconds": 0.0,
+      "mode": "offline",
+      "suggested_reply_az": "Salam! Şəbəkə ilə bağlı narahatçılığa görə üzr istəyirik. Ünvanınız üzrə siqnal problemini texniki şöbəyə ötürürəm, onlar sizinlə əlaqə saxlayacaq."
+    }
+  ]
+}

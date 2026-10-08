@@ -1,0 +1,225 @@
+[
+  {
+    "id": "T01",
+    "language": "az",
+    "tone": "calm",
+    "chat": "Customer: Salam, Türkiyəyə gedirəm gələn həftə. Rouminq paketi necə qoşulur?\nBot: Rouminq paketləri haqqında məlumat üçün *150# yığın.\nCustomer: yığdım, amma Türkiyə üçün hansının sərfəli olduğunu başa düşmədim\nBot: Bağışlayın, sualınızı başa düşmədim.\nCustomer: operatorla danışa bilərəm? təşəkkürlər",
+    "label": {
+      "category": "roaming",
+      "churn_risk": "low",
+      "sentiment": 1
+    }
+  },
+  {
+    "id": "T02",
+    "language": "en",
+    "tone": "calm",
+    "chat": "Customer: Hi, I'd like to switch from my current tariff to a bigger internet package, maybe 30GB\nBot: You can see all tariffs on our website.\nCustomer: I checked, but I want to keep my bonus minutes. Can someone confirm if they carry over?\nBot: I did not understand your question.\nCustomer: ok, please connect me to an agent, no rush",
+    "label": {
+      "category": "tariff",
+      "churn_risk": "low",
+      "sentiment": 1
+    }
+  },
+  {
+    "id": "T03",
+    "language": "ru",
+    "tone": "calm",
+    "chat": "Customer: Добрый день. Потеряла телефон, нужно восстановить сим-карту с тем же номером\nBot: Для блокировки SIM-карты наберите 0909.\nCustomer: заблокировала уже, спасибо. Где можно получить новую? Можно ли eSIM?\nBot: Пожалуйста, уточните ваш вопрос.\nCustomer: хочу eSIM на тот же номер, подскажите что нужно",
+    "label": {
+      "category": "sim_card",
+      "churn_risk": "low",
+      "sentiment": 1
+    }
+  },
+  {
+    "id": "T04",
+    "language": "az",
+    "tone": "calm",
+    "chat": "Customer: Salam. Bu ayın hesabında 2 AZN 'əlavə xidmət' görürəm, nədir bu?\nBot: Hesab detallarını Kabinetdə görə bilərsiniz.\nCustomer: baxdım orda sadəcə 'əlavə xidmət' yazılıb. nə xidmətidir bilmək istəyirəm\nBot: Əlavə xidmətlər bölməsinə keçin.\nCustomer: ok, sadəcə izah etsəniz yaxşı olar",
+    "label": {
+      "category": "billing",
+      "churn_risk": "low",
+      "sentiment": 2
+    }
+  },
+  {
+    "id": "T05",
+    "language": "en",
+    "tone": "calm",
+    "chat": "Customer: Hello, mobile internet at my office in Nərimanov is a bit slow in the afternoons\nBot: Please restart your device and check network settings.\nCustomer: did that, it's fine at home, only the office. Just wanted to report it\nBot: Thank you for your message.\nCustomer: will someone check the area? thanks",
+    "label": {
+      "category": "internet_speed",
+      "churn_risk": "low",
+      "sentiment": 2
+    }
+  },
+  {
+    "id": "T06",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Customer: salam balansima 10 manat yuklemisem 2 gune bitib\nBot: Balans məlumatı üçün *100# yığın.\nCustomer: bilirem balansi, sual odur ki NIYE bitib? zeng etmemisem demek olar\nBot: Xərclərinizi Kabinetdə görə bilərsiniz.\nCustomer: kabinet acilmir. kim izah edecek bunu?",
+    "label": {
+      "category": "billing",
+      "churn_risk": "medium",
+      "sentiment": 3
+    }
+  },
+  {
+    "id": "T07",
+    "language": "ru",
+    "tone": "annoyed",
+    "chat": "Customer: Вернулась из Грузии, с меня списали 25 манат за роуминг\nBot: Тарифы роуминга указаны на сайте.\nCustomer: я включила пакет роуминга заранее! он должен был покрывать интернет\nBot: Пожалуйста, подождите.\nCustomer: жду уже 20 минут. верните деньги или объясните за что списали",
+    "label": {
+      "category": "roaming",
+      "churn_risk": "medium",
+      "sentiment": 4
+    }
+  },
+  {
+    "id": "T08",
+    "language": "mixed",
+    "tone": "annoyed",
+    "chat": "Customer: salam, internet çox yavaşdır, 0.5 mb/s\nBot: Telefonunuzu yenidən başladın.\nCustomer: başlatdım. dünən də yazmışdım eyni şeyi deyirsiniz\nCustomer: работаю из дома, мне нужен нормальный интернет\nBot: Müraciətiniz qeydə alındı.\nCustomer: qeydə alındı nə deməkdir, nə vaxt düzələcək?",
+    "label": {
+      "category": "internet_speed",
+      "churn_risk": "medium",
+      "sentiment": 3
+    }
+  },
+  {
+    "id": "T09",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Customer: SIM kartim bloklanib, PUK soruşur\nBot: PUK kodu SIM kartın paketində yazılıb.\nCustomer: paket yoxdur 5 il qabaq almışam. işim var telefonsuz qalmışam\nBot: Ən yaxın xidmət mərkəzinə yaxınlaşın.\nCustomer: işdəyəm gedə bilmirəm, onlayn həll yoxdur?",
+    "label": {
+      "category": "sim_card",
+      "churn_risk": "medium",
+      "sentiment": 3
+    }
+  },
+  {
+    "id": "T10",
+    "language": "en",
+    "tone": "annoyed",
+    "chat": "Customer: I was promised 50% off my tariff for 6 months when I renewed. Bill is full price\nBot: Discounts are applied according to tariff conditions.\nCustomer: the agent in the store literally told me 50%. I have the SMS confirmation\nBot: Please provide more details.\nCustomer: I just did. Fix my tariff please",
+    "label": {
+      "category": "tariff",
+      "churn_risk": "medium",
+      "sentiment": 3
+    }
+  },
+  {
+    "id": "T11",
+    "language": "ru",
+    "tone": "annoyed",
+    "chat": "Customer: Почему у меня в квартире нет сигнала? Ясамал, 9 этаж\nBot: Проверьте покрытие сети на сайте.\nCustomer: на сайте показывает отличное покрытие. а по факту звонки обрываются\nCustomer: уже месяц так\nBot: Мы передадим информацию.\nCustomer: кому передадите? когда ответ будет?",
+    "label": {
+      "category": "network_coverage",
+      "churn_risk": "medium",
+      "sentiment": 4
+    }
+  },
+  {
+    "id": "T12",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Customer: 'Oyun+' abunəliyi üçün 3 AZN çıxılıb, mən heç vaxt qoşmamışam\nBot: Abunəlikləri *777# vasitəsilə idarə edə bilərsiniz.\nCustomer: ləğv etdim, amma pulu qaytarın, bu mənim günahım deyil\nBot: Geri qaytarma şərtləri saytda göstərilib.\nCustomer: sayta baxmaq istəmirəm, pulumu qaytarın",
+    "label": {
+      "category": "refund",
+      "churn_risk": "medium",
+      "sentiment": 3
+    }
+  },
+  {
+    "id": "T13",
+    "language": "mixed",
+    "tone": "annoyed",
+    "chat": "Customer: hi, roaming was activated automatically in Dubai, I never asked\nCustomer: indi 40 AZN borcum var balansda\nBot: Roaming is activated when you connect to a foreign network.\nCustomer: I turned off data roaming! check your system\nBot: Please wait for an operator.\nCustomer: waiting. this is a lot of money for me",
+    "label": {
+      "category": "roaming",
+      "churn_risk": "medium",
+      "sentiment": 4
+    }
+  },
+  {
+    "id": "T14",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Customer: Wow, əla xidmətdir, 3 gündür internet yoxdur, çox sağ olun 👏\nBot: Müsbət rəyiniz üçün təşəkkür edirik!\nCustomer: rəy müsbət deyildi. İNTERNET YOXDUR\nBot: Telefonu yenidən başladın.\nCustomer: hə, əlbəttə, bu dəfə mütləq kömək edəcək...",
+    "label": {
+      "category": "internet_speed",
+      "churn_risk": "medium",
+      "sentiment": 4
+    },
+    "note": "tricky: sarcasm"
+  },
+  {
+    "id": "T15",
+    "language": "en",
+    "tone": "annoyed",
+    "chat": "Customer: Two problems. First, my calls keep dropping at home in Xırdalan\nCustomer: second, I was charged 7 AZN for an SMS package I didn't order\nBot: Please choose one topic.\nCustomer: the money one first then, I want those 7 AZN back\nBot: Refunds are reviewed within 5 business days.\nCustomer: and the calls? nobody answered that",
+    "label": {
+      "category": "refund",
+      "churn_risk": "medium",
+      "sentiment": 3
+    },
+    "note": "tricky: two issues in one chat"
+  },
+  {
+    "id": "T16",
+    "language": "az",
+    "tone": "furious",
+    "chat": "Customer: 3cü dəfədir yazıram!!! internet 1 həftədir işləmir\nBot: Telefonu yenidən başladın.\nCustomer: REZALƏTDİR! hər dəfə eyni cavab\nCustomer: Bakcell-ə keçəcəm nömrəmlə birlikdə, bezdim sizdən\nBot: Müraciətiniz qeydə alındı.",
+    "label": {
+      "category": "internet_speed",
+      "churn_risk": "high",
+      "sentiment": 5
+    },
+    "note": "tricky: threatens to switch operator"
+  },
+  {
+    "id": "T17",
+    "language": "ru",
+    "tone": "furious",
+    "chat": "Customer: Это позор!!! С меня списали 60 манат за роуминг в Турции, хотя у меня был пакет\nBot: Тарифы роуминга указаны на сайте.\nCustomer: Я 10 лет ваш клиент. Если деньги не вернёте, расторгаю договор\nCustomer: и пишу жалобу в министерство\nBot: Пожалуйста, подождите оператора.",
+    "label": {
+      "category": "roaming",
+      "churn_risk": "high",
+      "sentiment": 5
+    }
+  },
+  {
+    "id": "T18",
+    "language": "en",
+    "tone": "furious",
+    "chat": "Customer: This is the WORST service. My SIM was blocked for no reason during a business trip\nBot: SIM cards may be blocked for security reasons.\nCustomer: I missed a client call because of you!!! unblock it NOW\nCustomer: I'm posting this on Instagram and moving to Nar tomorrow\nBot: Please visit a service center with your ID.",
+    "label": {
+      "category": "sim_card",
+      "churn_risk": "high",
+      "sentiment": 5
+    }
+  },
+  {
+    "id": "T19",
+    "language": "mixed",
+    "tone": "furious",
+    "chat": "Customer: tarif dəyişmisiniz mənə xəbər vermədən!!! 15 AZN idi oldu 22\nBot: Tarif şərtləri dəyişə bilər.\nCustomer: это обман! мне никто не сообщал\nCustomer: ya köhnə tarifi qaytarın ya da nömrəni ləğv edirəm\nBot: Sualınızı başa düşmədim.",
+    "label": {
+      "category": "tariff",
+      "churn_risk": "high",
+      "sentiment": 5
+    }
+  },
+  {
+    "id": "T20",
+    "language": "az",
+    "tone": "furious",
+    "chat": "Customer: Evdə siqnal yoxdur, zənglər kəsilir, anam xəstədir mənə zəng edə bilmir!!!\nBot: Şəbəkə əhatəsini saytda yoxlayın.\nCustomer: sayt sayt sayt!!! İNSANLA DANIŞMAQ İSTƏYİRƏM\nCustomer: bu axırıncı dəfədir, sabah başqa operatora keçirəm\nBot: Operator tezliklə qoşulacaq.",
+    "label": {
+      "category": "network_coverage",
+      "churn_risk": "high",
+      "sentiment": 5
+    }
+  }
+]
