@@ -14,6 +14,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from labels_az import CATEGORY
 from prompts import FEW_SHOT, SYSTEM_PROMPT
 
 MODEL = os.getenv("COPILOT_MODEL", "gemini-2.5-flash")
@@ -137,19 +138,19 @@ def analyze_offline(chat: str) -> Analysis:
     frustration = min(2, sum(1 for k in _FRUSTRATION_KEYWORDS if k in text))
     sentiment = max(1, min(5, 1 + frustration + anger + (2 if churn_hits else 0)))
     if churn_hits:
-        risk, reason = "high", f"Customer mentions: {', '.join(churn_hits[:3])}."
+        risk, reason = "high", f"Müştəri bunları qeyd edir: {', '.join(churn_hits[:3])}."
     elif sentiment >= 3:
-        risk, reason = "medium", "Customer is clearly frustrated but has not threatened to leave."
+        risk, reason = "medium", "Müştəri açıq-aşkar narazıdır, amma operatoru dəyişmək barədə danışmayıb."
     else:
-        risk, reason = "low", "Calm tone and no mention of leaving."
+        risk, reason = "low", "Ton sakitdir, operatoru dəyişmək barədə söz yoxdur."
 
     customer_lines = [l.split(":", 1)[-1].strip() for l in chat.splitlines() if l.lower().startswith(("customer", "müştəri", "клиент"))]
     first = customer_lines[0] if customer_lines else chat.strip().splitlines()[0]
     last = customer_lines[-1] if customer_lines else first
     summary = "\n".join([
-        f"Issue ({category.replace('_', ' ')}): {first[:110]}",
-        f"Chat has {len(chat.splitlines())} messages; the bot did not resolve it.",
-        f"Latest from customer: {last[:110]}",
+        f"Problem ({CATEGORY[category]}): {first[:110]}",
+        f"Söhbətdə {len(chat.splitlines())} mesaj var; bot məsələni həll etməyib.",
+        f"Müştərinin son mesajı: {last[:110]}",
     ])
     action = "retention_offer" if risk == "high" and _ACTIONS[category] == "no_action" else _ACTIONS[category]
     return Analysis(

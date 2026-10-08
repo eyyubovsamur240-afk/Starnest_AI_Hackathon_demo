@@ -23,15 +23,27 @@ A one-page tool that turns an escalated support chat into a 3-line summary, an i
 
 ## Quick start
 
-Requires Python 3.10+.
+Requires Python 3.10+. The whole interface is in Azerbaijani; the summary, churn-risk reason and reply are generated in Azerbaijani too.
 
-```bash
-pip install -r requirements.txt
-export GEMINI_API_KEY=your-key          # optional, free at aistudio.google.com/apikey
-streamlit run app.py
+**Windows (PowerShell)**
+
+```powershell
+python -m pip install -r requirements.txt
+$env:GEMINI_API_KEY="your-key"          # optional, free at aistudio.google.com/apikey
+python -m streamlit run app.py
 ```
 
-Open http://localhost:8501, pick a sample chat (or paste your own) and click **Analyze**.
+`$env:` only lasts for the current PowerShell window. Using `python -m` makes pip and Streamlit run on the same Python when more than one is installed.
+
+**macOS / Linux**
+
+```bash
+python3 -m pip install -r requirements.txt
+export GEMINI_API_KEY=your-key
+python3 -m streamlit run app.py
+```
+
+Open http://localhost:8501, pick a sample chat (or paste your own) and click **Təhlil et**.
 
 ```bash
 # Analyze one chat from the command line
@@ -40,7 +52,7 @@ echo "Customer: internet yoxdur 3 gündür, Bakcell-ə keçəcəm" | python copi
 
 ### Offline mode
 
-Without an API key (or with **Force offline mode** in the sidebar) the app uses a simple keyword baseline in `copilot.py`. It keeps the demo running if venue Wi-Fi or the API fails, but its replies are templates and its summary is extractive. Real results come from the LLM mode.
+Without an API key (or with **Oflayn rejim** switched on in the sidebar) the app uses a simple keyword baseline in `copilot.py`. It keeps the demo running if venue Wi-Fi or the API fails, but its replies are templates and its summary is extractive. Real results come from the LLM mode.
 
 ### Deploy to Streamlit Community Cloud
 
@@ -79,7 +91,8 @@ The offline baseline's keywords were written while looking at this same test set
 
 | File | What it does |
 |---|---|
-| `app.py` | Streamlit UI: sample-chat dropdown, paste box, Analyze button, risk badge, summary, editable reply, "time saved" counter |
+| `app.py` | Streamlit UI in Azerbaijani: sample-chat dropdown, paste box, **Təhlil et** button, risk / category / sentiment cards, summary, next step, editable reply, "time saved" counter |
+| `labels_az.py` | Azerbaijani display names for categories, actions, risk levels and sentiment (internal codes stay in English) |
 | `copilot.py` | Builds the request, calls Gemini with structured JSON output (Pydantic schema), and holds the offline fallback |
 | `prompts.py` | System prompt, category/action vocabulary, 2 few-shot examples |
 | `data/tickets.json` | 20 synthetic chats with labels (category, churn risk, sentiment) |
