@@ -221,5 +221,229 @@
       "churn_risk": "high",
       "sentiment": 5
     }
+  },
+  {
+    "id": "T21",
+    "language": "az",
+    "tone": "calm",
+    "chat": "Customer: Salam, ötən ayın hesabında 12 AZN 'əlavə xidmətlər' yazılıb. Bu nədir?\nBot: Hesabınızın detallarını Kabinetdə görə bilərsiniz.\nCustomer: baxdım, orada da sadəcə 'əlavə xidmətlər' yazılıb. Zəhmət olmasa izah edin.",
+    "label": {
+      "category": "billing",
+      "churn_risk": "low",
+      "sentiment": 2
+    }
+  },
+  {
+    "id": "T22",
+    "language": "ru",
+    "tone": "annoyed",
+    "chat": "Customer: Добрый день. С меня списали 8 манат за подписку на игры, я её не подключала\nBot: Чтобы отключить подписку, отправьте STOP на 8080.\nCustomer: отключить я и сама могу. Верните деньги за этот месяц\nBot: Извините, я не понял ваш вопрос.\nCustomer: мне нужен живой оператор",
+    "label": {
+      "category": "refund",
+      "churn_risk": "medium",
+      "sentiment": 3
+    }
+  },
+  {
+    "id": "T23",
+    "language": "en",
+    "tone": "furious",
+    "chat": "Customer: I was charged 45 AZN for roaming while my phone was in flight mode the whole trip\nBot: Roaming charges apply when your device connects to a foreign network.\nCustomer: IT WAS IN FLIGHT MODE. I have screenshots.\nCustomer: refund this today or I'm porting my number to Nar and posting this everywhere\nBot: Your request has been registered.",
+    "label": {
+      "category": "roaming",
+      "churn_risk": "high",
+      "sentiment": 5
+    }
+  },
+  {
+    "id": "T24",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Customer: evdə zəng edəndə səs kəsilir, 2 həftədir belədir\nBot: Zəhmət olmasa, telefonunuzu yenidən başladın.\nCustomer: başlatmışam, telefonu da dəyişmişəm, problem şəbəkədədir\nCustomer: Yasamalda yaşayıram, qonşularda da eyni problem var",
+    "label": {
+      "category": "network_coverage",
+      "churn_risk": "medium",
+      "sentiment": 3
+    }
+  },
+  {
+    "id": "T25",
+    "language": "mixed",
+    "tone": "calm",
+    "chat": "Customer: Salam, nömrəmi başqa adama keçirmək istəyirəm (atama). Bunu necə edə bilərəm?\nBot: Nömrənin keçirilməsi üçün xidmət mərkəzinə yaxınlaşın.\nCustomer: ok, amma hansı sənədlər lazımdır? Также можно ли это сделать онлайн?",
+    "label": {
+      "category": "other",
+      "churn_risk": "low",
+      "sentiment": 1
+    }
+  },
+  {
+    "id": "T26",
+    "language": "ru",
+    "tone": "furious",
+    "chat": "Customer: Это уже четвёртый раз за месяц!!! Нет связи вообще в Сумгаите\nBot: Приносим извинения за неудобства.\nCustomer: ваши извинения мне не нужны. Я плачу 25 манат за тариф и не могу позвонить\nCustomer: расторгаю договор, завтра иду в Bakcell\nBot: Ваше обращение передано специалистам.",
+    "label": {
+      "category": "network_coverage",
+      "churn_risk": "high",
+      "sentiment": 5
+    }
+  },
+  {
+    "id": "T27",
+    "language": "en",
+    "tone": "annoyed",
+    "chat": "Customer: hi, my eSIM stopped working after I updated my iPhone\nBot: Please restart your device.\nCustomer: did that 3 times. It shows 'No Service'. I need it for work\nBot: For eSIM issues please visit a service center.\nCustomer: I can't leave work today, is there no other way?",
+    "label": {
+      "category": "sim_card",
+      "churn_risk": "medium",
+      "sentiment": 3
+    }
+  },
+  {
+    "id": "T28",
+    "language": "az",
+    "tone": "calm",
+    "chat": "Customer: Salam! Hazırda 'Sərfəli 10' tarifindəyəm. Daha çox internet olan paket varmı, amma qiyməti çox fərqlənməsin?\nBot: Tariflər haqqında məlumat üçün saytımıza baxın.\nCustomer: baxdım, çox seçim var, hansını tövsiyə edirsiniz?",
+    "label": {
+      "category": "tariff",
+      "churn_risk": "low",
+      "sentiment": 1
+    }
+  },
+  {
+    "id": "T29",
+    "language": "mixed",
+    "tone": "annoyed",
+    "chat": "Customer: privet, internet paketim bitib amma 2 gün qabaq 10GB almışdım\nBot: Paketinizin qalığını *100# ilə yoxlaya bilərsiniz.\nCustomer: yoxladım 0 göstərir. Как 10 гигов за 2 дня закончились?? Mən YouTube belə açmıram\nCustomer: bu pulu kim qaytaracaq?",
+    "label": {
+      "category": "billing",
+      "churn_risk": "medium",
+      "sentiment": 4
+    }
+  },
+  {
+    "id": "T30",
+    "language": "en",
+    "tone": "calm",
+    "chat": "Customer: Hello, I'm travelling to Georgia next week. Will my 'Roaming Plus' package work there?\nBot: Roaming Plus is available in selected countries.\nCustomer: Is Georgia one of them? I couldn't find the list on the website.",
+    "label": {
+      "category": "roaming",
+      "churn_risk": "low",
+      "sentiment": 1
+    }
+  },
+  {
+    "id": "T31",
+    "language": "az",
+    "tone": "furious",
+    "chat": "Customer: SİZİN OPERATORUNUZ MƏNƏ KOBUD DANIŞDI!!!\nBot: Narahatçılığa görə üzr istəyirik.\nCustomer: 20 dəqiqə gözlədim, sonra telefonu üzümə qapadı\nCustomer: nazirliyə şikayət yazacam və nömrəmi bağlayıram\nBot: Rəyiniz üçün təşəkkür edirik.",
+    "label": {
+      "category": "other",
+      "churn_risk": "high",
+      "sentiment": 5
+    },
+    "note": "tricky: complaint about staff, not a technical issue"
+  },
+  {
+    "id": "T32",
+    "language": "ru",
+    "tone": "calm",
+    "chat": "Customer: Здравствуйте, вернулась из отпуска, а сим-карта заблокирована. Наверное, долго не пользовалась\nBot: Для разблокировки введите PUK-код.\nCustomer: PUK у меня нет, карточку я потеряла. Как быть?",
+    "label": {
+      "category": "sim_card",
+      "churn_risk": "low",
+      "sentiment": 2
+    }
+  },
+  {
+    "id": "T33",
+    "language": "en",
+    "tone": "annoyed",
+    "chat": "Customer: I cancelled my 'Music Max' subscription last month but you charged me again this month\nBot: You can manage subscriptions in My Account.\nCustomer: I KNOW, that's where I cancelled it. I want the 5 AZN back\nCustomer: this is the second time this happens, honestly thinking about switching",
+    "label": {
+      "category": "refund",
+      "churn_risk": "high",
+      "sentiment": 4
+    },
+    "note": "tricky: churn hint stated mildly"
+  },
+  {
+    "id": "T34",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Customer: axşamlar internet çox yavaşlayır, saat 20:00-dan sonra heç video açılmır\nBot: Şəbəkənin yüklənməsi səbəbindən sürət azala bilər.\nCustomer: yəni hər axşam belə olacaq? Mən tam sürət üçün pul ödəyirəm",
+    "label": {
+      "category": "internet_speed",
+      "churn_risk": "medium",
+      "sentiment": 3
+    }
+  },
+  {
+    "id": "T35",
+    "language": "mixed",
+    "tone": "furious",
+    "chat": "Customer: tarifimi mənim xəbərim olmadan dəyişmisiniz!! Было 15 манат, стало 22\nBot: Tarif şərtləri operator tərəfindən yenilənə bilər.\nCustomer: yenilənə bilər?? Mənə heç SMS gəlmədi\nCustomer: köhnə tarifi qaytarmasanız, Nar-a keçirəm, 10 ildir sizinləyəm",
+    "label": {
+      "category": "tariff",
+      "churn_risk": "high",
+      "sentiment": 5
+    }
+  },
+  {
+    "id": "T36",
+    "language": "ru",
+    "tone": "annoyed",
+    "chat": "Customer: Я перевела 20 манат на чужой номер по ошибке, можно вернуть?\nBot: Переводы баланса не подлежат отмене.\nCustomer: но это же ошибка, номер отличается на одну цифру\nCustomer: помогите пожалуйста, это большие деньги для меня",
+    "label": {
+      "category": "refund",
+      "churn_risk": "medium",
+      "sentiment": 3
+    },
+    "note": "tricky: refund request for the customer's own mistake"
+  },
+  {
+    "id": "T37",
+    "language": "az",
+    "tone": "calm",
+    "chat": "Customer: Salam, qızım üçün yeni nömrə almaq istəyirəm, 14 yaşı var. Onun adına rəsmiləşdirmək olar?\nBot: Nömrə almaq üçün şəxsiyyət vəsiqəsi tələb olunur.\nCustomer: onun hələ şəxsiyyət vəsiqəsi yoxdur, doğum haqqında şəhadətnaməsi var",
+    "label": {
+      "category": "other",
+      "churn_risk": "low",
+      "sentiment": 1
+    }
+  },
+  {
+    "id": "T38",
+    "language": "en",
+    "tone": "annoyed",
+    "chat": "Customer: the bill says I used 300 minutes of international calls. I never call abroad\nBot: Please check your call history in the app.\nCustomer: the history shows calls to a number in Somalia at 3am. I was asleep. Someone hacked my number?\nBot: I'm sorry, I can't help with that.",
+    "label": {
+      "category": "billing",
+      "churn_risk": "medium",
+      "sentiment": 4
+    },
+    "note": "tricky: possible fraud, customer is worried rather than threatening"
+  },
+  {
+    "id": "T39",
+    "language": "mixed",
+    "tone": "annoyed",
+    "chat": "Customer: salam, mən Türkiyədəyəm, rouminq aktivdir amma internet işləmir\nBot: Mobil məlumatın rouminq rejimini telefon ayarlarından aktiv edin.\nCustomer: aktivdir, already checked. Zəng gəlir, amma internet yoxdur\nCustomer: işimlə bağlı təcili e-poçt göndərməliyəm",
+    "label": {
+      "category": "roaming",
+      "churn_risk": "medium",
+      "sentiment": 3
+    }
+  },
+  {
+    "id": "T40",
+    "language": "ru",
+    "tone": "furious",
+    "chat": "Customer: Интернет 5G обещали, а у меня даже 4G нет, одна буква E\nBot: Покрытие 5G доступно в центральной части Баку.\nCustomer: я живу в центре!!! Возле метро 28 Мая\nCustomer: месяц так. Это обман клиентов. Пишу жалобу в ANAS и ухожу\nBot: Спасибо за обращение.",
+    "label": {
+      "category": "internet_speed",
+      "churn_risk": "high",
+      "sentiment": 5
+    }
   }
 ]

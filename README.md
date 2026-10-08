@@ -67,14 +67,15 @@ python eval.py --offline    # keyword baseline
 python eval.py --limit 5    # quick smoke run
 ```
 
-`eval.py` runs all 20 tickets in `data/tickets.json`, compares them with the hand-written labels and writes `results/eval_<mode>.md` (ready for the pitch "Proof" slide) plus a JSON file with every prediction and reply.
+`eval.py` runs all 40 tickets in `data/tickets.json`, compares them with the hand-written labels and writes `results/eval_<mode>.md` (ready for the pitch "Proof" slide) plus a JSON file with every prediction and reply.
 
-**Test set** (`data/tickets.json`): 20 synthetic escalated chats drafted with an AI assistant (review and edit them as a team before submitting). None are taken from a real operator.
+**Test set** (`data/tickets.json`): 40 synthetic escalated chats drafted with an AI assistant (review and edit them as a team before submitting). None are taken from a real operator.
 
 - Languages: Azerbaijani, Russian, English and mixed chats
-- Tone: 5 calm, 10 annoyed, 5 furious
+- Tone: 11 calm, 19 annoyed, 10 furious
 - Categories: roaming, internet speed, tariff, SIM card, billing, network coverage, refund
-- Tricky cases: sarcasm (T14), two issues in one chat (T15), threatening to switch operator (T16, plus T17–T20)
+- Tricky cases: sarcasm (T14), two issues in one chat (T15), threatening to switch operator (T16, plus T17–T20), complaint about staff rather than a technical issue (T31), a mild switching hint (T33), refund for the customer's own mistake (T36), possible fraud (T38)
+- T21–T40 were added later to cover every category (including `other`) and all three risk levels in each language
 
 **Metrics reported:** category accuracy, churn-risk accuracy, sentiment within ±1, average and max response time. Add a 1–5 reply-quality score from 2–3 people outside the team, and a before/after timing (agent reading the raw chat vs. using the tool on 3 chats).
 
@@ -82,10 +83,10 @@ python eval.py --limit 5    # quick smoke run
 
 | Mode | Category | Churn risk | Sentiment ±1 | Avg time |
 |---|---|---|---|---|
-| Offline keyword baseline | 95% | 75% | 90% | <0.01s |
+| Offline keyword baseline (40 chats) | 77.5% | 67.5% | 75% | <0.01s |
 | LLM (`gemini-2.5-flash`) | _run `python eval.py`_ | | | |
 
-The offline baseline's keywords were written while looking at this same test set, so its scores are optimistic and are shown only as a floor. See `results/eval_offline.md` for the cases it misses.
+The offline baseline's keywords were written while looking at T01–T20 (95% / 75% / 90% there), so the drop on T21–T40 shows how much it overfits. It is shown only as a floor. See `results/eval_offline.md` for the cases it misses.
 
 ## Project structure
 
@@ -95,7 +96,7 @@ The offline baseline's keywords were written while looking at this same test set
 | `labels_az.py` | Azerbaijani display names for categories, actions, risk levels and sentiment (internal codes stay in English) |
 | `copilot.py` | Builds the request, calls Gemini with structured JSON output (Pydantic schema), and holds the offline fallback |
 | `prompts.py` | System prompt, category/action vocabulary, 2 few-shot examples |
-| `data/tickets.json` | 20 synthetic chats with labels (category, churn risk, sentiment) |
+| `data/tickets.json` | 40 synthetic chats with labels (category, churn risk, sentiment) |
 | `eval.py` | Runs the test set and writes the accuracy table |
 | `results/` | Eval outputs |
 
@@ -110,11 +111,11 @@ Disclosed as required by section 5 of the Terms & Conditions.
 | [google-genai Python SDK](https://github.com/googleapis/python-genai) | API client, structured output parsing | Apache 2.0 |
 | [Pydantic](https://docs.pydantic.dev) | Output schema and validation | MIT |
 | Claude Code (AI coding assistant) | Scaffolding of the code, test set and this README | — |
-| Data | 20 synthetic chats written for this project. No real customer or operator data. | — |
+| Data | 40 synthetic chats written for this project. No real customer or operator data. | — |
 
 ## Known limitations
 
-- **Synthetic data only.** Accuracy on real operator chats is unknown; 20 tickets is a small test set.
+- **Synthetic data only.** Accuracy on real operator chats is unknown; 40 tickets is still a small test set.
 - **Azerbaijani quality** depends on the model. Replies should always be read by the agent before sending, which is why the reply box is editable.
 - **No account access.** The copilot only sees the chat text. It cannot verify balances, charges or tariffs, and is told not to invent amounts.
 - **One main category per chat.** When a customer raises two issues (T15) only the one they are most upset about is categorised; the summary should mention both.
