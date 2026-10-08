@@ -7,3 +7,7 @@ textColor = "#1f2937"
 
 [server]
 headless = true
+
+[client]
+# The sidebar shows our own Azerbaijani page links (ui.nav) instead of file names.
+showSidebarNavigation = false

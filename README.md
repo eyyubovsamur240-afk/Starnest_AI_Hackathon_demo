@@ -10,7 +10,7 @@ A tool for the human agent who takes over when the support **chatbot** gives up.
 
 **Problem:** the support chatbot resolves most chats, but the hardest ones get handed over to a human with no context. The agent has to re-read the whole **Bot ↔ Müştəri** conversation, often mixing Azerbaijani, Russian and English, while an angry customer waits. Customers who are about to leave look the same as everyone else in the queue, and nobody tracks why the bot keeps failing.
 
-**What the copilot does** (three tabs, whole UI in Azerbaijani):
+**What the copilot does** (three pages in the sidebar, whole UI in Azerbaijani):
 
 1. **🔍 Söhbət təhlili (main screen):** the Bot ↔ Müştəri chat on the left; on the right the **Təhlil et** button, summary, sentiment, churn risk, issue category and a suggested reply. Below it, an **AI dəqiqliyi** block: category and sentiment accuracy from `eval.py`, plus summary (👍/👎) and reply quality (stars) rated by a person in the app.
 2. **📥 Prioritet növbəsi (priority queue):** every escalated chat analysed and sorted by churn risk, then sentiment, then waiting time. Click a row to see the customer profile, the chat, why the bot failed, a new FAQ entry for the bot, the next action and a retention offer.
@@ -53,7 +53,7 @@ export GEMINI_API_KEY=your-key
 python3 -m streamlit run app.py
 ```
 
-Open http://localhost:8501, pick a sample chat (or paste your own) and click **Təhlil et**. Offline, the whole queue of 40 chats is analysed at once. With an API key, open **Prioritet növbəsi**, pick how many chats to analyse with the slider and click **▶ Növbəni təhlil et** (the free Gemini tier is rate-limited, so the default is 15; results are cached in `.cache/` and open instantly next time).
+Open http://localhost:8501, pick a sample chat (or paste your own) and click **Təhlil et**. Offline, the whole queue of 40 chats is analysed at once. With an API key, open the **Prioritet növbəsi** page, pick how many chats to analyse with the slider and click **▶ Növbəni təhlil et** (the free Gemini tier is rate-limited, so the default is 15; results are cached in `.cache/` and open instantly next time).
 
 ```bash
 # Analyze one chat from the command line
@@ -102,7 +102,10 @@ The offline baseline's keywords were written while looking at T01–T20 (95% / 7
 
 | File | What it does |
 |---|---|
-| `app.py` | Streamlit UI in Azerbaijani: main analysis screen with the AI accuracy block, priority queue, statistics with charts |
+| `app.py` | Main screen in Azerbaijani: chat left, analysis right, AI accuracy block below |
+| `pages/1_queue.py` | Priority queue page with the full analysis of the selected chat |
+| `pages/2_stats.py` | Statistics page: charts and FAQ export |
+| `ui.py` | Shared styles, sidebar links and building blocks for the two extra pages |
 | `copilot.py` | Masks the chat, calls Gemini with structured JSON output (Pydantic schema), caches results, and holds the offline fallback |
 | `privacy.py` | Rule-based masking of phone numbers, names, card numbers, e-mails and FIN codes |
 | `offers.py` | Rule-based retention offers from the issue category, churn risk and customer profile |
