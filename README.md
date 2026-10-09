@@ -6,7 +6,7 @@ Starnest Academy AI Hackathon 2026 · Track: **AI for Customer Experience & Digi
 
 | Submission item | Where |
 |---|---|
-| Demo link | _Streamlit Community Cloud link: to be added_ ([run it locally](#how-to-open-the-demo) in two commands) |
+| Demo link | **[eyyubovsamur240-afk-starnest-ai-hackathon-demo-app-iu2ppq.streamlit.app](https://eyyubovsamur240-afk-starnest-ai-hackathon-demo-app-iu2ppq.streamlit.app/)** (no login or key needed; all 40 sample chats open with saved Gemini answers). Or [run it locally](#how-to-open-the-demo) in two commands |
 | Video (≤ 2 min) | _to be added_ |
 | Pitch deck | Uploaded on the hackathon dashboard |
 | User and problem | [below](#user-and-problem) |
@@ -38,7 +38,7 @@ Three pages in the sidebar; the whole interface is in Azerbaijani.
 | Step | Done by | Why |
 |---|---|---|
 | Mask phones, names, cards, e-mails and FIN codes | Rules (`privacy.py`) | Personal data must not leave the machine; rules are predictable and auditable |
-| Summary, category, sentiment, churn risk and reason, why the bot failed, FAQ entry, AZ reply, next action | **Gemini** (`gemini-3.8-flash`, `copilot.py`, `prompts.py`), structured JSON checked against a Pydantic schema | Needs reading mixed-language, sarcastic, misspelled chats, which keyword rules do badly (see the eval below) |
+| Summary, category, sentiment, churn risk and reason, why the bot failed, FAQ entry, AZ reply, next action | **Gemini** Flash models (default `gemini-3.8-flash`, others as free-tier fallbacks; the eval records which model answered each chat; `copilot.py`, `prompts.py`), structured JSON checked against a Pydantic schema | Needs reading mixed-language, sarcastic, misspelled chats, which keyword rules do badly (see the eval below) |
 | Queue order | Rules on Gemini's output plus waiting time | Transparent to the agent |
 | Retention offer | Rules (`offers.py`) on Gemini's risk + the CRM profile | The model never invents discounts or prices |
 | Offline fallback | Keyword rules | Keeps the demo working if the API or Wi-Fi fails; every result shows a 🤖 Gemini or ⚙️ Oflayn badge so it's always clear who decided |
@@ -69,9 +69,13 @@ The answer key in `data/tickets.json` (`expected`) is only read by `eval.py` aft
 | Mode | Category | Churn risk | Sentiment ±1 | Bot-failure reason | Avg time | Cost / chat |
 |---|---|---|---|---|---|---|
 | Keyword rules (offline baseline, 40 chats) | 77.5% | 67.5% | 75% | 67.5% | <0.01 s | 0 |
-| Gemini `gemini-3.8-flash` (40 chats) | _run `python eval.py`_ | | | | | |
+| **Gemini** (all 40 chats, free tier) | **87.5%** | **97.5%** | **100%** | 62.5% | 25.8 s (max 152 s) | $0.0043* |
 
-The keyword rules were written while looking at T01–T20 (95% / 75% / 90% on those), so they overfit: they are shown only as the floor that the AI has to beat. Full per-chat results are in `results/eval_<mode>.json`.
+\* At a placeholder price: `eval.py` uses the older gemini-2.5-flash list price ($0.30 / $2.50 per 1M input / output tokens) unless `GEMINI_PRICE_IN` / `GEMINI_PRICE_OUT` are set; Gemini reported 1,985 input and 1,466 output tokens per chat on average. The demo itself ran on the free tier at no cost.
+
+**What this shows.** Gemini beats the rules clearly on churn risk (+30 points) and sentiment (+25), the two fields that decide queue order and retention offers, and on category (+10). It is **worse on why the bot failed** (62.5% against 67.5%): see the failures below. The keyword rules were written while looking at T01–T20 (95% / 75% / 90% on those), so they overfit and are shown only as the floor; Gemini saw none of the answer key.
+
+**How the run was made.** The free tier allows 20 requests a day per model, so the 40 chats were answered by a chain of Flash models (`GEMINI_MODEL`, see Feasibility): gemini-3.5-flash 20 chats, gemini-3.5-flash-lite 8, gemini-3.6-flash 7, gemini-3.7-flash 3, gemini-3.8-flash 2. The score is for that mix, not for one model. Per-chat results, including which model answered, are in `results/eval_llm.json` and `results/eval_llm.md`; the Gemini answers themselves are saved in `results/gemini_cache.json`, so the demo shows them without an API key. Response time is long and uneven (3–152 s) because free-tier models were often busy and retried.
 
 ### Examples of failures
 
@@ -84,7 +88,15 @@ From the keyword baseline (`results/eval_offline.md` lists all 16 misses):
 | T38, possible fraud: calls to Somalia at 3 am | Rules picked **roaming / low**; the answer is billing / medium | A worried, polite customer can still be at risk |
 | T15, two issues in one chat | Rules picked billing; the answer is refund | Only one main category per chat; the summary must mention both |
 
-Gemini's own misses are written to `results/eval_llm.md` by the same script; the ones worth discussing go here once the run is done.
+From Gemini (`results/eval_llm.md` lists every miss; 5 category misses, 1 churn-risk miss, 15 bot-failure misses):
+
+| Chat | What happened | Why it matters |
+|---|---|---|
+| T17 and T23, overcharged for roaming, customer wants the money back | Gemini picked **refund**; the answer key says roaming. Churn risk (high) was right in both | Arguably a labelling question (the customer's goal is a refund, the topic is roaming). The category list needs a rule for "refund of X" |
+| T25 (transfer a number to a relative) and T37 (a SIM for a 14-year-old) | Gemini picked **sim_card**; the answer key says other | Same pattern: requests that sit next to a category get pulled into it |
+| T40, 5G promised but only "E" on the phone | Gemini picked **network_coverage**; the answer key says internet_speed | Coverage and speed overlap in how customers describe them |
+| T34, internet slow every evening | Gemini said churn risk **low**; the answer key says medium | The only risk miss; likely the calm tone hid that the problem repeats every day |
+| Bot-failure reason, 15 of 40 wrong | 9 of the 15 misses are Gemini answering **no_permission** (e.g. T07, T08, T09, T21, T27), and T04/T06 were called a loop | The five reasons overlap, and Gemini tends to fall back on no_permission whenever the bot couldn't act. This is the field to fix next, with clearer definitions and an example per reason in the prompt |
 
 ### Comparison with today's approach
 
@@ -101,9 +113,9 @@ Today the agent reads the raw chat and writes a reply from scratch. Protocol: 2�
 
 **Data requirements.** For a pilot: an export of escalated bot chats (anonymised or masked with `privacy.py`), the operator's issue categories, and its real retention-offer catalogue to replace the made-up one in `offers.py`. No model training is needed: the prompt, the category list and 2 few-shot examples are the whole set-up. A few hundred labelled chats would replace our 40 synthetic ones as the test set.
 
-**Running costs.** The demo runs on the Gemini free tier, so it costs nothing. On the paid tier, `eval.py` records the tokens Gemini reports for every chat and prints the cost per chat and per 1,000 chats at the price set in `GEMINI_PRICE_IN` / `GEMINI_PRICE_OUT` (USD per 1M tokens; the defaults are the older gemini-2.5-flash list price of $0.30 / $2.50, so set the current price for your model from [ai.google.dev/pricing](https://ai.google.dev/pricing)). One chat costs **one** Gemini request (one call returns every field), and every answer is saved to `results/gemini_cache.json`, so re-opening a chat or re-running the eval costs nothing. Hosting is a single Streamlit app.
+**Running costs.** The demo runs on the Gemini free tier, so it costs nothing. On the 40-chat eval Gemini used about 1,985 input and 1,466 output tokens per chat (thinking tokens count as output), which is **$0.0043 per chat, $4.26 per 1,000 chats** at the placeholder price below; check the current price of the model you use before relying on it. On the paid tier, `eval.py` records the tokens Gemini reports for every chat and prints the cost per chat and per 1,000 chats at the price set in `GEMINI_PRICE_IN` / `GEMINI_PRICE_OUT` (USD per 1M tokens; the defaults are the older gemini-2.5-flash list price of $0.30 / $2.50, so set the current price for your model from [ai.google.dev/pricing](https://ai.google.dev/pricing)). One chat costs **one** Gemini request (one call returns every field), and every answer is saved to `results/gemini_cache.json`, so re-opening a chat or re-running the eval costs nothing. Hosting is a single Streamlit app.
 
-**Free-tier limit.** On the free tier Google allows only **20 requests a day** for `gemini-3.8-flash` (quota `GenerateRequestsPerDayPerProjectPerModel-FreeTier`), so the 40-chat eval needs two days or a billed key. When the limit is hit, `eval.py` stops with one message and writes a report from the chats that finished, marked partial, and the app shows a message in Azerbaijani and switches to the ⚙️ offline rules. Saved answers keep working either way. The limit is per Google Cloud project and per model, so a second key in the same project shares it; `eval.py` prints which key it uses (source and last 4 characters). Because each model has its own quota, `GEMINI_MODEL` takes a comma-separated fallback list (`python eval.py --list-models` shows what the key can use): when one model's daily limit is used up, or it stays busy (503) after its retries, the next model answers. The saved answer and the report record which model answered each chat, and the report shows the keyword rules on the same chats next to Gemini, so a partial run is still a fair, labelled sample.
+**Free-tier limit.** On the free tier Google allows only **20 requests a day** for `gemini-3.8-flash` (quota `GenerateRequestsPerDayPerProjectPerModel-FreeTier`), so one model covers only half of the 40-chat eval. When the limit is hit, `eval.py` stops with one message and writes a report from the chats that finished, marked partial, and the app shows a message in Azerbaijani and switches to the ⚙️ offline rules. Saved answers keep working either way. The limit is per Google Cloud project and per model, so a second key in the same project shares it; `eval.py` prints which key it uses (source and last 4 characters). Because each model has its own quota, `GEMINI_MODEL` takes a comma-separated fallback list (`python eval.py --list-models` shows what the key can use): when one model's daily limit is used up, or it stays busy (503) after its retries, the next model answers. The saved answer and the report record which model answered each chat, and the report shows the keyword rules on the same chats next to Gemini, so a partial run is still a fair, labelled sample.
 
 **Next step.** A 2-week shadow pilot with one support team: the copilot runs next to the agents on real escalated chats, agents rate each summary and reply in the app, and we compare handling time and the bot's handover rate before and after adding the generated FAQ entries.
 
@@ -118,7 +130,7 @@ Most support copilots summarise a chat and suggest a reply. Escalation Copilot i
 
 ## How to open the demo
 
-**Online:** the Streamlit Community Cloud link at the top. Nothing to install.
+**Online:** [https://eyyubovsamur240-afk-starnest-ai-hackathon-demo-app-iu2ppq.streamlit.app/](https://eyyubovsamur240-afk-starnest-ai-hackathon-demo-app-iu2ppq.streamlit.app/). Nothing to install. If the app is asleep, click "Yes, get this app back up!" and wait about a minute. The sample chats show saved Gemini answers (🤖 badge) without spending quota; a pasted new chat uses the live key, or the ⚙️ offline rules if the daily quota is used up.
 
 **Locally** (Python 3.10+). Windows PowerShell:
 
@@ -156,7 +168,7 @@ Required by rules 03 and 04 of the hackathon.
 
 | What | Used for | Licence / terms |
 |---|---|---|
-| Google Gemini (`gemini-3.8-flash`, configurable via `GEMINI_MODEL`) | Chat analysis and reply generation | Gemini API terms (free tier). Free-tier inputs may be used by Google to improve its models, so only synthetic chats are sent. |
+| Google Gemini Flash models via the Gemini API (`gemini-3.8-flash` by default; the 40-chat eval also used gemini-3.7-flash, gemini-3.6-flash, gemini-3.5-flash and gemini-3.5-flash-lite as free-tier fallbacks; set with `GEMINI_MODEL`) | Chat analysis and reply generation | Gemini API terms (free tier). Free-tier inputs may be used by Google to improve its models, so only synthetic chats are sent. |
 | [Streamlit](https://streamlit.io) | Web UI and hosting (Community Cloud) | Apache 2.0 |
 | [google-genai Python SDK](https://github.com/googleapis/python-genai) | API client and structured output | Apache 2.0 |
 | [Pydantic](https://docs.pydantic.dev) | Output schema and validation | MIT |
@@ -177,7 +189,7 @@ Required by rules 03 and 04 of the hackathon.
 - **Churn risk is a judgement, not a prediction model.** It comes from what the customer writes; the profile is only used for queue order and the offer.
 - **Masking is a safety net, not a certified anonymiser.** A name written in an unusual way can slip through.
 - **Ratings in the app live only in the browser session.**
-- **Latency** depends on the network and API load (gemini-3.8-flash took 35–90 s per chat on the free tier); offline mode is the fallback.
+- **Latency** depends on the network and API load (on the free tier the eval took 3–152 s per chat, 26 s on average, mostly waiting on busy models); offline mode is the fallback.
 - **Free-tier quota:** 20 Gemini requests a day. Saved answers in `results/gemini_cache.json` cover the sample chats; new chats need quota or a billed key.
 
 ## Project structure
