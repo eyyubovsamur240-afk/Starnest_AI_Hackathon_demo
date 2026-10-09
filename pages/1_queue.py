@@ -33,8 +33,8 @@ ensure_queue(tickets, offline)
 ctrl1, ctrl2 = st.columns([3, 1], vertical_alignment="bottom")
 with ctrl1:
     count = st.slider("Növbədəki söhbət sayı", 5, len(tickets), len(tickets) if offline else 15,
-                      help="Pulsuz Gemini planında sorğu limiti var, 40 söhbət bir neçə dəqiqə çəkə bilər. "
-                           "Nəticələr yaddaşda saxlanılır, növbəti dəfə dərhal açılır.")
+                      help="Pulsuz Gemini planında gündə 20 sorğu limiti var. Yadda saxlanmış cavabı olan söhbətlər "
+                           "limit xərcləmir, yalnız yeni söhbətlər Gemini-yə göndərilir.")
 with ctrl2:
     if st.button("▶ Növbəni təhlil et", type="primary", width="stretch"):
         run_queue(tickets[:count], offline)

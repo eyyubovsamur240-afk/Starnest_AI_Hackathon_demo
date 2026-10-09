@@ -57,11 +57,12 @@ The answer key in `data/tickets.json` (`expected`) is only read by `eval.py` aft
 
 ### Automated tests
 
-`pytest` (68 tests, run in CI on every push):
+`pytest` (75 tests, run in CI on every push):
 
 - `tests/test_privacy.py`: every phone format, card, e-mail, FIN code and name pattern is masked; all 7 test chats with personal data come out with no name or phone left.
 - `tests/test_offers.py`: no offer at low risk; medium risk only for loyal or high-value customers; high risk always gets a priced offer.
 - `tests/test_copilot.py`: the test set is well formed; the output always fits the schema; only the masked chat is sent to Gemini; the answer key never reaches the prompt.
+- `tests/test_quota_and_cache.py`: each chat costs one Gemini request and is never sent twice; a daily-quota 429 stops at once (no retries), a 503 is retried once, and an interrupted eval still writes a report marked partial.
 
 ### Accuracy (`python eval.py`)
 
@@ -100,7 +101,9 @@ Today the agent reads the raw chat and writes a reply from scratch. Protocol: 2�
 
 **Data requirements.** For a pilot: an export of escalated bot chats (anonymised or masked with `privacy.py`), the operator's issue categories, and its real retention-offer catalogue to replace the made-up one in `offers.py`. No model training is needed: the prompt, the category list and 2 few-shot examples are the whole set-up. A few hundred labelled chats would replace our 40 synthetic ones as the test set.
 
-**Running costs.** The demo runs on the Gemini free tier, so it costs nothing. On the paid tier, `eval.py` records the tokens Gemini reports for every chat and prints the cost per chat and per 1,000 chats at the price set in `GEMINI_PRICE_IN` / `GEMINI_PRICE_OUT` (USD per 1M tokens; the defaults are the older gemini-2.5-flash list price of $0.30 / $2.50, so set the current price for your model from [ai.google.dev/pricing](https://ai.google.dev/pricing)). Results are cached, so re-opening a chat costs nothing. Hosting is a single Streamlit app.
+**Running costs.** The demo runs on the Gemini free tier, so it costs nothing. On the paid tier, `eval.py` records the tokens Gemini reports for every chat and prints the cost per chat and per 1,000 chats at the price set in `GEMINI_PRICE_IN` / `GEMINI_PRICE_OUT` (USD per 1M tokens; the defaults are the older gemini-2.5-flash list price of $0.30 / $2.50, so set the current price for your model from [ai.google.dev/pricing](https://ai.google.dev/pricing)). One chat costs **one** Gemini request (one call returns every field), and every answer is saved to `results/gemini_cache.json`, so re-opening a chat or re-running the eval costs nothing. Hosting is a single Streamlit app.
+
+**Free-tier limit.** On the free tier Google allows only **20 requests a day** for `gemini-3.8-flash` (quota `GenerateRequestsPerDayPerProjectPerModel-FreeTier`), so the 40-chat eval needs two days or a billed key. When the limit is hit, `eval.py` stops with one message and writes a report from the chats that finished, marked partial, and the app shows a message in Azerbaijani and switches to the ⚙️ offline rules. Saved answers keep working either way.
 
 **Next step.** A 2-week shadow pilot with one support team: the copilot runs next to the agents on real escalated chats, agents rate each summary and reply in the app, and we compare handling time and the bot's handover rate before and after adding the generated FAQ entries.
 
@@ -133,16 +136,16 @@ export GEMINI_API_KEY=your-key
 python3 -m streamlit run app.py
 ```
 
-Open http://localhost:8501, pick a sample chat and click **Təhlil et**. Without a key (or with **Oflayn rejim** on in the sidebar) the app uses the keyword fallback. With a key, open **Prioritet növbəsi**, choose how many chats to analyse and click **▶ Növbəni təhlil et** (the free tier is rate-limited, so the default is 15; results are cached in `.cache/`).
+Open http://localhost:8501, pick a sample chat and click **Təhlil et**. Without a key (or with **Oflayn rejim** on in the sidebar) the app uses the keyword fallback. Sample chats that already have a saved Gemini answer in `results/gemini_cache.json` open instantly with the 🤖 Gemini badge, even without a key, and cost no quota; only a new pasted chat (or a sample with no saved answer) calls Gemini live. With a key, open **Prioritet növbəsi**, choose how many chats to analyse and click **▶ Növbəni təhlil et** to fill in the missing ones (the free tier allows 20 requests a day, see [Feasibility](#feasibility)).
 
 **Deploy to Streamlit Community Cloud:** create an app at share.streamlit.io pointing at `app.py`, then add `GEMINI_API_KEY = "your-key"` (and optionally `GEMINI_MODEL = "gemini-3.8-flash"`) under **⋮ → Settings → Secrets**.
 
 **Tests and eval:**
 
 ```bash
-python -m pytest -q          # 68 automated tests, no key needed
+python -m pytest -q          # 75 automated tests, no key needed
 python eval.py --offline     # keyword baseline -> results/eval_offline.*
-python eval.py               # Gemini (needs GEMINI_API_KEY) -> results/eval_llm.*
+python eval.py               # Gemini -> results/eval_llm.*; only chats without a saved answer call the API
 python eval.py --limit 5     # quick Gemini check on 5 chats
 ```
 
@@ -173,7 +176,8 @@ Required by rules 03 and 04 of the hackathon.
 - **Churn risk is a judgement, not a prediction model.** It comes from what the customer writes; the profile is only used for queue order and the offer.
 - **Masking is a safety net, not a certified anonymiser.** A name written in an unusual way can slip through.
 - **Ratings in the app live only in the browser session.**
-- **Latency** depends on the network and API load; offline mode is the fallback.
+- **Latency** depends on the network and API load (gemini-3.8-flash took 35–90 s per chat on the free tier); offline mode is the fallback.
+- **Free-tier quota:** 20 Gemini requests a day. Saved answers in `results/gemini_cache.json` cover the sample chats; new chats need quota or a billed key.
 
 ## Project structure
 
@@ -183,7 +187,7 @@ Required by rules 03 and 04 of the hackathon.
 | `pages/1_queue.py` | Priority queue with the full analysis of the selected chat |
 | `pages/2_stats.py` | Dashboard: charts and FAQ export |
 | `copilot_ui.py` | Shared styles, sidebar links and building blocks for the pages |
-| `copilot.py` | Masks the chat, calls Gemini with a JSON schema, records tokens, caches results, holds the offline fallback |
+| `copilot.py` | Masks the chat, calls Gemini once with a JSON schema, saves every answer to `results/gemini_cache.json`, handles quota and model errors, holds the offline fallback |
 | `privacy.py` | Rule-based masking of personal data |
 | `offers.py` | Rule-based retention offers |
 | `prompts.py` | System prompt, vocabularies and 2 few-shot examples |

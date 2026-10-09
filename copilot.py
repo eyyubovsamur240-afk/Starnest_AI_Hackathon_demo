@@ -22,7 +22,9 @@ from prompts import FEW_SHOT, SYSTEM_PROMPT
 
 DEFAULT_MODEL = "gemini-3.8-flash"  # gemini-2.5-flash is closed to new API keys (404 NOT_FOUND)
 PROMPT_VERSION = "v3"  # bump when the prompt or schema changes so old cached answers are ignored
-CACHE_FILE = Path(__file__).parent / ".cache" / "analyses.json"
+# Every Gemini answer is saved here, keyed by model + prompt version + masked chat. The file is committed,
+# so the sample chats show real Gemini output without spending the free-tier quota (20 requests a day).
+CACHE_FILE = Path(__file__).parent / "results" / "gemini_cache.json"
 
 
 class Analysis(BaseModel):
@@ -92,6 +94,14 @@ class SetupError(RuntimeError):
     """The model or the key is wrong, so every chat will fail the same way: stop instead of retrying."""
 
 
+class QuotaError(RuntimeError):
+    """The daily request quota is used up; retrying before it resets only wastes time."""
+
+    def __init__(self, message: str, retry_seconds: float | None = None):
+        super().__init__(message)
+        self.retry_seconds = retry_seconds
+
+
 def _setup_error(exc: Exception) -> SetupError | None:
     code = getattr(exc, "code", None)
     text = str(exc)
@@ -116,38 +126,75 @@ def _build_contents(chat: str) -> list[dict]:
     return contents
 
 
-def _retry_delay(exc: Exception, attempt: int) -> float:
-    """Seconds to wait after a rate-limit error: the API's own hint if present, else back off."""
-    m = re.search(r"retry(?:Delay| in)\W+(\d+(?:\.\d+)?)", str(exc), re.IGNORECASE)
-    return min(60.0, float(m.group(1)) + 1 if m else 5.0 * 2 ** attempt)
+def _retry_seconds(text: str) -> float | None:
+    """The wait Google asks for: RetryInfo's retryDelay ('50515s') or 'retry in 14h1m55.5s'."""
+    m = re.search(r"retryDelay\W+(\d+(?:\.\d+)?)s", text)
+    if m:
+        return float(m.group(1))
+    m = re.search(r"retry in\s+(?:(\d+)h)?\s*(?:(\d+)m)?\s*(?:(\d+(?:\.\d+)?)s)?", text, re.IGNORECASE)
+    if m and any(m.groups()):
+        h, mins, secs = (float(g) if g else 0.0 for g in m.groups())
+        return h * 3600 + mins * 60 + secs
+    return None
 
 
-def analyze_llm(chat: str, retries: int = 3) -> tuple[Analysis, int, int]:
-    """Return the analysis plus the prompt and output token counts Gemini reports."""
-    from google import genai
-    from google.genai import errors, types
+def _quota_error(exc: Exception) -> QuotaError | None:
+    """A 429 that will not clear within a few minutes (the free tier's daily limit)."""
+    if getattr(exc, "code", None) != 429:
+        return None
+    text = str(exc)
+    wait = _retry_seconds(text)
+    if "PerDay" not in text and (wait is None or wait <= 300):
+        return None  # per-minute limit: worth waiting and retrying
+    hours = f" It resets in about {max(1, round(wait / 3600))} h." if wait else ""
+    return QuotaError(
+        f"Gemini's daily free-tier quota for {MODEL} is used up.{hours} "
+        "Cached results still work; enable billing or use another key for more.",
+        retry_seconds=wait,
+    )
 
-    client = genai.Client(api_key=api_key())
-    for attempt in range(retries + 1):
+
+def _call_with_retries(call, minute_retries: int = 3, unavailable_retries: int = 1):
+    """Run one Gemini request. Wait and retry on a per-minute 429 (up to 3 times) or a 503
+    (once, 'high demand'); stop at once on a daily quota, a missing model or a bad key."""
+    attempts = {429: 0, 503: 0}
+    while True:
         try:
-            response = client.models.generate_content(
-                model=MODEL,
-                contents=_build_contents(chat),
-                config=types.GenerateContentConfig(
-                    system_instruction=SYSTEM_PROMPT,
-                    response_mime_type="application/json",
-                    response_schema=Analysis,
-                    temperature=0.2,
-                ),
-            )
-            break
-        except errors.APIError as exc:  # 429 = free-tier rate limit, 503 = overloaded
+            return call()
+        except Exception as exc:
+            code = getattr(exc, "code", None)
+            if code is None:
+                raise
             setup = _setup_error(exc)
             if setup:
                 raise setup from exc
-            if exc.code not in (429, 503) or attempt == retries:
+            quota = _quota_error(exc)
+            if quota:
+                raise quota from exc
+            limit = {429: minute_retries, 503: unavailable_retries}.get(code)
+            if limit is None or attempts[code] >= limit:
                 raise
-            time.sleep(_retry_delay(exc, attempt))
+            attempts[code] += 1
+            wait = _retry_seconds(str(exc)) if code == 429 else None
+            time.sleep(min(60.0, wait + 1 if wait else 5.0 * 2 ** attempts[code]))
+
+
+def analyze_llm(chat: str) -> tuple[Analysis, int, int]:
+    """One Gemini request per chat. Returns the analysis plus the prompt and output token counts."""
+    from google import genai
+    from google.genai import types
+
+    client = genai.Client(api_key=api_key())
+    response = _call_with_retries(lambda: client.models.generate_content(
+        model=MODEL,
+        contents=_build_contents(chat),
+        config=types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            response_mime_type="application/json",
+            response_schema=Analysis,
+            temperature=0.2,
+        ),
+    ))
     usage = response.usage_metadata
     tokens_in = (usage.prompt_token_count or 0) if usage else 0
     tokens_out = ((usage.candidates_token_count or 0) + (usage.thoughts_token_count or 0)) if usage else 0
@@ -169,11 +216,28 @@ def _cache_load() -> dict:
         return {}
 
 
-def _cache_save(key: str, analysis: Analysis) -> None:
+def _cache_get(key: str) -> dict | None:
+    entry = _cache_load().get(key)
+    if entry and "analysis" not in entry:  # older cache files stored the bare analysis
+        entry = {"analysis": entry}
+    return entry
+
+
+def _cache_save(key: str, analysis: Analysis, seconds: float, tokens_in: int, tokens_out: int) -> None:
     data = _cache_load()
-    data[key] = analysis.model_dump()
+    data[key] = {
+        "model": MODEL,
+        "analysis": analysis.model_dump(),
+        "seconds": seconds,
+        "tokens_in": tokens_in,
+        "tokens_out": tokens_out,
+    }
     CACHE_FILE.parent.mkdir(exist_ok=True)
-    CACHE_FILE.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+    CACHE_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def cached_count() -> int:
+    return len(_cache_load())
 
 
 # --- Offline fallback -------------------------------------------------------
@@ -311,26 +375,35 @@ def analyze(
     chat: str,
     force_offline: bool = False,
     known_names: list[str] | None = None,
-    use_cache: bool = False,
+    use_cache: bool = True,
+    live: bool = True,
 ) -> AnalysisResult:
-    """Mask personal data, then analyze. Falls back to offline rules if no API key is configured."""
+    """Mask personal data, then analyze.
+
+    Order: a saved Gemini answer for this chat (no API call, works without a key), then a live Gemini
+    call if a key is set and `live` is on, else the offline keyword rules. `force_offline` skips Gemini
+    and the cache. Raises SetupError (model or key) and QuotaError (daily limit) so callers can stop.
+    """
     start = time.perf_counter()
     masked_chat, masked = mask(chat, known_names)
+    key = _cache_key(masked_chat)
     tokens_in = tokens_out = 0
-    if not force_offline and llm_available():
-        key = _cache_key(masked_chat)
-        cached = _cache_load().get(key) if use_cache else None
-        if cached:
-            analysis, mode = Analysis.model_validate(cached), "cache"
-        else:
-            (analysis, tokens_in, tokens_out), mode = analyze_llm(masked_chat), "llm"
-            if use_cache:
-                _cache_save(key, analysis)
+    seconds = None
+    cached = _cache_get(key) if use_cache and not force_offline else None
+    if cached:
+        analysis, mode = Analysis.model_validate(cached["analysis"]), "cache"
+        tokens_in, tokens_out = cached.get("tokens_in", 0), cached.get("tokens_out", 0)
+        seconds = cached.get("seconds")
+    elif not force_offline and live and llm_available():
+        (analysis, tokens_in, tokens_out), mode = analyze_llm(masked_chat), "llm"
+        seconds = round(time.perf_counter() - start, 2)
+        if use_cache:
+            _cache_save(key, analysis, seconds, tokens_in, tokens_out)
     else:
         analysis, mode = analyze_offline(masked_chat), "offline"
     return AnalysisResult(
-        analysis=analysis, seconds=round(time.perf_counter() - start, 2), mode=mode,
-        masked_chat=masked_chat, masked=masked, tokens_in=tokens_in, tokens_out=tokens_out,
+        analysis=analysis, seconds=seconds if seconds is not None else round(time.perf_counter() - start, 2),
+        mode=mode, masked_chat=masked_chat, masked=masked, tokens_in=tokens_in, tokens_out=tokens_out,
     )
 
 

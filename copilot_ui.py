@@ -12,7 +12,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from copilot import MODEL, SetupError, analyze, llm_available
+from copilot import MODEL, QuotaError, SetupError, analyze, cached_count, llm_available
 from labels_az import (
     ACTION,
     ACTION_ICON,
@@ -100,6 +100,21 @@ def nav() -> None:
         st.page_link(path, label=label, icon=icon)
 
 
+def mode_sidebar() -> bool:
+    """Sidebar status of the Gemini connection. Returns True when the agent switched to offline rules.
+    Without a key, saved Gemini answers are still shown and the other chats use the offline rules."""
+    saved = cached_count()
+    if llm_available():
+        st.success(f"Canlı rejim: {MODEL}")
+        offline = st.toggle("Oflayn rejim", value=False, help="Süni intellekt əvəzinə açar söz qaydaları")
+    else:
+        st.warning("API açarı yoxdur: yeni söhbətlər ⚙️ oflayn qaydalarla təhlil olunur. "
+                   "Canlı təhlil üçün GEMINI_API_KEY təyin edin.")
+        offline = False
+    st.caption(f"💾 Yaddaşda {saved} hazır Gemini cavabı var: bu söhbətlər limit xərcləmədən açılır.")
+    return offline
+
+
 def setup_page(title: str) -> bool:
     """Page config, styles and sidebar. Returns True when the app runs offline."""
     st.set_page_config(page_title=f"{title} · Eskalasiya Köməkçisi", page_icon="🛟", layout="wide")
@@ -108,22 +123,27 @@ def setup_page(title: str) -> bool:
         st.markdown("## 🛟 Eskalasiya Köməkçisi")
         nav()
         st.divider()
-        if llm_available():
-            st.success(f"Canlı rejim: {MODEL}")
-            offline = st.toggle("Oflayn rejim", value=False, help="Süni intellekt əvəzinə açar söz qaydaları")
-        else:
-            st.warning("Oflayn rejim: real təhlil üçün GEMINI_API_KEY təyin edin.")
-            offline = True
+        offline = mode_sidebar()
         st.caption("🔒 Telefon, ad, kart, e-poçt və FİN kod süni intellektə göndərilməzdən əvvəl gizlədilir.")
         st.caption("Demo yalnız uydurma söhbət və profillərdən istifadə edir.")
     st.markdown(f"<div class='hero'><h1>{title}</h1></div>", unsafe_allow_html=True)
     return offline
 
 
+def gemini_problem_az(exc: Exception) -> str:
+    """Azerbaijani explanation for the agent when Gemini can't be used right now."""
+    if isinstance(exc, QuotaError):
+        hours = f" Limit təxminən {max(1, round(exc.retry_seconds / 3600))} saatdan sonra yenilənir." if exc.retry_seconds else ""
+        return ("⏳ Gemini-nin gündəlik pulsuz sorğu limiti bitib." + hours +
+                " Yadda saxlanmış Gemini cavabları göstərilir, qalanları ⚙️ oflayn qaydalarla təhlil olunur.")
+    return f"⚠️ Gemini işləmir (model və ya API açarı problemi), ⚙️ oflayn qaydalar istifadə olunur.\n\n{exc}"
+
+
 def ensure_queue(tickets: list[dict], offline: bool) -> None:
-    """Without an API key the whole queue is analyzed instantly with the offline rules."""
-    if "queue" not in st.session_state and offline:
-        run_queue(tickets, offline=True)
+    """Fill the queue on first open without spending quota: saved Gemini answers where they exist,
+    the offline rules for the rest. The ▶ button then calls Gemini live for the chats still missing."""
+    if "queue" not in st.session_state:
+        run_queue(tickets, offline=offline, live=False)
 
 
 @st.cache_data
@@ -261,17 +281,16 @@ def priority(result, profile: dict) -> int:
     return RISK_WEIGHT[a.churn_risk] + a.sentiment * 10 + min(profile["waiting_min"], 60)
 
 
-def run_queue(tickets: list[dict], offline: bool) -> None:
+def run_queue(tickets: list[dict], offline: bool, live: bool = True) -> None:
     results, fallbacks, setup_error = {}, 0, None
     bar = st.progress(0.0, text="Növbə təhlil edilir...")
     for i, t in enumerate(tickets, start=1):
         names = [t["customer"]["name"]]
         try:
-            res = analyze(t["chat"], force_offline=offline or bool(setup_error), known_names=names, use_cache=True)
-        except SetupError as exc:  # wrong model or key: don't call Gemini again for the rest of the queue
+            res = analyze(t["chat"], force_offline=offline, known_names=names, live=live and not setup_error)
+        except (SetupError, QuotaError) as exc:  # don't call Gemini again; saved answers still work
             setup_error = exc
-            res = analyze(t["chat"], force_offline=True, known_names=names)
-            fallbacks += 1
+            res = analyze(t["chat"], force_offline=offline, known_names=names, live=False)
         except Exception:  # keep the queue usable if one call fails (quota, network)
             res = analyze(t["chat"], force_offline=True, known_names=names)
             fallbacks += 1
@@ -280,7 +299,7 @@ def run_queue(tickets: list[dict], offline: bool) -> None:
     bar.empty()
     st.session_state.queue = results
     if setup_error:
-        st.error(f"Gemini işləmədi, bütün növbə oflayn qaydalarla təhlil olundu.\n\n{setup_error}")
+        st.warning(gemini_problem_az(setup_error))
     elif fallbacks:
         st.warning(f"{fallbacks} söhbət üçün süni intellekt cavab vermədi, oflayn qaydalar istifadə olundu.")
 
