@@ -12,7 +12,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from copilot import MODEL, analyze, llm_available
+from copilot import MODEL, SetupError, analyze, llm_available
 from labels_az import (
     ACTION,
     ACTION_ICON,
@@ -262,12 +262,16 @@ def priority(result, profile: dict) -> int:
 
 
 def run_queue(tickets: list[dict], offline: bool) -> None:
-    results, fallbacks = {}, 0
+    results, fallbacks, setup_error = {}, 0, None
     bar = st.progress(0.0, text="Növbə təhlil edilir...")
     for i, t in enumerate(tickets, start=1):
         names = [t["customer"]["name"]]
         try:
-            res = analyze(t["chat"], force_offline=offline, known_names=names, use_cache=True)
+            res = analyze(t["chat"], force_offline=offline or bool(setup_error), known_names=names, use_cache=True)
+        except SetupError as exc:  # wrong model or key: don't call Gemini again for the rest of the queue
+            setup_error = exc
+            res = analyze(t["chat"], force_offline=True, known_names=names)
+            fallbacks += 1
         except Exception:  # keep the queue usable if one call fails (quota, network)
             res = analyze(t["chat"], force_offline=True, known_names=names)
             fallbacks += 1
@@ -275,7 +279,9 @@ def run_queue(tickets: list[dict], offline: bool) -> None:
         bar.progress(i / len(tickets), text=f"{i}/{len(tickets)} söhbət təhlil edildi")
     bar.empty()
     st.session_state.queue = results
-    if fallbacks:
+    if setup_error:
+        st.error(f"Gemini işləmədi, bütün növbə oflayn qaydalarla təhlil olundu.\n\n{setup_error}")
+    elif fallbacks:
         st.warning(f"{fallbacks} söhbət üçün süni intellekt cavab vermədi, oflayn qaydalar istifadə olundu.")
 
 

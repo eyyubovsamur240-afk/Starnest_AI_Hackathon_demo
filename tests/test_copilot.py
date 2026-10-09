@@ -54,3 +54,44 @@ def test_only_the_masked_chat_is_sent_to_gemini(monkeypatch):
 def test_prompt_contents_hold_no_answer_key():
     contents = json.dumps(copilot._build_contents("Müştəri: test"), ensure_ascii=False)
     assert '"expected"' not in contents
+
+
+class _FakeAPIError(Exception):
+    def __init__(self, code, message):
+        super().__init__(f"{code} {message}")
+        self.code = code
+
+
+def test_model_comes_from_env_and_defaults_to_an_available_one(monkeypatch):
+    monkeypatch.delenv("GEMINI_MODEL", raising=False)
+    monkeypatch.delenv("COPILOT_MODEL", raising=False)
+    assert copilot._model_name() == copilot.DEFAULT_MODEL != "gemini-2.5-flash"
+    monkeypatch.setenv("GEMINI_MODEL", "models/gemini-x-flash")
+    assert copilot._model_name() == "gemini-x-flash"
+
+
+def test_unavailable_model_and_bad_key_are_setup_errors():
+    gone = _FakeAPIError(404, "NOT_FOUND. models/gemini-2.5-flash is no longer available to new users")
+    assert isinstance(copilot._setup_error(gone), copilot.SetupError)
+    assert "GEMINI_MODEL" in str(copilot._setup_error(gone))
+    bad_key = _FakeAPIError(400, "INVALID_ARGUMENT. API key not valid. Please pass a valid API key.")
+    assert isinstance(copilot._setup_error(bad_key), copilot.SetupError)
+    assert copilot._setup_error(_FakeAPIError(429, "RESOURCE_EXHAUSTED")) is None
+
+
+def test_eval_stops_after_the_first_setup_error(monkeypatch, tmp_path):
+    import eval as eval_script
+
+    calls = []
+
+    def failing_analyze(*args, **kwargs):
+        calls.append(1)
+        raise copilot.SetupError("model not available")
+
+    monkeypatch.setattr(eval_script, "llm_available", lambda: True)
+    monkeypatch.setattr(eval_script, "analyze", failing_analyze)
+    monkeypatch.setattr("sys.argv", ["eval.py"])
+    with pytest.raises(SystemExit) as exit_info:
+        eval_script.main()
+    assert len(calls) == 1
+    assert "model not available" in str(exit_info.value)
