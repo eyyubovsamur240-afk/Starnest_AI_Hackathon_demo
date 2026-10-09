@@ -10,7 +10,11 @@
     "bot_failure_accuracy": 67.5,
     "chats_with_masked_data": 7,
     "avg_seconds": 0.0,
-    "max_seconds": 0.0
+    "max_seconds": 0.0,
+    "avg_tokens_in": 0,
+    "avg_tokens_out": 0,
+    "usd_per_chat": 0.0,
+    "usd_per_1000_chats": 0.0
   },
   "rows": [
     {
@@ -35,7 +39,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T02",
@@ -59,7 +65,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm."
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T03",
@@ -83,7 +91,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik."
+      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T04",
@@ -107,7 +117,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq."
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T05",
@@ -131,7 +143,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək."
+      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T06",
@@ -158,7 +172,9 @@
       },
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq."
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T07",
@@ -182,7 +198,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T08",
@@ -206,7 +224,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək."
+      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T09",
@@ -233,7 +253,9 @@
       },
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik."
+      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T10",
@@ -257,7 +279,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm."
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T11",
@@ -281,7 +305,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Şəbəkə ilə bağlı narahatçılığa görə üzr istəyirik. Ünvanınız üzrə siqnal problemini texniki şöbəyə ötürürəm, onlar sizinlə əlaqə saxlayacaq."
+      "suggested_reply_az": "Salam! Şəbəkə ilə bağlı narahatçılığa görə üzr istəyirik. Ünvanınız üzrə siqnal problemini texniki şöbəyə ötürürəm, onlar sizinlə əlaqə saxlayacaq.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T12",
@@ -305,7 +331,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Tutulan məbləğin geri qaytarılması üçün müraciət açıram və nəticə barədə sizə SMS ilə məlumat veriləcək."
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Tutulan məbləğin geri qaytarılması üçün müraciət açıram və nəticə barədə sizə SMS ilə məlumat veriləcək.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T13",
@@ -329,7 +357,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T14",
@@ -353,7 +383,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək."
+      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T15",
@@ -377,7 +409,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq."
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T16",
@@ -401,7 +435,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək."
+      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T17",
@@ -425,7 +461,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T18",
@@ -452,7 +490,9 @@
       },
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik."
+      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T19",
@@ -476,7 +516,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm."
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T20",
@@ -500,7 +542,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Şəbəkə ilə bağlı narahatçılığa görə üzr istəyirik. Ünvanınız üzrə siqnal problemini texniki şöbəyə ötürürəm, onlar sizinlə əlaqə saxlayacaq."
+      "suggested_reply_az": "Salam! Şəbəkə ilə bağlı narahatçılığa görə üzr istəyirik. Ünvanınız üzrə siqnal problemini texniki şöbəyə ötürürəm, onlar sizinlə əlaqə saxlayacaq.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T21",
@@ -524,7 +568,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq."
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T22",
@@ -551,7 +597,9 @@
       },
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq."
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T23",
@@ -577,7 +625,9 @@
       },
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T24",
@@ -601,7 +651,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Məsələni yoxlayıram və qısa zamanda sizə cavab verəcəyəm."
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Məsələni yoxlayıram və qısa zamanda sizə cavab verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T25",
@@ -625,7 +677,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Məsələni yoxlayıram və qısa zamanda sizə cavab verəcəyəm."
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Məsələni yoxlayıram və qısa zamanda sizə cavab verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T26",
@@ -649,7 +703,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik."
+      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T27",
@@ -673,7 +729,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik."
+      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T28",
@@ -697,7 +755,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm."
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T29",
@@ -721,7 +781,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm."
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T30",
@@ -745,7 +807,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T31",
@@ -769,7 +833,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm."
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T32",
@@ -793,7 +859,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik."
+      "suggested_reply_az": "Salam! SIM kartınızla bağlı problemi yoxlayıram. Şəxsiyyətinizi təsdiqlədikdən sonra kartınızı aktivləşdirə bilərik.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T33",
@@ -819,7 +887,9 @@
       },
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq."
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T34",
@@ -843,7 +913,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək."
+      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T35",
@@ -867,7 +939,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm."
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Tarifinizin şərtlərini yoxlayıram və sizə ən uyğun variantı təklif edəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T36",
@@ -891,7 +965,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq."
+      "suggested_reply_az": "Salam! Narahatçılığa görə üzr istəyirik. Balansınızdan edilən çıxılmaları yoxlayıram və sizə ətraflı izah verəcəyəm. Səhv tutulma aşkar olunarsa, məbləğ geri qaytarılacaq.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T37",
@@ -915,7 +991,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Məsələni yoxlayıram və qısa zamanda sizə cavab verəcəyəm."
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. Məsələni yoxlayıram və qısa zamanda sizə cavab verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T38",
@@ -941,7 +1019,9 @@
       },
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T39",
@@ -965,7 +1045,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm."
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. Rouminq xidmətinizin vəziyyətini və tutulmaları yoxlayıram, qısa zamanda sizə dəqiq məlumat verəcəyəm.",
+      "tokens_in": 0,
+      "tokens_out": 0
     },
     {
       "id": "T40",
@@ -989,7 +1071,9 @@
       "masked": {},
       "seconds": 0.0,
       "mode": "offline",
-      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək."
+      "suggested_reply_az": "Salam! İnternetlə bağlı problemə görə üzr istəyirik. Müraciətinizi texniki şöbəyə ötürürəm ki, ərazinizdəki şəbəkəni yoxlasınlar. Nəticə barədə sizə məlumat veriləcək.",
+      "tokens_in": 0,
+      "tokens_out": 0
     }
   ]
 }

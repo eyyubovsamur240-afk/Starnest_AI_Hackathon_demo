@@ -23,6 +23,11 @@ from copilot import MODEL, analyze, llm_available
 
 ROOT = Path(__file__).parent
 
+# Paid-tier list price of gemini-2.5-flash in USD per 1M tokens (thinking tokens bill as output).
+# Check https://ai.google.dev/pricing before quoting; the free tier used for the demo costs nothing.
+PRICE_IN_PER_M = 0.30
+PRICE_OUT_PER_M = 2.50
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -62,6 +67,8 @@ def main() -> None:
             "seconds": res.seconds,
             "mode": res.mode,
             "suggested_reply_az": a.suggested_reply_az,
+            "tokens_in": res.tokens_in,
+            "tokens_out": res.tokens_out,
         }
         rows.append(row)
         mark = lambda ok: "ok " if ok else "XX "
@@ -86,7 +93,13 @@ def main() -> None:
         "chats_with_masked_data": sum(1 for r in scored if r["masked"]),
         "avg_seconds": round(sum(r["seconds"] for r in scored) / n, 2),
         "max_seconds": max((r["seconds"] for r in scored), default=0),
+        "avg_tokens_in": round(sum(r["tokens_in"] for r in scored) / n),
+        "avg_tokens_out": round(sum(r["tokens_out"] for r in scored) / n),
     }
+    summary["usd_per_chat"] = round(
+        (summary["avg_tokens_in"] * PRICE_IN_PER_M + summary["avg_tokens_out"] * PRICE_OUT_PER_M) / 1e6, 5
+    )
+    summary["usd_per_1000_chats"] = round(summary["usd_per_chat"] * 1000, 2)
 
     out_dir = ROOT / "results"
     out_dir.mkdir(exist_ok=True)
@@ -109,6 +122,8 @@ def main() -> None:
         f"| Bot-failure reason accuracy | {summary['bot_failure_accuracy']}% |",
         f"| Chats with personal data masked | {summary['chats_with_masked_data']} |",
         f"| Avg / max response time | {summary['avg_seconds']}s / {summary['max_seconds']}s |",
+        f"| Avg tokens per chat (in / out) | {summary['avg_tokens_in']} / {summary['avg_tokens_out']} |",
+        f"| Cost per chat / per 1,000 chats (paid tier) | ${summary['usd_per_chat']} / ${summary['usd_per_1000_chats']} |",
         "",
         "## Misses",
         "",

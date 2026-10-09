@@ -11,6 +11,8 @@ Decided by: **keyword rules (offline)**. Expected values come from the hand-writ
 | Bot-failure reason accuracy | 67.5% |
 | Chats with personal data masked | 7 |
 | Avg / max response time | 0.0s / 0.0s |
+| Avg tokens per chat (in / out) | 0 / 0 |
+| Cost per chat / per 1,000 chats (paid tier) | $0.0 / $0.0 |
 
 ## Misses
 

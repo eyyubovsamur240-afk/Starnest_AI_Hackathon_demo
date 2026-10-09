@@ -51,6 +51,8 @@ class AnalysisResult(BaseModel):
     mode: Literal["llm", "offline", "cache"]
     masked_chat: str
     masked: dict[str, int]
+    tokens_in: int = 0  # Gemini prompt tokens (0 offline or from cache), used for the cost estimate
+    tokens_out: int = 0
 
 
 def api_key() -> str | None:
@@ -85,7 +87,8 @@ def _retry_delay(exc: Exception, attempt: int) -> float:
     return min(60.0, float(m.group(1)) + 1 if m else 5.0 * 2 ** attempt)
 
 
-def analyze_llm(chat: str, retries: int = 3) -> Analysis:
+def analyze_llm(chat: str, retries: int = 3) -> tuple[Analysis, int, int]:
+    """Return the analysis plus the prompt and output token counts Gemini reports."""
     from google import genai
     from google.genai import errors, types
 
@@ -107,10 +110,13 @@ def analyze_llm(chat: str, retries: int = 3) -> Analysis:
             if exc.code not in (429, 503) or attempt == retries:
                 raise
             time.sleep(_retry_delay(exc, attempt))
+    usage = response.usage_metadata
+    tokens_in = (usage.prompt_token_count or 0) if usage else 0
+    tokens_out = ((usage.candidates_token_count or 0) + (usage.thoughts_token_count or 0)) if usage else 0
     if isinstance(response.parsed, Analysis):
-        return response.parsed
+        return response.parsed, tokens_in, tokens_out
     if response.text:
-        return Analysis.model_validate_json(response.text)
+        return Analysis.model_validate_json(response.text), tokens_in, tokens_out
     raise RuntimeError("Model returned no analysis (empty or blocked response)")
 
 
@@ -272,20 +278,21 @@ def analyze(
     """Mask personal data, then analyze. Falls back to offline rules if no API key is configured."""
     start = time.perf_counter()
     masked_chat, masked = mask(chat, known_names)
+    tokens_in = tokens_out = 0
     if not force_offline and llm_available():
         key = _cache_key(masked_chat)
         cached = _cache_load().get(key) if use_cache else None
         if cached:
             analysis, mode = Analysis.model_validate(cached), "cache"
         else:
-            analysis, mode = analyze_llm(masked_chat), "llm"
+            (analysis, tokens_in, tokens_out), mode = analyze_llm(masked_chat), "llm"
             if use_cache:
                 _cache_save(key, analysis)
     else:
         analysis, mode = analyze_offline(masked_chat), "offline"
     return AnalysisResult(
         analysis=analysis, seconds=round(time.perf_counter() - start, 2), mode=mode,
-        masked_chat=masked_chat, masked=masked,
+        masked_chat=masked_chat, masked=masked, tokens_in=tokens_in, tokens_out=tokens_out,
     )
 
 
