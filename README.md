@@ -38,7 +38,7 @@ Three pages in the sidebar; the whole interface is in Azerbaijani.
 | Step | Done by | Why |
 |---|---|---|
 | Mask phones, names, cards, e-mails and FIN codes | Rules (`privacy.py`) | Personal data must not leave the machine; rules are predictable and auditable |
-| Summary, category, sentiment, churn risk and reason, why the bot failed, FAQ entry, AZ reply, next action | **Gemini 2.5 Flash** (`copilot.py`, `prompts.py`), structured JSON checked against a Pydantic schema | Needs reading mixed-language, sarcastic, misspelled chats, which keyword rules do badly (see the eval below) |
+| Summary, category, sentiment, churn risk and reason, why the bot failed, FAQ entry, AZ reply, next action | **Gemini** (`gemini-3.8-flash`, `copilot.py`, `prompts.py`), structured JSON checked against a Pydantic schema | Needs reading mixed-language, sarcastic, misspelled chats, which keyword rules do badly (see the eval below) |
 | Queue order | Rules on Gemini's output plus waiting time | Transparent to the agent |
 | Retention offer | Rules (`offers.py`) on Gemini's risk + the CRM profile | The model never invents discounts or prices |
 | Offline fallback | Keyword rules | Keeps the demo working if the API or Wi-Fi fails; every result shows a 🤖 Gemini or ⚙️ Oflayn badge so it's always clear who decided |
@@ -57,7 +57,7 @@ The answer key in `data/tickets.json` (`expected`) is only read by `eval.py` aft
 
 ### Automated tests
 
-`pytest` (65 tests, run in CI on every push):
+`pytest` (68 tests, run in CI on every push):
 
 - `tests/test_privacy.py`: every phone format, card, e-mail, FIN code and name pattern is masked; all 7 test chats with personal data come out with no name or phone left.
 - `tests/test_offers.py`: no offer at low risk; medium risk only for loyal or high-value customers; high risk always gets a priced offer.
@@ -68,7 +68,7 @@ The answer key in `data/tickets.json` (`expected`) is only read by `eval.py` aft
 | Mode | Category | Churn risk | Sentiment ±1 | Bot-failure reason | Avg time | Cost / chat |
 |---|---|---|---|---|---|---|
 | Keyword rules (offline baseline, 40 chats) | 77.5% | 67.5% | 75% | 67.5% | <0.01 s | 0 |
-| Gemini 2.5 Flash (40 chats) | _run `python eval.py`_ | | | | | |
+| Gemini `gemini-3.8-flash` (40 chats) | _run `python eval.py`_ | | | | | |
 
 The keyword rules were written while looking at T01–T20 (95% / 75% / 90% on those), so they overfit: they are shown only as the floor that the AI has to beat. Full per-chat results are in `results/eval_<mode>.json`.
 
@@ -100,7 +100,7 @@ Today the agent reads the raw chat and writes a reply from scratch. Protocol: 2�
 
 **Data requirements.** For a pilot: an export of escalated bot chats (anonymised or masked with `privacy.py`), the operator's issue categories, and its real retention-offer catalogue to replace the made-up one in `offers.py`. No model training is needed: the prompt, the category list and 2 few-shot examples are the whole set-up. A few hundred labelled chats would replace our 40 synthetic ones as the test set.
 
-**Running costs.** The demo runs on the Gemini free tier, so it costs nothing. On the paid tier, `eval.py` records the tokens Gemini reports for every chat and prints the cost per chat and per 1,000 chats at the gemini-2.5-flash list price ($0.30 per 1M input tokens, $2.50 per 1M output tokens; check [ai.google.dev/pricing](https://ai.google.dev/pricing)). Results are cached, so re-opening a chat costs nothing. Hosting is a single Streamlit app.
+**Running costs.** The demo runs on the Gemini free tier, so it costs nothing. On the paid tier, `eval.py` records the tokens Gemini reports for every chat and prints the cost per chat and per 1,000 chats at the price set in `GEMINI_PRICE_IN` / `GEMINI_PRICE_OUT` (USD per 1M tokens; the defaults are the older gemini-2.5-flash list price of $0.30 / $2.50, so set the current price for your model from [ai.google.dev/pricing](https://ai.google.dev/pricing)). Results are cached, so re-opening a chat costs nothing. Hosting is a single Streamlit app.
 
 **Next step.** A 2-week shadow pilot with one support team: the copilot runs next to the agents on real escalated chats, agents rate each summary and reply in the app, and we compare handling time and the bot's handover rate before and after adding the generated FAQ entries.
 
@@ -135,12 +135,12 @@ python3 -m streamlit run app.py
 
 Open http://localhost:8501, pick a sample chat and click **Təhlil et**. Without a key (or with **Oflayn rejim** on in the sidebar) the app uses the keyword fallback. With a key, open **Prioritet növbəsi**, choose how many chats to analyse and click **▶ Növbəni təhlil et** (the free tier is rate-limited, so the default is 15; results are cached in `.cache/`).
 
-**Deploy to Streamlit Community Cloud:** create an app at share.streamlit.io pointing at `app.py`, then add `GEMINI_API_KEY = "your-key"` under **⋮ → Settings → Secrets**.
+**Deploy to Streamlit Community Cloud:** create an app at share.streamlit.io pointing at `app.py`, then add `GEMINI_API_KEY = "your-key"` (and optionally `GEMINI_MODEL = "gemini-3.8-flash"`) under **⋮ → Settings → Secrets**.
 
 **Tests and eval:**
 
 ```bash
-python -m pytest -q          # 65 automated tests, no key needed
+python -m pytest -q          # 68 automated tests, no key needed
 python eval.py --offline     # keyword baseline -> results/eval_offline.*
 python eval.py               # Gemini (needs GEMINI_API_KEY) -> results/eval_llm.*
 python eval.py --limit 5     # quick Gemini check on 5 chats
@@ -152,7 +152,7 @@ Required by rules 03 and 04 of the hackathon.
 
 | What | Used for | Licence / terms |
 |---|---|---|
-| Google Gemini (`gemini-2.5-flash`, configurable via `COPILOT_MODEL`) | Chat analysis and reply generation | Gemini API terms (free tier). Free-tier inputs may be used by Google to improve its models, so only synthetic chats are sent. |
+| Google Gemini (`gemini-3.8-flash`, configurable via `GEMINI_MODEL`) | Chat analysis and reply generation | Gemini API terms (free tier). Free-tier inputs may be used by Google to improve its models, so only synthetic chats are sent. |
 | [Streamlit](https://streamlit.io) | Web UI and hosting (Community Cloud) | Apache 2.0 |
 | [google-genai Python SDK](https://github.com/googleapis/python-genai) | API client and structured output | Apache 2.0 |
 | [Pydantic](https://docs.pydantic.dev) | Output schema and validation | MIT |

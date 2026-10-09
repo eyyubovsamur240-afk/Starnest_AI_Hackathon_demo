@@ -20,7 +20,7 @@ from labels_az import CATEGORY
 from privacy import mask
 from prompts import FEW_SHOT, SYSTEM_PROMPT
 
-MODEL = os.getenv("COPILOT_MODEL", "gemini-2.5-flash")
+DEFAULT_MODEL = "gemini-3.8-flash"  # gemini-2.5-flash is closed to new API keys (404 NOT_FOUND)
 PROMPT_VERSION = "v3"  # bump when the prompt or schema changes so old cached answers are ignored
 CACHE_FILE = Path(__file__).parent / ".cache" / "analyses.json"
 
@@ -72,6 +72,41 @@ def llm_available() -> bool:
     return bool(api_key())
 
 
+def _model_name() -> str:
+    """The Gemini model: GEMINI_MODEL (or the older COPILOT_MODEL) env var, then Streamlit secrets."""
+    name = os.getenv("GEMINI_MODEL") or os.getenv("COPILOT_MODEL")
+    if not name:
+        try:
+            import streamlit as st
+
+            name = st.secrets.get("GEMINI_MODEL")
+        except Exception:  # no secrets file, or not running under Streamlit
+            name = None
+    return (name or DEFAULT_MODEL).strip().removeprefix("models/")
+
+
+MODEL = _model_name()
+
+
+class SetupError(RuntimeError):
+    """The model or the key is wrong, so every chat will fail the same way: stop instead of retrying."""
+
+
+def _setup_error(exc: Exception) -> SetupError | None:
+    code = getattr(exc, "code", None)
+    text = str(exc)
+    if code == 404 or "NOT_FOUND" in text:
+        return SetupError(
+            f"Gemini model '{MODEL}' is not available for this API key. Set another model, e.g.\n"
+            '  PowerShell:  $env:GEMINI_MODEL="gemini-3.8-flash"\n'
+            '  Streamlit Cloud secrets:  GEMINI_MODEL = "gemini-3.8-flash"\n'
+            f"Google said: {text[:300]}"
+        )
+    if code in (400, 401, 403) and any(w in text for w in ("API key", "API_KEY", "PERMISSION_DENIED", "UNAUTHENTICATED")):
+        return SetupError(f"Gemini rejected the API key. Check GEMINI_API_KEY.\nGoogle said: {text[:300]}")
+    return None
+
+
 def _build_contents(chat: str) -> list[dict]:
     contents: list[dict] = []
     for ex in FEW_SHOT:
@@ -107,6 +142,9 @@ def analyze_llm(chat: str, retries: int = 3) -> tuple[Analysis, int, int]:
             )
             break
         except errors.APIError as exc:  # 429 = free-tier rate limit, 503 = overloaded
+            setup = _setup_error(exc)
+            if setup:
+                raise setup from exc
             if exc.code not in (429, 503) or attempt == retries:
                 raise
             time.sleep(_retry_delay(exc, attempt))

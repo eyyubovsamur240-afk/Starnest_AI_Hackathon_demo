@@ -17,16 +17,18 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 
-from copilot import MODEL, analyze, llm_available
+from copilot import MODEL, SetupError, analyze, llm_available
 
 ROOT = Path(__file__).parent
 
-# Paid-tier list price of gemini-2.5-flash in USD per 1M tokens (thinking tokens bill as output).
-# Check https://ai.google.dev/pricing before quoting; the free tier used for the demo costs nothing.
-PRICE_IN_PER_M = 0.30
-PRICE_OUT_PER_M = 2.50
+# Paid-tier price in USD per 1M tokens (thinking tokens bill as output). The defaults are the
+# gemini-2.5-flash list price; set GEMINI_PRICE_IN / GEMINI_PRICE_OUT to the current price of the
+# model you use (https://ai.google.dev/pricing). The free tier used for the demo costs nothing.
+PRICE_IN_PER_M = float(os.getenv("GEMINI_PRICE_IN", "0.30"))
+PRICE_OUT_PER_M = float(os.getenv("GEMINI_PRICE_OUT", "2.50"))
 
 
 def main() -> None:
@@ -49,6 +51,8 @@ def main() -> None:
     for t in tickets:
         try:
             res = analyze(t["chat"], force_offline=args.offline, known_names=[t["customer"]["name"]])
+        except SetupError as exc:  # wrong model or key: every chat would fail the same way
+            raise SystemExit(f"{t['id']}: stopped. {exc}") from None
         except Exception as exc:  # keep going so one API error doesn't kill the run
             print(f"{t['id']}: ERROR {exc}")
             rows.append({"id": t["id"], "error": str(exc), "expected": t["expected"]})
