@@ -1,4 +1,498 @@
 {
+ "04291530a9d35cd1097338e22609a50e54ca3988edfffdbd7683d2ec4736949e": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot pulun geri qaytarılması prosesini həyata keçirə bilmədiyi üçün sadəcə kabineti istifadə etməyi təkrarladı.",
+   "category": "refund",
+   "churn_risk": "high",
+   "faq_answer": "Əgər abunəni ləğv etməyinizə baxmayaraq balansınızdan yenidən pul çıxılıbsa, bu səhvin yoxlanılması və məbləğin geri qaytarılması üçün sizi dərhal operatora yönləndiririk.",
+   "faq_question": "Ləğv etdiyim abunə üçün niyə yenidən pul çıxılıb və necə qaytarıla bilər?",
+   "next_action": "refund",
+   "risk_reason": "Müştəri problemin ikinci dəfə təkrarlandığını qeyd edərək operatoru dəyişməyi düşündüyünü bildirib ('honestly thinking about switching').",
+   "sentiment": 4,
+   "suggested_reply_az": "Salam! Yaşanan narahatçılığa görə çox üzr istəyirik. Qeyd etdiyiniz məbləğin geri qaytarılması üçün müraciətinizi qeydiyyata aldım və dərhal araşdırıb sizə məlumat verəcəyik.",
+   "summary": "Müştəri ötən ay ləğv etdiyi 'Music Max' abunəliyi üçün bu ay yenidən pul çıxıldığını bildirir.\nBot müştərini şəxsi kabinetə yönləndirdi, müştəri isə pulun geri qaytarılmasını istəyir.\nÇıxılan 5 AZN hələ də qaytarılmayıb və abunə problemi həll olunmayıb."
+  },
+  "model": "gemini-3.5-flash-lite",
+  "seconds": 3.76,
+  "tokens_in": 1974,
+  "tokens_out": 437
+ },
+ "097f6ae5f6ce753e68702c625aecd826264229d8cdfd931dad2a5cd44a44d466": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot xərcləri və paket statusunu yoxlamaq səlahiyyəti olmadığı üçün yalnız sayta yönləndirdi ('Тарифы роуминга указаны на сайте').",
+   "category": "roaming",
+   "churn_risk": "medium",
+   "faq_answer": "Paketinizin aktivlik statusunu və istifadə təfərrüatlarını dəqiqləşdirmək üçün sizi operatora yönləndiririk. Səhvən çıxarılan məbləğ olduğu təqdirdə balansa bərpa olunacaq.",
+   "faq_question": "Rouminq paketi qoşduğum halda balansımdan əlavə pul çıxılarsa neyləməliyəm?",
+   "next_action": "explain_charges",
+   "risk_reason": "Əvvəlcədən paket aktivləşdirilməsinə baxmayaraq balansdan 25 AZN çıxıldığı üçün müştəri narazıdır ('верните деньги или объясните за что списали').",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Yaşandığınız narahatlığa görə üzr istəyirik. Gürcüstan səfəriniz zamanı aktivləşdirdiyiniz rouminq paketini və balansı xərclərini dərhal yoxlayıram. Səhvən çıxarış olubsa, məbləğin qaytarılması üçün müraciət yaradacağam.",
+   "summary": "Müştəri Gürcüstana səfərdən sonra əvvəlcədən paket almasına baxmayaraq 25 AZN rouminq xərci çıxıldığı üçün narazıdır.\nBot müştərini yalnız sayta yönləndirdi və gözləməyi xahiş etdi.\n25 AZN-in nə üçün çıxıldığı aydınlaşdırılmayıb və pul qaytarılmayıb."
+  },
+  "model": "gemini-3.6-flash",
+  "seconds": 116.15,
+  "tokens_in": 1981,
+  "tokens_out": 1807
+ },
+ "09dd742d05a006e15f0bf3ef6b13765c6e9a9b3f170141d55ccb28691e906ed5": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot xüsusi endirim şərtlərini yoxlamaq səlahiyyətinə malik deyil və təfərrüat artıq verildiyi halda 'Please provide more details' cavabını verdi.",
+   "category": "tariff",
+   "churn_risk": "medium",
+   "faq_answer": "Əgər sizə vəd olunan endirim tətbiq olunmayıbsa, təsdiq SMS-i və ya müqavilə şərtləri yoxlanılır. Düzəliş olunması üçün sizi dərhal operatora yönləndiririk.",
+   "faq_question": "Mağazada vəd edilən tarif endirimi tətbiq olunmayıbsa nə etməliyəm?",
+   "next_action": "tariff_change",
+   "risk_reason": "Müştəriyə vəd edilən 50%-lik endirim tətbiq olunmayıb ('agent in the store literally told me 50%'), lakin operatoru dəyişmək haqqında qeyd etməyib.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Yaranmış narahatlığa görə üzr istəyirik. Təsdiq SMS-inizi və tarifinizə aid 50%-lik endirim şərtlərini dərhal sistemdə yoxlayıram. Endirimin tətbiq edilməsi və hesabınızın düzəldilməsi üçün lazımi addımları atacağıq.",
+   "summary": "Müştəri mağazada vəd olunan 50%-lik tarif endiriminin tətbiq edilməsini tələb edir.\nBot ümumi cavab verdi və təfərrüatlar artıq bildirildiyi halda yenidən məlumat istədi.\nTarifə endirim tətbiq edilməyib və hesab tam məbləğlə çıxarılıb."
+  },
+  "model": "gemini-3.6-flash",
+  "seconds": 21.89,
+  "tokens_in": 1965,
+  "tokens_out": 2054
+ },
+ "10954217db9d55bba533363a1a28bb4931dc3cccb73e9c35690cf7a4b9553219": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot şəbəkə problemini həll etmək və ya müştərini saxlamaq səlahiyyətinə malik olmadığı üçün yalnız şablon cavab verməklə kifayətləndi.",
+   "category": "network_coverage",
+   "churn_risk": "high",
+   "faq_answer": "Şəbəkə problemini araşdırmaq üçün ünvanınızı dəqiqləşdirib dərhal texniki şöbəyə müraciət yaradırıq. Zəhmət olmasa, operatora qoşulun.",
+   "faq_question": "Şəbəkə tamamilə yoxdur, zəng edə bilmirəm, nə etməliyəm?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri şəbəkənin olmamasına görə müqaviləni ləğv edib digər operatora keçəcəyini bildirir: \"расторгаю договор, завтра иду в Bakcell\".",
+   "sentiment": 5,
+   "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz hal üçün səmimi qəlbdən üzr istəyirik. Sumqayıt ərazisindəki şəbəkə problemini dərhal texniki şöbəmizə yönləndirirəm ki, araşdırılsın. Sizi abunəçimiz kimi saxlamaq bizim üçün çox önəmlidir, məsələni şəxsi nəzarətimə götürürəm.",
+   "summary": "Müştəri Sumqayıtda şəbəkənin olmamasından şikayət edir və müqaviləni ləğv etmək istəyir.\nBot yalnız üzr istəyib və müraciəti mütəxəssislərə ötürəcəyini bildirib.\nŞəbəkə problemi həll olunmayıb və müştərinin nömrəni daşımaq riski çox yüksəkdir."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 11.1,
+  "tokens_in": 1979,
+  "tokens_out": 1847
+ },
+ "11f61576de3acf3e6031f32b4f80f1eaed1454313130c80dec390a1b01b50c7f": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot eSIM problemini həll etmək üçün müştərini birbaşa xidmət mərkəzinə yönləndirdi ('For eSIM issues please visit a service center') və onlayn alternativ təqdim etmədi.",
+   "category": "sim_card",
+   "churn_risk": "medium",
+   "faq_answer": "Cihazınızı yenidən başladın. Problem həll olunmazsa, eSIM profilinin yenidən göndərilməsi üçün onlayn çat vasitəsilə operatora müraciət edin.",
+   "faq_question": "iPhone yenilənməsindən sonra eSIM işləmir, nə etməliyəm?",
+   "next_action": "unblock_sim",
+   "risk_reason": "Müştəri eSIM-in iş üçün vacib olduğunu bildirir ('I need it for work') və bu gün xidmət mərkəzinə gedə bilmir.",
+   "sentiment": 2,
+   "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. eSIM profilinizi onlayn şəkildə yenidən aktivləşdirmək üçün sizə köməklik göstərəcəyəm. Zəhmət olmasa, təhlükəsizlik yoxlanışı üçün nömrə sahibinin adını və soyadını qeyd edin.",
+   "summary": "Müştəri iPhone yenilənməsindən sonra işləməyən eSIM-in bərpa olunmasını istəyir.\nMüştəri telefonu 3 dəfə yenidən başladığını, lakin 'No Service' göstərdiyini bildirdi; bot xidmət mərkəzinə getməyi təklif etdi.\nMüştəri bu gün işdən çıxa bilmir və eSIM-i onlayn bərpa etmək üçün alternativ yol axtarır."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 8.08,
+  "tokens_in": 1961,
+  "tokens_out": 1661
+ },
+ "12501f1356801a0d9ede8d33cadaaf796da9fb9156da3f7019d9b95032ae9424": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot hesabın təhlükəsizliyi və e-poçtla detalların göndərilməsi kimi əməliyyatları yerinə yetirə bilmədi.",
+   "category": "billing",
+   "churn_risk": "medium",
+   "faq_answer": "Etmədiyiniz zənglər aşkarlandığı hallarda dərhal təhlükəsizlik yoxlanışı aparılması və hesabın araşdırılması üçün sizi operatora yönləndiririk.",
+   "faq_question": "Etmədiyim beynəlxalq zənglər hesabıma yazılıb, nə etməliyəm?",
+   "next_action": "explain_charges",
+   "risk_reason": "Müştərinin nömrəsinin sındırıldığından ('Someone hacked my number?') və xaricə etmədiyi zənglər üçün pul ödəməkdən narahatdır.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Yaşadığınız bu narahatlığa görə üzr istəyirik. Beynəlxalq zənglərlə bağlı hesabatı və təhlükəsizlik yoxlanışını dərhal araşdırmağa başlayırıq. E-poçtunuza detallı məlumatın göndərilməsi üçün sorğunuzu qeydiyyata alıram.",
+   "summary": "Müştəri beynəlxalq zənglər üçün hesabına 300 dəqiqə əlavə olunduğunu və tanımadığı Somaliyə zəng etdiyini bildirir.\nBot zəng tarixçəsini yoxlamağı tövsiyə etdi və məlumatı e-poçtla göndərmək tələbini yerinə yetirə bilmədi.\nHesabın naməlum şəxslər tərəfindən istifadə edilib-edilmədiyi və yanlış zənglərin silinməsi hələ də həll olunmayıb."
+  },
+  "model": "gemini-3.5-flash-lite",
+  "seconds": 2.97,
+  "tokens_in": 1976,
+  "tokens_out": 486
+ },
+ "17616fea25518ab059d8829ff868b4022146bd2ce7b8a7fc4e9021a23aa420b9": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot müştərini kabinetə yönləndirdi, lakin kabinetdəki ümumi məlumatı detallı şəkildə izah edə bilmədi.",
+   "category": "billing",
+   "churn_risk": "low",
+   "faq_answer": "Hesabınızdakı 'əlavə xidmətlər' bölməsinə rouminq, xüsusi tarif abunəlikləri və ya SMS xidmətləri daxil ola bilər. Detallı məlumat üçün sizi operatora yönləndiririk.",
+   "faq_question": "Hesab-fakturada 'əlavə xidmətlər' nə deməkdir?",
+   "next_action": "explain_charges",
+   "risk_reason": "Müştəri sakit şəkildə əlavə xidmət haqqında məlumat istəyir, hər hansı narazılıq və ya operatoru dəyişmək niyyəti bildirməyib.",
+   "sentiment": 1,
+   "suggested_reply_az": "Salam! Hesabınızdakı 12 AZN-lik ödənişin hansı xidmətlərə aid olduğunu dərhal yoxlayıram. Zəhmət olmasa, bir neçə saniyə gözləyin, detalları sizə təqdim edəcəyəm.",
+   "summary": "Müştəri ötən ayın hesabındakı 12 AZN-lik 'əlavə xidmətlər' ödənişinin nə olduğunu öyrənmək istəyir.\nBot müştərini şəxsi kabinetə yönləndirdi, lakin orada da ətraflı məlumat yoxdur.\n12 AZN-lik xidmətin konkret olaraq nə olduğu hələ də izah edilməyib."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 11.2,
+  "tokens_in": 1986,
+  "tokens_out": 1947
+ },
+ "19a21c926020a4145c9216dcb5149ccaf8617b5cb0c5f34ceaa8f76ac289402a": {
+  "analysis": {
+   "bot_failure": "not_understood",
+   "bot_failure_reason": "Bot müştərinin etirazına qarşı \"Sualınızı başa düşmədim\" deyərək kömək edə bilmədi.",
+   "category": "tariff",
+   "churn_risk": "high",
+   "faq_answer": "Tarif şərtlərində dəyişiklik edilməzdən öncə müştərilərə SMS vasitəsilə məlumat göndərilir. Mövcud tarifiniz və ya sizə uyğun digər təkliflər barədə ətraflı məlumat almaq üçün operatora qoşula bilərsiniz.",
+   "faq_question": "Tarifimin qiyməti mənim xəbərim olmadan niyə artdı?",
+   "next_action": "retention_offer",
+   "risk_reason": "Müştəri köhnə tarif bərpa olunmasa nömrəni ləğv edəcəyini bildirir: \"ya köhnə tarifi qaytarın ya da nömrəni ləğv edirəm\".",
+   "sentiment": 4,
+   "suggested_reply_az": "Salam! Yaşadığınız narahatlığa görə üzr istəyirik. Tarif şərtlərindəki dəyişikliklər barədə öncədən məlumat göndərilməli idi, bu vəziyyəti mütləq araşdıracağıq. Sizə daha uyğun və sərfəli digər tariflərimizi təklif etmək və ya bu məsələni həll etmək üçün kömək etmək istərdim.",
+   "summary": "Müştəri xəbərdarlıq edilmədən 15 AZN-dən 22 AZN-ə qaldırılan tarifinin köhnə qiymətə qaytarılmasını tələb edir.\nBot tarif şərtlərinin dəyişə biləcəyini bildirdi, lakin müştərinin etirazını başa düşmədi.\nTarifin köhnə qiymətə qaytarılması və ya müştəriyə uyğun alternativ təklif edilməsi hələ də həll olunmayıb."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 15.81,
+  "tokens_in": 1993,
+  "tokens_out": 2576
+ },
+ "1ef7485bb99bf448b0633b1f811200eb7715ae0061606afb46c35424a4bfcd28": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot onlayn PUK kodu təqdim edə bilmədiyi üçün müştərini mağazaya yönləndirdi ('Ən yaxın xidmət mərkəzinə yaxınlaşın').",
+   "category": "sim_card",
+   "churn_risk": "medium",
+   "faq_answer": "PUK kodunu SIM kartın qutusundan, mobil tətbiqdən və ya kimliyinizi təsdiqləməklə operatora müraciət edərək öyrənə bilərsiniz.",
+   "faq_question": "PUK kodunu itirmişəm, onlayn necə bərpa edə bilərəm?",
+   "next_action": "unblock_sim",
+   "risk_reason": "Müştəri telefonsuz qaldığını və işdə olduğu üçün xidmət mərkəzinə gedə bilmədiyini qeyd edir ('işdəyəm gedə bilmirəm, onlayn həll yoxdur?').",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Yaşadığınız narahatlığa görə üzr istəyirik. Təhlükəsizlik qaydalarına uyğun olaraq kimliyinizi təsdiqlədikdən sonra PUK kodunuzu sizə təqdim edəcəyəm. Zəhmət olmasa şəxsiyyət vəsaitinizin seriya nömrəsini qeyd edin.",
+   "summary": "Müştəri bloklanmış SIM kartı üçün PUK kodunu öyrənmək istəyir.\nBot PUK kodunun paketdə olduğunu deyib xidmət mərkəzinə yönləndirdi.\nMüştəri işdə olduğu üçün gedə bilmir və PUK kodunu onlayn almaq istəyir."
+  },
+  "model": "gemini-3.6-flash",
+  "seconds": 26.61,
+  "tokens_in": 2015,
+  "tokens_out": 1206
+ },
+ "2830612c75bad953b4fa3808700a25eb7d70c1d2ca910b0f48863c9a858d62a3": {
+  "analysis": {
+   "bot_failure": "loop",
+   "bot_failure_reason": "Bot müştərinin kabinetə artıq baxdığını nəzərə almayaraq, yenidən 'Əlavə xidmətlər bölməsinə keçin' cavabını təkrarladı.",
+   "category": "billing",
+   "churn_risk": "low",
+   "faq_answer": "Şəxsi kabinetdə ətraflı məlumat tapmadıqda, ödənişin hansı xidmətə aid olduğunu dəqiqləşdirmək üçün operatora müraciət edə bilərsiniz.",
+   "faq_question": "Hesabımda 'əlavə xidmət' adı altında çıxılan ödənişin nə olduğunu necə öyrənə bilərəm?",
+   "next_action": "explain_charges",
+   "risk_reason": "Müştəri sadəcə hesabındakı naməlum ödənişin səbəbini öyrənmək istəyir və hər hansı narazılıq və ya operatoru dəyişmək niyyəti bildirməyib.",
+   "sentiment": 2,
+   "suggested_reply_az": "Salam! Hesabınızdakı 2 AZN-lik ödənişin hansı xidmətə aid olduğunu dərhal yoxlayıram. Zəhmət olmasa, bir neçə saniyə gözləyin, sizə ətraflı məlumat verəcəyəm.",
+   "summary": "Müştəri hesabındakı 2 AZN-lik 'əlavə xidmət' ödənişinin nə olduğunu öyrənmək istəyir.\nBot müştərini şəxsi kabinetə yönləndirdi, lakin müştəri orada ətraflı məlumat tapa bilmədi.\nÖdənişin konkret hansı xidmətə görə çıxıldığı hələ də aydınlaşdırılmayıb."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 152.33,
+  "tokens_in": 2021,
+  "tokens_out": 1463
+ },
+ "2831945d4f2d4f55ab98c42167c8fb22da08c6d4fb740544cebfbe0b916dea0e": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot müştərinin uçuş rejimində olduğunu bildirməsinə baxmayaraq şablon cavab verdi və ödənişi araşdırmaq səlahiyyəti yoxdur.",
+   "category": "refund",
+   "churn_risk": "high",
+   "faq_answer": "Uçuş rejimində olduğunuz halda rouminq haqqı çıxılıbsa, bu xətanın araşdırılması və məbləğin geri qaytarılması üçün dərhal operatora yönləndiriləcəksiniz. Zəhmət olmasa, sübut edən skrinşotları hazır saxlayın.",
+   "faq_question": "Telefonum uçuş rejimində olduğu halda rouminq haqqı çıxılıb, nə etməliyəm?",
+   "next_action": "refund",
+   "risk_reason": "Müştəri 'I'm porting my number to Nar and posting this everywhere' deyərək nömrəsini digər operatoru daşıyacağını və məsələni ictimailəşdirəcəyini bildirir.",
+   "sentiment": 5,
+   "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz vəziyyətə görə çox təəssüf edirik. Telefonunuz uçuş rejimində olduğu halda çıxılan 45 AZN-lik rouminq ödənişini araşdırmaq və geri qaytarılması üçün dərhal sorğu yaradıram. Zəhmət olmasa, qeyd etdiyiniz skrinşotları bura göndərin ki, texniki şöbəmizə təqdim edək.",
+   "summary": "Müştəri uçuş rejimində olduğu halda çıxılan 45 AZN rouminq ödənişinin geri qaytarılmasını tələb edir.\nBot rouminq qaydaları haqqında şablon cavab verdi, müştəri isə nömrəsini Nar-a daşımaqla hədələdi.\n45 AZN-lik ödəniş hələ də araşdırılmayıb və geri qaytarılmayıb."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 16.34,
+  "tokens_in": 1992,
+  "tokens_out": 2224
+ },
+ "2b4bd1ed78a7a27a915642f2f582fe7c9294bda090e7609864af7a1742301cc5": {
+  "analysis": {
+   "bot_failure": "wrong_answer",
+   "bot_failure_reason": "Bot müştərinin sarkazmını anlamayaraq 'Müsbət rəyiniz üçün təşəkkür edirik!' deyə tamamilə yanlış cavab verdi.",
+   "category": "internet_speed",
+   "churn_risk": "medium",
+   "faq_answer": "İnternet bağlantınız tamamilə kəsilibsə, cihazınızı yenidən başladın. Problem davam edərsə, xəttinizi və ərazinizdəki şəbəkə vəziyyətini yoxlamaq üçün dərhal operatora qoşulun.",
+   "faq_question": "İnternetim tamamilə kəsilibsə nə etməliyəm?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri 3 gündür internetin olmadığını bildirir və xidmətdən ciddi şəkildə narazıdır: '3 gündür internet yoxdur, çox sağ olun'.",
+   "sentiment": 4,
+   "suggested_reply_az": "Salam! Yaşadığınız narahatlığa və botun yanlış cavabına görə çox üzr istəyirik. İnternet probleminizi araşdırmaq üçün dərhal texniki şöbəyə müraciət göndərirəm. Qısa zamanda sizə geri dönüş edəcəyik.",
+   "summary": "Müştəri 3 gündür kəsilən internet probleminin həll olunmasını istəyir.\nBot müştərinin sarkazmını başa düşməyib təşəkkür etdi və sonra telefonu söndürüb yandırmağı təklif etdi.\nİnternet bağlantısı hələ də bərpa olunmayıb."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 81.0,
+  "tokens_in": 2002,
+  "tokens_out": 1772
+ },
+ "2cf0dbdf0585f19eb88bb89400c0b8152be747f736f27352df26075c0459d09c": {
+  "analysis": {
+   "bot_failure": "missing_knowledge",
+   "bot_failure_reason": "Bot ünvanın mərkəzdə olduğunu nəzərə almadan ümumi cavab verdi ('Покрытие 5G доступно в центральной части Баку') və texniki yoxlama təşkil etmədi.",
+   "category": "network_coverage",
+   "churn_risk": "high",
+   "faq_answer": "Mərkəzi ərazilərdə şəbəkə problemi yaşanırsa, ünvanınızı dəqiqləşdirib texniki şöbəyə müraciət açırıq və sizi dərhal operatora yönləndiririk.",
+   "faq_question": "Mərkəzdə yaşayıram, amma 5G və ya 4G əvəzinə 'E' işləyir, nə etməliyəm?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri aldadıldığını deyərək tənzimləyici orqana şikayət edəcəyini və operatoru tərk edəcəyini bildirir ('Пишу жалобу в ANAS и ухожу').",
+   "sentiment": 5,
+   "suggested_reply_az": "Salam! Yaşadığınız narahatçılığa görə çox üzr istəyirik, mərkəzdə belə halın baş verməsi qəbuledilməzdir. Məsələni dərhal texniki şöbəyə yönləndirirəm ki, 28 May metrosu ətrafındakı şəbəkə qüllələri yoxlanılsın. Ən qısa zamanda sizinlə əlaqə saxlayacağıq.",
+   "summary": "Müştəri mərkəzdə 5G və ya ən azı 4G yerinə 'E' sürəti aldığını bildirir.\nBot mərkəzdə 5G olduğunu desə də, müştəri 28 May metrosu yaxınlığında yaşadığını və bir aydır problemin həll olunmadığını qeyd etdi.\nŞəbəkə problemi hələ də həllini tapmayıb və müştəri şikayət edəcəyini deyir."
+  },
+  "model": "gemini-3.5-flash-lite",
+  "seconds": 4.5,
+  "tokens_in": 1975,
+  "tokens_out": 537
+ },
+ "2f5d0e79217eafc407719d67130ea4e533d9e70bf177cb3ff9bac6be33df246c": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot müştərinin PUK kodunu itirdiyini bildirdikdən sonra ona alternativ həll yolu təklif edə bilmədi və operatora yönləndirdi.",
+   "category": "sim_card",
+   "churn_risk": "low",
+   "faq_answer": "PUK kodunuzu itirmisinizsə, şəxsiyyətinizi təsdiq edən sənədlə müştəri xidmətlərinə müraciət edərək kodu öyrənə və ya yeni SİM kart əldə edə bilərsiniz.",
+   "faq_question": "PUK kodumu itirmişəm, SİM kartı necə aça bilərəm?",
+   "next_action": "unblock_sim",
+   "risk_reason": "Müştəri sadəcə SİM kartını necə bərpa edəcəyini soruşur və heç bir narazılıq və ya operatoru dəyişmək niyyəti bildirmir.",
+   "sentiment": 1,
+   "suggested_reply_az": "Salam! Qayıtmağınız münasibətilə təbrik edirik. SİM kartınızı yenidən aktivləşdirmək üçün sizə PUK kodunu təqdim edə bilərəm. Zəhmət olmasa, təhlükəsizlik məqsədilə nömrə sahibinin adını və soyadını qeyd edin.",
+   "summary": "Müştəri uzun müddət istifadə etmədiyi üçün bloklanan SİM kartını aktivləşdirmək istəyir.\nBot müştəridən PUK kodunu daxil etməyi istədi, lakin müştəri PUK kodunu itirdiyini bildirdi.\nSİM kart hələ də blokdadır və PUK kodu təqdim edilməlidir."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 38.24,
+  "tokens_in": 1949,
+  "tokens_out": 1410
+ },
+ "3057427ead31fd0ff02fe04092bdfe4c1155cff5d85f61f4457215c7240c4127": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot texniki araşdırma sorğusu aça bilmədiyi üçün 'Thank you for your message' deyərək söhbəti dayandırmağa çalışdı.",
+   "category": "internet_speed",
+   "churn_risk": "low",
+   "faq_answer": "Dəqiq ünvanı və zəifləmənin baş verdiyi saatları qeyd edin. Ərazidəki şəbəkə keyfiyyətinin yoxlanılması üçün texniki heyətə sorğu açılaraq operatora yönləndiriləcəksiniz.",
+   "faq_question": "Müəyyən bir ünvanda internet zəif işləyirsə, nə etməliyəm?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri sakit və nəzakətlidir, sadəcə vəziyyəti xəbər vermək istədiyini bildirir ('Just wanted to report it').",
+   "sentiment": 1,
+   "suggested_reply_az": "Salam! Məlumat verdiyiniz üçün təşəkkür edirik. Nərimanov ərazisindəki ofisinizdə günorta saatlarında internetin zəifləməsi ilə bağlı texniki şöbəmizə sorğu yönləndirirəm. Şəbəkə mütəxəssislərimiz ərazini yoxladıqdan sonra sizə SMS vasitəsilə məlumat veriləcək.",
+   "summary": "Müştəri günorta saatlarında Nərimanovdakı ofisində internet sürətinin zəifləməsi ilə bağlı ərazinin yoxlanılmasını istəyir.\nBot cihazı yenidən başlatmağı təklif etdi, lakin problem yalnız həmin ofis ünvanına aiddir.\nƏrazidəki şəbəkə yükünü yoxlamaq üçün texniki sorğu hələ açılmayıb."
+  },
+  "model": "gemini-3.7-flash",
+  "seconds": 21.52,
+  "tokens_in": 1965,
+  "tokens_out": 1540
+ },
+ "360a6435cb9ca1da83491692948ff599d736b495f09741be6dd61d879af42df8": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot doğum şəhadətnaməsi ilə nömrə alınması qaydasını bilmədiyi üçün operatora yönləndirdi.",
+   "category": "sim_card",
+   "churn_risk": "low",
+   "faq_answer": "14 yaşına çatmış şəxslər şəxsiyyət vəsiqəsi ilə öz adlarına nömrə ala bilərlər. Vəsiqə yoxdursa, nömrə valideynin adına rəsmiləşdirilə bilər.",
+   "faq_question": "14 yaşı olan uşağın adına şəxsiyyət vəsiqəsi olmadan nömrə almaq olar?",
+   "next_action": "unblock_sim",
+   "risk_reason": "Müştəri sadəcə yeni nömrə almaq qaydaları ilə maraqlanır və heç bir narazılıq və ya tərk etmə təhdidi yoxdur.",
+   "sentiment": 1,
+   "suggested_reply_az": "Salam! 14 yaşına çatmış şəxslər öz adlarına şəxsiyyət vəsiqəsi ilə nömrə ala bilərlər. Əgər hələ vəsiqə yoxdursa, nömrəni valideynin şəxsiyyət vəsiqəsi ilə rəsmiləşdirmək mümkündür.",
+   "summary": "Müştəri 14 yaşlı qızı üçün doğum haqqında şəhadətnamə ilə nömrə almaq istəyir.\nBot yalnız şəxsiyyət vəsiqəsinin tələb olunduğunu bildirdi.\nYetkinlik yaşına çatmayanlar üçün nömrə rəsmiləşdirmə qaydaları hələ açıqlanmayıb."
+  },
+  "model": "gemini-3.5-flash-lite",
+  "seconds": 10.15,
+  "tokens_in": 1991,
+  "tokens_out": 435
+ },
+ "3b5e31fdf284b23e8a85b627345e0983be3981da4d842133cd627ff55a981ea9": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot ezamiyyətdə olan müştəriyə kömək etmək əvəzinə, ona xidmət mərkəzinə yaxınlaşmağı təklif etdi: \"Please visit a service center with your ID.\"",
+   "category": "sim_card",
+   "churn_risk": "high",
+   "faq_answer": "Xaricdə olarkən SİM kartınız bloklanıbsa, dərhal onlayn dəstək xidmətimizə müraciət edin. Şəxsiyyətinizi onlayn şəkildə təsdiqlədikdən sonra nömrənizi dərhal aktivləşdirəcəyik.",
+   "faq_question": "Xaricdə və ya ezamiyyətdə olarkən SİM kartım bloklanarsa nə etməliyəm?",
+   "next_action": "unblock_sim",
+   "risk_reason": "Müştəri sabah Nar operatoruna keçəcəyini və bu barədə Instagram-da paylaşım edəcəyini bildirib: \"I'm posting this on Instagram and moving to Nar tomorrow\".",
+   "sentiment": 5,
+   "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz vəziyyətə və buraxılmış vacib zəngə görə çox təəssüflənirik. Ezamiyyətdə olduğunuzu nəzərə alaraq, nömrənizin blokunu dərhal yoxlayıb açmaq üçün lazımi tədbirləri görürəm. Zəhmət olmasa, bir neçə dəqiqə xətdə gözləyin.",
+   "summary": "Müştəri ezamiyyətdə olarkən bloklanmış SİM kartının dərhal açılmasını tələb edir.\nBot təhlükəsizlik səbəbini əsas gətirərək müştərini xidmət mərkəzinə yaxınlaşmağa yönləndirib.\nSİM kart hələ də blokdadır və müştəri vacib zəngi qaçırdığı üçün çox qəzəblidir."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 11.03,
+  "tokens_in": 1982,
+  "tokens_out": 1566
+ },
+ "3b6082d2bc92a0cd70849e7157e1eec13f13d3f105dfd315aa01c452b1a28cbf": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot müştərinin sistemdəki rouminq trafiki və xərclərini yoxlamaq səlahiyyətinə malik olmadığı üçün şablon cavab verdi ('Roaming is activated when you connect to a foreign network').",
+   "category": "roaming",
+   "churn_risk": "medium",
+   "faq_answer": "Bəzi tətbiqlər arxa fonda internetdən istifadə edə bilər. Rouminq xərclərinizin düzgünlüyünü təfərrüatı ilə yoxlamaq üçün sizi canlı operatora yönləndiririk.",
+   "faq_question": "Xaricdə data rouminqi söndürdüyüm halda balansdan niyə borc çıxılıb?",
+   "next_action": "explain_charges",
+   "risk_reason": "Müştəri gözlənilməz 40 AZN borcdan narahatdır ('this is a lot of money for me'), lakin başqa operatora keçəcəyini bildirməyib.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Yaranmış narahatlığa görə üzr istəyirik. Dubayda olarkən qeydə alınan rouminq trafiki və xərcləri dərhal sistemdə yoxlayıram. Məsələni araşdırıb sizə ətraflı məlumat verəcəyəm.",
+   "summary": "Müştəri Dubayda istifadə etmədiyi rouminq üçün yaranan 40 AZN borcun yoxlanılmasını istəyir.\nBot rouminqin xarici şəbəkəyə qoşularkən aktivləşdiyini izah etdi.\n40 AZN borcun düzgünlüyü yoxlanılmayıb və məsələ açıq qalır."
+  },
+  "model": "gemini-3.6-flash",
+  "seconds": 11.78,
+  "tokens_in": 1978,
+  "tokens_out": 1469
+ },
+ "5668ff01d014d65023e66e53a1e82ead763f0684c69a483e0e0d2f03f5097ba2": {
+  "analysis": {
+   "bot_failure": "wrong_answer",
+   "bot_failure_reason": "Bot müştərinin xəbərdarlıq SMS-i almadığını və kömək istədiyini nəzərə almadan ümumi 'Tarif şərtləri yenilənə bilər' cavabını verdi.",
+   "category": "tariff",
+   "churn_risk": "high",
+   "faq_answer": "Tarif dəyişikliyi ilə bağlı narazılığınız üçün üzr istəyirik. Zəhmət olmasa gözləyin, dərhal məlumatı yoxlayıb sizi operatora yönləndiririk.",
+   "faq_question": "Tarifim mənim xəbərim olmadan niyə dəyişdirilib və necə geri qaytara bilərəm?",
+   "next_action": "tariff_change",
+   "risk_reason": "Müştəri 10 illik abunəçi olduğunu qeyd edərək köhnə tarif qaytarılmasa Nar-a keçəcəyini bildirir ('Nar-a keçirəm, 10 ildir sizinləyəm').",
+   "sentiment": 4,
+   "suggested_reply_az": "Salam! Yaşadığınız narazılığa görə üzr istəyirik və 10 illik sədaqətinizi yüksək qiymətləndiririk. Zəhmət olmasa gözləyin, tarif dəyişikliyi ilə bağlı məlumatı yoxlayıb sizə köhnə və ya alternativ uyğun tarifin seçilməsində kömək edəcəyəm.",
+   "summary": "Müştəri xəbəri olmadan tarifinin 15 AZN-dən 22 AZN-ə dəyişdirildiyini bildirir.\nBot tarif şərtlərinin yenilənə biləcəyini deyərək məsələni aydınlaşdırmayıb.\nKöhnə tarifin qaytarılmasını tələb edir və operatoru dəyişməklə hədələyir."
+  },
+  "model": "gemini-3.5-flash-lite",
+  "seconds": 4.84,
+  "tokens_in": 2000,
+  "tokens_out": 482
+ },
+ "5fe8b5efabc26d81a191a6e5f9893c33d1e50c41a131837e78bc557d40f3678f": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot eyni anda iki problemi emal edə bilmədi və müştərini seçim etməyə məcbur etdi.",
+   "category": "refund",
+   "churn_risk": "medium",
+   "faq_answer": "Narahat olmayın, balansınızdan çıxılan məbləğin geri qaytarılması və şəbəkə probleminin araşdırılması üçün sizi dərhal operatora yönləndiririk.",
+   "faq_question": "Sifariş etmədiyim xidmətə görə pul çıxılıb və şəbəkə problemi yaşayıram, nə etməliyəm?",
+   "next_action": "refund",
+   "risk_reason": "Müştərinin həm şəbəkə problemi var, həm də icazəsiz olaraq balansından 7 AZN çıxılıb.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Yaşadığınız çətinliklərə görə üzr istəyirik. Sifariş etmədiyiniz SMS paketi üçün çıxılan 7 AZN-in geri qaytarılması üçün müraciət yaradıram, həmçinin Xırdalandakı zəng kəsintilərini araşdırmaq üçün texniki şöbəyə sorğu göndərirəm.",
+   "summary": "Müştəri Xırdalanda zənglərin kəsilməsindən və icazəsiz çıxılan 7 AZN-in qaytarılmasından şikayət edir.\nBot müştərini bir mövzu seçməyə məcbur etdi və yalnız geri ödəniş müddətini qeyd etdi.\nHər iki problem (7 AZN geri ödəniş və zəng kəsintiləri) hələ də həll olunmamış qalır."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 11.29,
+  "tokens_in": 1978,
+  "tokens_out": 2431
+ },
+ "60a693bab40aa400ec61c81e795146ebd95fba903242f0d539d8ce9b5b135c2f": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot səhv köçürmə üzrə əməliyyatı təkbaşına yoxlaya və ya geri qaytara bilmədiyi üçün qəti şəkildə 'köçürmələr ləğv edilmir' cavabını verdi.",
+   "category": "refund",
+   "churn_risk": "medium",
+   "faq_answer": "Səhv köçürmələr zamanı əməliyyatın detallarını yoxlamaq üçün sizi dərhal operatora yönləndiririk, zəhmət olmasa gözləyin.",
+   "faq_question": "Səhvən başqa nömrəyə balans köçürmüşəm, geri qaytarmaq olar?",
+   "next_action": "refund",
+   "risk_reason": "Müştəri səhvən köçürdüyü məbləğin onun üçün böyük olduğunu deyərək kömək istəyir, lakin operatoru tərk edəcəyini hələ bildirməyib.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Səhv köçürülən məbləğlə bağlı vəziyyəti başa düşürük və narahatçılığınıza görə üzr istəyirik. Zəhmət olmasa, səhvən köçürdüyünüz nömrəni və ödəniş çekini qeyd edin, müraciətinizi yoxlayaq. Növbəti addım olaraq sorğunuzu araşdırmaya yönəldəcəyik.",
+   "summary": "Müştəri səhvən başqa nömrəyə 20 AZN köçürüb və pulun geri qaytarılmasını xahiş edir.\nBot köçürmələrin ləğv edilmədiyini bildirib.\nPulun geri qaytarılması məsələsi hələ də həll olunmayıb."
+  },
+  "model": "gemini-3.5-flash-lite",
+  "seconds": 4.49,
+  "tokens_in": 1955,
+  "tokens_out": 477
+ },
+ "6364a2b6b13f25edf406d607abef99913a115f284172067a7e2ef4699fdbf0d2": {
+  "analysis": {
+   "bot_failure": "loop",
+   "bot_failure_reason": "Bot müştərinin 'NIYE bitib?' sualına mahiyyətcə cavab verməyərək şablon yönləndirmələr təkrarladı: 'Xərclərinizi Kabinetdə görə bilərsiniz.'",
+   "category": "billing",
+   "churn_risk": "medium",
+   "faq_answer": "Balans xərclərinizi şəxsi kabinetdən yoxlaya bilərsiniz. Əgər kabinetə girişdə çətinlik yaranarsa və ya naməlum xərclər görsəniz, çıxarışın təqdim edilməsi üçün operatorla əlaqə saxlaya bilərsiniz.",
+   "faq_question": "Balansımdan gözlənilmədən pul çıxılıb, səbəbini necə öyrənə bilərəm?",
+   "next_action": "explain_charges",
+   "risk_reason": "Müştəri 10 manat pul itirdiyinə görə əsəbidir ('sual odur ki NIYE bitib?'), lakin şəbəkəni tərk etmək barədə qeyd etməyib.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Narahatlığınızı başa düşürük və vəziyyəti dərhal aydınlaşdıracağıq. Son 2 gün üzrə xərclərinizin detallı çıxarışını yoxlayıram ki, balansın nəyə çıxıldığını sizə izah edim. Zəhmət olmasa bir neçə dəqiqə xətdə qalın.",
+   "summary": "Müştəri yüklədiyi 10 AZN balansın iki günə niyə bitdiyini aydınlaşdırmaq istəyir.\nBot yalnız balans yoxlamaq üçün USSD kod verdi və şəxsi kabinetə yönləndirdi.\nKabinet açılmır və balansın hansı xidmətlərə xərcləndiyi hələ də izah edilməyib."
+  },
+  "model": "gemini-3.7-flash",
+  "seconds": 86.09,
+  "tokens_in": 2011,
+  "tokens_out": 502
+ },
+ "66f0d8a3c497ecff46717e8bae3cd20658b10615195a9f306e719bdf5852bca8": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot müştərinin paketi olduğunu bildirməsinə baxmayaraq, saytdakı tariflərə yönləndirərək şablon cavab verdi.",
+   "category": "refund",
+   "churn_risk": "high",
+   "faq_answer": "Rouminq paketinizin aktivliyini və balans çıxılmasını yoxlamaq üçün dərhal operatora yönləndirilirsiniz. Səhvən çıxılan vəsait araşdırılaraq geri qaytarılacaqdır.",
+   "faq_question": "Rouminq paketim olduğu halda balansımdan əlavə vəsait çıxılıb, nə etməliyəm?",
+   "next_action": "refund",
+   "risk_reason": "Müştəri 10 illik abunəçi olduğunu, lakin pul qaytarılmasa müqaviləni ləğv edəcəyini və nazirliyə şikayət edəcəyini bildirir.",
+   "sentiment": 5,
+   "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz vəziyyətə görə çox təəssüf edirik. Türkiyədə aktiv etdiyiniz rouminq paketinizi və balansınızdan çıxılan 60 AZN-i dərhal yoxlayıram. Məsələni araşdırıb sizə ən qısa zamanda geri dönüş edəcəyəm.",
+   "summary": "Müştəri Türkiyədə rouminq paketi olduğu halda çıxılan 60 AZN-in geri qaytarılmasını tələb edir.\nBot müştəriyə kömək etmək əvəzinə saytdakı tariflərə baxmağı təklif edib.\nBalansdan çıxılan vəsait hələ də araşdırılmayıb və geri qaytarılmayıb."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 9.65,
+  "tokens_in": 1964,
+  "tokens_out": 1657
+ },
+ "67e8daf686ca3abbbc526edc223bb8c0898a1a602d24905277144da8717e333d": {
+  "analysis": {
+   "bot_failure": "not_understood",
+   "bot_failure_reason": "Bot müştərinin eSIM bərpası haqqında sualını anlamayaraq 'Пожалуйста, уточните ваш вопрос' cavabını verdi.",
+   "category": "sim_card",
+   "churn_risk": "low",
+   "faq_answer": "İtirilmiş nömrənizi eSIM kimi bərpa etmək üçün şəxsiyyət vəsiqənizlə Müştəri Xidmətləri mərkəzinə yaxınlaşmalısınız. Əməkdaşlarımız sizə yeni eSIM QR-kodunu təqdim edəcəklər.",
+   "faq_question": "İtirilmiş nömrəni eSIM olaraq necə bərpa edə bilərəm?",
+   "next_action": "no_action",
+   "risk_reason": "Müştəri tamamilə sakitdir və nömrəsinin bərpa edilməsi qaydasını soruşur.",
+   "sentiment": 1,
+   "suggested_reply_az": "Salam! Nömrənizi eSIM kimi bərpa etmək üçün şəxsiyyət vəsiqənizlə istənilən xidmət mərkəzimizə yaxınlaşmağınız kifayətdir. Əməkdaşlarımız sizə yeni eSIM QR kodu təqdim edəcəklər. Sizə ən yaxın filialımızın ünvanını təqdim edim?",
+   "summary": "Müştəri itirilmiş nömrəsini eSIM olaraq bərpa etmək üçün nə lazım olduğunu öyrənmək istəyir.\nBot əvvəlcə bloklama qaydasını bildirdi, sonra isə sualı anlamadı.\neSIM-in necə və haradan əldə ediləcəyi hələ aydınlaşdırılmayıb."
+  },
+  "model": "gemini-3.6-flash",
+  "seconds": 122.26,
+  "tokens_in": 1976,
+  "tokens_out": 1655
+ },
+ "6b1aecca3e164e1c7adeca24014e43e528200d89d42030ef7b9f9d112d3f76ac": {
+  "analysis": {
+   "bot_failure": "missing_knowledge",
+   "bot_failure_reason": "Bot 'Roaming Plus' paketinin keçərli olduğu ölkələrin siyahısını bilmədiyi üçün müştərinin sualına cavab verə bilmədi.",
+   "category": "roaming",
+   "churn_risk": "low",
+   "faq_answer": "Bəli, 'Roaming Plus' paketi Gürcüstanda keçərlidir. Səfəriniz zamanı paket daxilindəki xidmətlərdən rahatlıqla istifadə edə bilərsiniz.",
+   "faq_question": "Roaming Plus paketi Gürcüstanda keçərlidir?",
+   "next_action": "explain_charges",
+   "risk_reason": "Müştəri sadəcə rouminq paketinin Gürcüstanda keçərli olub-olmadığını soruşur, heç bir narazılıq yoxdur.",
+   "sentiment": 1,
+   "suggested_reply_az": "Salam! Bəli, 'Roaming Plus' paketi Gürcüstanda keçərlidir və səfəriniz zamanı ondan rahatlıqla istifadə edə bilərsiniz. Sizə xoş səyahətlər arzulayırıq! Başqa bir sualınız varmı?",
+   "summary": "Müştəri gələn həftə Gürcüstana gedəcəyini və 'Roaming Plus' paketinin orada işləyəcəyini öyrənmək istəyir.\nBot xidmətin seçilmiş ölkələrdə aktiv olduğunu bildirdi, lakin Gürcüstanın siyahıda olub-olmaması sualına cavab vermədi.\nGürcüstanın 'Roaming Plus' paketi siyahısında olub-olmaması hələ də dəqiqləşdirilməyib."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 7.02,
+  "tokens_in": 1944,
+  "tokens_out": 1375
+ },
+ "6eee8dff50bef46d40eb34baf41b86f9108f07c947dc833befa508ce7ee1fffb": {
+  "analysis": {
+   "bot_failure": "wrong_answer",
+   "bot_failure_reason": "Bot müştərinin təcili şəbəkə problemini nəzərə almadan ona \"Şəbəkə əhatəsini saytda yoxlayın\" deyərək qeyri-adekvat cavab verib.",
+   "category": "network_coverage",
+   "churn_risk": "high",
+   "faq_answer": "Şəbəkə problemini araşdırmaq üçün dərhal ünvanınızı qeyd edin. Sizi texniki şöbəyə yönləndiririk ki, ərazidəki ötürücülər yoxlanılsın.",
+   "faq_question": "Evdə şəbəkə tutmur və zənglər kəsilir, nə edə bilərəm?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri şəbəkə problemindən qəzəblənərək \"sabah başqa operatora keçirəm\" deyə bildirib.",
+   "sentiment": 5,
+   "suggested_reply_az": "Salam! Yaşadığınız bu ciddi çətinliyə görə çox üzr istəyirik, ananızın vəziyyətini tam anlayırıq. Ünvanınızı dəqiqləşdirib dərhal texniki komandamızla əlaqə saxlayacağam ki, ərazidəki şəbəkə problemini araşdırsınlar. Sizi xətdə çox saxlamayacağam.",
+   "summary": "Müştəri evdə şəbəkə siqnalının olmamasından və zənglərin kəsilməsindən şikayət edir.\nBot müştəriyə şəbəkə əhatəsini saytda yoxlamağı təklif etdi, bu isə müştərini qəzəbləndirdi.\nŞəbəkə problemi hələ də həll olunmayıb və müştəri operatoru dəyişmək niyyətindədir."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 15.05,
+  "tokens_in": 1992,
+  "tokens_out": 1643
+ },
  "6fd048d2cfb26cfa7123eb9002ed3656ba6a94eb9f028ec2223c1b801c988eb6": {
   "analysis": {
    "bot_failure": "not_understood",
@@ -18,6 +512,25 @@
   "tokens_in": 2014,
   "tokens_out": 1847
  },
+ "7618a65786468f147d35428a5e6ddee9fd160c3750dfd26c8c3c7f72ea89b99d": {
+  "analysis": {
+   "bot_failure": "loop",
+   "bot_failure_reason": "Bot müştərinin insanla danışmaq istəyinə məhəl qoymayaraq eyni mövzu seçimini (\"Zəhmət olmasa, mövzunu seçin\") təkrarlayıb.",
+   "category": "other",
+   "churn_risk": "high",
+   "faq_answer": "Canlı operatorla danışmaq üçün 'Operator' yazmağınız kifayətdir, sizi dərhal canlı mütəxəssisə yönləndirəcəyik.",
+   "faq_question": "Canlı operatora necə qoşula bilərəm?",
+   "next_action": "retention_offer",
+   "risk_reason": "Müştəri \"nazirliyə şikayət yazacam və nömrəmi bağlayıram\" deyərək nömrəni ləğv etməklə hədələyir.",
+   "sentiment": 5,
+   "suggested_reply_az": "Salam! Yaşadığınız xoşagəlməz təcrübəyə və botun yaratdığı çətinliyə görə çox üzr istəyirik. Sizə dərhal kömək etmək üçün buradayam, zəhmət olmasa qarşılaşdığınız problemi mənə bildirin.",
+   "summary": "Müştəri botun təkrarlanan suallarından bezib canlı operatorla danışmaq istəyir.\nBot müştərinin etirazına baxmayaraq eyni mövzu seçimini təkrarlayıb.\nMüştərinin əsl problemi hələ də məlum deyil və o, şikayət etmək niyyətindədir."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 9.82,
+  "tokens_in": 2038,
+  "tokens_out": 1694
+ },
  "78b7d9a235fc1e25b37194a4828f08136d63f829f18c9ba627ae692f0ec5b9cd": {
   "analysis": {
    "bot_failure": "not_understood",
@@ -36,5 +549,214 @@
   "seconds": 11.95,
   "tokens_in": 1975,
   "tokens_out": 1338
+ },
+ "794967cef9667d4a4fd209dd598f5a9702db1b798a606f30952f6e96557582d8": {
+  "analysis": {
+   "bot_failure": "missing_knowledge",
+   "bot_failure_reason": "Bot müştərinin konkret tarif tövsiyəsi istəyinə cavab vermək əvəzinə onu birbaşa operatora yönləndirdi.",
+   "category": "tariff",
+   "churn_risk": "low",
+   "faq_answer": "Sizə daha çox internet təqdim edən digər uyğun tariflərimizi təklif edə bilərik. Seçimləri görmək və dərhal keçid etmək üçün sizi operatorumuza yönləndirirəm.",
+   "faq_question": "Sərfəli 10 tarifindən daha çox interneti olan hansı tarifə keçə bilərəm?",
+   "next_action": "tariff_change",
+   "risk_reason": "Müştəri sadəcə özünə uyğun yeni tarif axtarır və heç bir narazılıq bildirməyib.",
+   "sentiment": 1,
+   "suggested_reply_az": "Salam! Sizə kömək etməkdən məmnun olaram. Hazırkı 'Sərfəli 10' tarifinizə yaxın qiymətə daha çox internet təklif edən digər tariflərimizi yoxlayaq və sizə ən uyğun olanını seçib aktivləşdirək.",
+   "summary": "Müştəri 'Sərfəli 10' tarifindən daha çox interneti olan oxşar qiymətli tarifə keçmək istəyir.\nBot müştərini sayta yönləndirdi, lakin müştəri konkret tövsiyə istədikdə cavab verə bilmədi.\nMüştəri üçün uyğun tarif seçilməli və keçid təklif edilməlidir."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 6.48,
+  "tokens_in": 1980,
+  "tokens_out": 1287
+ },
+ "8468455ad3f6c41c90fe9dd4d022ca0506d25fed7f8b2598d3e3534abd14f0fd": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot texniki bilet yarada bilmədiyi üçün 'Мы передадим информацию' cavabı ilə kifayətləndi və dəqiq müddət göstərmədi.",
+   "category": "network_coverage",
+   "churn_risk": "medium",
+   "faq_answer": "Dəqiq ünvanınızı bildirərək müraciət edin. Ərazinizdəki baz stansiyalarının vəziyyətini yoxlamaq üçün məlumat texniki şöbəyə ötürüləcək və operator sizinlə əlaqə saxlayacaq.",
+   "faq_question": "Mənzilimdə şəbəkə tutmur və zənglər kəsilir, nə edim?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri bir aydır mənzilində zənglərin kəsildiyini bildirir ('уже месяц так'), lakin başqa operatora keçəcəyini hələ qeyd etməyib.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Yaşadığınız narahatlığa görə üzr istəyirik. Yasamal ərazisi üzrə texniki araşdırma aparılması üçün ünvanınızı dəqiqləşdirmək istərdik. Müraciətiniz dərhal texniki şöbəyə ötürüləcək və gün ərzində sizə geri dönüş olunacaq.",
+   "summary": "Müştəri Yasamaldakı mənzilində şəbəkə siqnalının zəif olması və zənglərin kəsilməsi probleminin həllini istəyir.\nBot saytdakı əhatə dairəsinə baxmağı təklif etdi və məlumatı ötürəcəyini bildirdi.\nŞəbəkə probleminin nə vaxt və kim tərəfindən araşdırılacağı hələ də qeyri-müəyyəndir."
+  },
+  "model": "gemini-3.6-flash",
+  "seconds": 11.01,
+  "tokens_in": 1967,
+  "tokens_out": 1784
+ },
+ "8b04156e06d98eef0b6333291c8e7334815a0f7206d211add23d73b94744a02c": {
+  "analysis": {
+   "bot_failure": "missing_knowledge",
+   "bot_failure_reason": "Bot yalnız əsas rouminq ayarlarını təklif etdi, lakin şəbəkə dəyişimi və ya APN kimi detallı dəstəyi təmin edə bilmədi.",
+   "category": "roaming",
+   "churn_risk": "medium",
+   "faq_answer": "Rouminqdə internet işləmirsə, telefon ayarlarından şəbəkəni əl ilə dəyişib digər tərəfdaş operatoru seçin və APN ayarlarını yoxlayın. Problem davam edərsə, sizi dərhal operatora yönləndiririk.",
+   "faq_question": "Rouminqdə zənglər işləyir, amma internet yoxdur, nə etməliyəm?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri xaricdə işi ilə əlaqədar təcili internetə ehtiyacı olduğunu və problemin həll olunmadığını bildirir.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Türkiyədə internetlə bağlı yaranan çətinliyə görə üzr istəyirik. Zəhmət olmasa operator şəbəkəsini (operator selection) avtomatikdən əl ilə digər tərəfdaş şəbəkəyə dəyişib yoxlayın. Əgər alınmasa, rouminq internet paketinizin balansını və APN tənzimləmələrini dərhal yoxlayaq.",
+   "summary": "Müştəri Türkiyədədir, rouminqdə zəng gəlsə də internet işləmir.\nBot mobil məlumatın ayarlarından rouminqi aktivləşdirməyi məsləhət görüb.\nMüştəri ayarların düzgün olduğunu deyir və işi üçün internetə təcili ehtiyacı var."
+  },
+  "model": "gemini-3.5-flash-lite",
+  "seconds": 3.67,
+  "tokens_in": 1984,
+  "tokens_out": 464
+ },
+ "b257bc9b59a21b2c8851fe43c357bc1cf9013c78027816ad6867c0cbf225e7ff": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot pulun qaytarılmasını təmin edə bilmədiyi üçün müştərini sayta yönləndirdi ('Geri qaytarma şərtləri saytda göstərilib').",
+   "category": "refund",
+   "churn_risk": "medium",
+   "faq_answer": "Xidməti ləğv etdikdən sonra məbləğin geri qaytarılması üçün operatora yönləndirilirsiniz. Müraciətiniz araşdırılaraq nəticə SMS vasitəsilə bildiriləcək.",
+   "faq_question": "İstəmədiyim abunəliyə görə çıxılan pulu necə geri ala bilərəm?",
+   "next_action": "refund",
+   "risk_reason": "Müştərinin istəmədiyi abunəlikdən 3 AZN pulu çıxılıb, amma operatoru tərk edəcəyini bildirməyib.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Yaşadığınız narahatlığa görə üzr istəyirik. 'Oyun+' xidmətinə görə balansımdan çıxılan 3 AZN məbləğinin qaytarılması üçün müraciət formalaşdırıram. Yoxlanışdan sonra nəticə barədə SMS alacaqsınız.",
+   "summary": "Müştəri istəmədən qoşulan 'Oyun+' abunəliyinə görə çıxılan 3 AZN-in qaytarılmasını istəyir.\nMüştəri abunəliyi ləğv etdi, lakin bot refund üçün sayta yönləndirdi.\nÇıxılan 3 AZN məbləğ müştəriyə hələ geri qaytarılmayıb."
+  },
+  "model": "gemini-3.6-flash",
+  "seconds": 28.01,
+  "tokens_in": 2020,
+  "tokens_out": 2081
+ },
+ "c0f5f42ec7a946110e14b0d73659a6b2fd26ce76decf357719faada1f146b6f2": {
+  "analysis": {
+   "bot_failure": "missing_knowledge",
+   "bot_failure_reason": "Bot nömrənin kiməsə keçirilməsi üçün lazım olan sənədlər və onlayn imkanlar barədə suala cavab verə bilmədi.",
+   "category": "sim_card",
+   "churn_risk": "low",
+   "faq_answer": "Nömrənin ad dəyişdirilməsi yalnız rəsmi xidmət mərkəzlərimizdə həyata keçirilir (onlayn mümkün deyil). Hər iki şəxsin şəxsiyyət vəsiqəsi ilə birlikdə ofisə yaxınlaşması mütləqdir.",
+   "faq_question": "Nömrəni başqa şəxsin adına necə keçirə bilərəm və hansı sənədlər lazımdır?",
+   "next_action": "no_action",
+   "risk_reason": "Müştəri sadəcə nömrənin ad dəyişdirilməsi barədə məlumat almaq istəyir, heç bir narazılıq yoxdur.",
+   "sentiment": 1,
+   "suggested_reply_az": "Salam! Nömrənin başqa şəxsin adına keçirilməsi onlayn şəkildə mümkün deyil. Həm sizin, həm də atanızın şəxsiyyət vəsiqəsi ilə birlikdə rəsmi xidmət mərkəzlərimizdən birinə yaxınlaşmağınız kifayətdir.",
+   "summary": "Müştəri nömrəni atasının adına keçirmək üçün lazım olan sənədləri və onlayn imkanı soruşur.\nBot müştəriyə xidmət mərkəzinə yaxınlaşmağı bildirdi, lakin əlavə suallardan sonra operatora yönləndirdi.\nLazım olan sənədlərin siyahısı və onlayn müraciətin mümkün olub-olmaması hələ də cavablandırılmayıb."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 7.52,
+  "tokens_in": 1984,
+  "tokens_out": 1450
+ },
+ "c2c1598257d8a28851455c2fda18aaf84f527a8e2cedccda7dbec8f0ba1ad375": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot şəbəkə problemini araşdıra bilmədiyi üçün müştəriyə standart olaraq 'telefonunuzu yenidən başladın' məsləhətini verdi.",
+   "category": "network_coverage",
+   "churn_risk": "medium",
+   "faq_answer": "Şəbəkə problemini araşdırmaq üçün dəqiq ünvanınızı qeyd edin. Məlumat dərhal texniki şöbəyə ötürüləcək və araşdırma aparılacaq.",
+   "faq_question": "Yaşadığım ərazidə şəbəkə zəifdir və zəng zamanı səs kəsilir, nə edə bilərəm?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri iki həftədir Yasamalda zəng zamanı səsin kəsilməsindən şikayət edir və 'problem şəbəkədədir' deyir.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Yasamal ərazisində yaşadığınız şəbəkə çətinliyinə görə üzr istəyirik. Qeyd etdiyiniz ünvan üzrə texniki yoxlanış aparılması üçün dərhal müraciət yaradıram. Texniki komandamız məsələni araşdırıb sizə ən qısa zamanda məlumat verəcək.",
+   "summary": "Müştəri Yasamalda evdə zəng zamanı səsin kəsilməsi probleminin həll edilməsini istəyir.\nMüştəri telefonu yenidən başlatdığını və dəyişdiyini, qonşularda da eyni problemin olduğunu bildirdi.\nŞəbəkə problemi hələ də araşdırılmayıb və həll olunmayıb."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 7.87,
+  "tokens_in": 1986,
+  "tokens_out": 1462
+ },
+ "c9654385cda8301291869a1402495f38c4458aed6eb2f0f7ca24c6a0e262716b": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot texniki nasazlığı araşdırmaq və dəqiq vaxt bildirmək səlahiyyəti olmadığı üçün sadəcə 'Müraciətiniz qeydə alındı' şablon cavabını verdi.",
+   "category": "internet_speed",
+   "churn_risk": "medium",
+   "faq_answer": "Cihazı yenidən başlatdıqdan sonra problem qalırsa, ərazinizdəki baza stansiyasını yoxlamaq üçün dərhal texniki sorğu açılır. Dəqiq həll müddəti və vəziyyətlə bağlı məlumat almaq üçün sizi operatora yönləndiririk.",
+   "faq_question": "İnternet sürətim çox aşağıdır, cihazı yenidən başlatmaq kömək etmədi, nə etməliyəm?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri problemin təkrarladığını bildirir ('dünən də yazmışdım eyni şeyi deyirsiniz') və evdən işlədiyi üçün internetin zəruri olduğunu vurğulayır, lakin getmək təhdidi etmir.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! İnternet sürətində yaşadığınız çətinliyə görə üzr istəyirik. Evdən işlədiyiniz üçün internetin vacibliyini anlayırıq və dərhal əraziniz üzrə texniki yoxlama başladırıq. Məsələ araşdırıldıqdan sonra ən qısa zamanda sizə məlumat veriləcək.",
+   "summary": "Müştəri aşağı internet sürətindən (0.5 mb/s) şikayət edir və problemin nə vaxt həll olunacağını bilmək istəyir.\nBot müştəriyə telefonu yenidən başlatmağı təklif edib və müraciətin qeydə alındığını bildirib.\nİnternetin zəif olma səbəbi və nə vaxt düzələcəyi hələ də məlum deyil."
+  },
+  "model": "gemini-3.7-flash",
+  "seconds": 62.94,
+  "tokens_in": 1997,
+  "tokens_out": 2431
+ },
+ "cb04b3575cbb9ac646d327c22f01cf47c8561c44ae59d47981e83cc821dcf014": {
+  "analysis": {
+   "bot_failure": "no_permission",
+   "bot_failure_reason": "Bot müştərinin internet paketinin niyə tez bitdiyini araşdıra bilmədiyi üçün onu operatora yönləndirdi.",
+   "category": "billing",
+   "churn_risk": "medium",
+   "faq_answer": "İnternet paketinizin istifadə detallarını mobil tətbiqimizdən yoxlaya bilərsiniz. Əgər xəta olduğunu düşünürsünüzsə, ətraflı yoxlama üçün sizi operatora yönləndirə bilərik.",
+   "faq_question": "İnternet paketim gözlədiyimdən daha tez bitdi, səbəbini necə öyrənə bilərəm?",
+   "next_action": "explain_charges",
+   "risk_reason": "Müştəri iki günə 10 GB internetin bitməsindən narazıdır və 'bu pulu kim qaytaracaq?' deyərək maliyyə itkisindən şikayət edir.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Narahatçılığınızı tam anlayıram. 10 GB internet paketinizin istifadə detallarını yoxlamaq üçün dərhal sistemə baxıram. Xərcləmənin səbəbini müəyyənləşdirib sizə ətraflı məlumat verəcəyəm.",
+   "summary": "Müştəri 2 gün əvvəl aldığı 10 GB internet paketinin niyə tez bitdiyini öyrənmək və pulun qaytarılmasını istəyir.\nBot müştəriyə balansı yoxlamağı təklif etdi, müştəri isə balansın sıfır olduğunu təsdiqlədi.\nİnternet paketinin hara xərcləndiyi hələ də aydınlaşdırılmayıb və pul qaytarılmayıb."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 9.24,
+  "tokens_in": 1991,
+  "tokens_out": 2043
+ },
+ "d595ef27262c3a5122588a02cb0030c62d2ba6a8f7534cf95653c59a32817901": {
+  "analysis": {
+   "bot_failure": "loop",
+   "bot_failure_reason": "Bot müştərinin təkrar müraciətinə baxmayaraq yenə eyni şablon cavabı (\"Telefonu yenidən başladın\") verdi.",
+   "category": "internet_speed",
+   "churn_risk": "high",
+   "faq_answer": "Əgər telefonu yenidən başlatmaq kömək etmirsə, lütfən bizə bildirin. Şəbəkə problemini araşdırmaq üçün dərhal texniki şöbəyə sorğu göndərəcəyik və sizi operatora yönləndirəcəyik.",
+   "faq_question": "İnternetim günlərdir işləmir və telefonu söndürüb yandırmaq kömək etmir, nə edim?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri internetin işləməməsinə görə nömrəsini digər operatora daşıyacağını bildirib: \"Bakcell-ə keçəcəm nömrəmlə birlikdə, bezdim sizdən\".",
+   "sentiment": 5,
+   "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz vəziyyətə görə çox təəssüf edirik. İnternet probleminizi dərhal araşdırmaq üçün texniki şöbəmizə təcili sorğu göndərirəm. Sizi itirmək istəmirik, məsələni ən qısa zamanda həll edib sizə geri dönüş edəcəyik.",
+   "summary": "Müştəri bir həftədir işləməyən internet probleminin həll olunmasını tələb edir.\nMüştəri artıq 3-cü dəfə müraciət etdiyini və botun yenə eyni şablon cavabı verdiyini bildirib.\nİnternet problemi həll olunmayıb və müştəri nömrəsini başqa operatora daşımaq istəyir."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 10.91,
+  "tokens_in": 1991,
+  "tokens_out": 2201
+ },
+ "f6234ee11d36f244b06b5f61384552b666d9793366bf4603efdf59841f5cc71b": {
+  "analysis": {
+   "bot_failure": "missing_knowledge",
+   "bot_failure_reason": "Bot yalnız 'Şəbəkənin yüklənməsi səbəbindən sürət azala bilər' deyərək ümumi məlumat verdi və texniki yoxlama təşkil etmədi.",
+   "category": "internet_speed",
+   "churn_risk": "low",
+   "faq_answer": "Axşam saatlarında şəbəkədə sıxlıq səbəbindən sürətdə müvəqqəti azalma ola bilər. Əgər problem hər gün təkrarlanırsa, zəhmət olmasa operatora qoşulun ki, texniki şöbəyə müraciət açılsın.",
+   "faq_question": "Axşam saatlarında internet niyə yavaşlayır?",
+   "next_action": "escalate_to_tech",
+   "risk_reason": "Müştəri pul ödədiyi xidmətdən narazıdır ('Mən tam sürət üçün pul ödəyirəm'), lakin hələ ki operatoru dəyişmək və ya xidməti ləğv etmək təhdidi etməyib.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Axşam saatlarında yaşanan sürət aşağı düşməsinə görə üzr istəyirik. Qeyd etdiyiniz problem üzrə texniki şöbəyə müraciət yaradıram ki, ərazinizdəki şəbəkə yüklənməsi yoxlanılsın. Tezliklə nəticə barədə sizə məlumat veriləcək.",
+   "summary": "Müştəri hər axşam saat 20:00-dan sonra internet sürətinin kəskin şəkildə aşağı düşməsindən şikayətlənir.\nBot şəbəkənin yüklənməsi səbəbindən sürətin azala biləcəyini bildirdi, lakin problemi həll etmədi.\nAxşam saatlarında internetin yavaşlaması problemi hələ də açıq qalır."
+  },
+  "model": "gemini-3.5-flash-lite",
+  "seconds": 3.01,
+  "tokens_in": 1980,
+  "tokens_out": 500
+ },
+ "fa0acc9c0b056a6b6feeb191cb5a9113f59fd153bf0a0b3317ef6d00e5162b75": {
+  "analysis": {
+   "bot_failure": "not_understood",
+   "bot_failure_reason": "Bot müştərinin pulun geri qaytarılması tələbini başa düşmədi və \"Извините, я не понял ваш вопрос\" cavabını verdi.",
+   "category": "refund",
+   "churn_risk": "medium",
+   "faq_answer": "İstəmədən aktivləşən abunəliyi ləğv etmək və çıxılan məbləğin geri qaytarılması üçün müraciət yaratmaq məqsədilə sizi dərhal canlı operatora yönləndiririk.",
+   "faq_question": "İstəmədən qoşulan abunəliyə görə çıxılan pulu necə geri ala bilərəm?",
+   "next_action": "refund",
+   "risk_reason": "Müştəri istəmədiyi xidmətə görə 8 AZN itirib və pulun geri qaytarılmasını tələb edir.",
+   "sentiment": 3,
+   "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz hala görə üzr istəyirik. İstəmədən qoşulduğunuz oyun abunəliyini dərhal ləğv edirik və çıxılan 8 AZN-in geri qaytarılması üçün müraciət yaradırıq. Müraciətiniz qısa zamanda araşdırılacaq və sizə məlumat veriləcək.",
+   "summary": "Müştəri qoşulmadığını bildirdiyi oyun abunəliyinə görə çıxılan 8 AZN-in geri qaytarılmasını istəyir.\nBot abunəliyi necə dayandırmağı izah etdi, lakin pulun qaytarılması tələbini başa düşmədi.\nAbunəliyin ləğvi və 8 AZN məbləğində pulun geri qaytarılması məsələsi hələ də həll olunmayıb."
+  },
+  "model": "gemini-3.5-flash",
+  "seconds": 7.87,
+  "tokens_in": 1992,
+  "tokens_out": 1383
  }
 }

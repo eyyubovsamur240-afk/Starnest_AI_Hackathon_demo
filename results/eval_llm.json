@@ -1,72 +1,37 @@
 {
   "summary": {
     "mode": "llm",
-    "decided_by": "Gemini (gemini-3.8-flash on 2)",
+    "decided_by": "Gemini (gemini-3.8-flash on 2, gemini-3.6-flash on 7, gemini-3.5-flash on 20, gemini-3.7-flash on 3, gemini-3.5-flash-lite on 8)",
     "models_used": {
-      "gemini-3.8-flash": 2
+      "gemini-3.8-flash": 2,
+      "gemini-3.6-flash": 7,
+      "gemini-3.5-flash": 20,
+      "gemini-3.7-flash": 3,
+      "gemini-3.5-flash-lite": 8
     },
-    "partial": true,
+    "partial": false,
     "stop_reason": null,
     "tickets_in_set": 40,
-    "tickets": 2,
+    "tickets": 40,
     "errors": 0,
-    "not_run": [
-      "T03",
-      "T04",
-      "T05",
-      "T06",
-      "T07",
-      "T08",
-      "T09",
-      "T10",
-      "T11",
-      "T12",
-      "T13",
-      "T14",
-      "T15",
-      "T16",
-      "T17",
-      "T18",
-      "T19",
-      "T20",
-      "T21",
-      "T22",
-      "T23",
-      "T24",
-      "T25",
-      "T26",
-      "T27",
-      "T28",
-      "T29",
-      "T30",
-      "T31",
-      "T32",
-      "T33",
-      "T34",
-      "T35",
-      "T36",
-      "T37",
-      "T38",
-      "T39",
-      "T40"
-    ],
+    "not_run": [],
     "from_saved_answers": 2,
-    "category_accuracy": 100.0,
-    "churn_risk_accuracy": 100.0,
+    "category_accuracy": 87.5,
+    "churn_risk_accuracy": 97.5,
     "sentiment_within_1": 100.0,
-    "bot_failure_accuracy": 100.0,
-    "chats_with_masked_data": 0,
-    "avg_seconds": 20.13,
-    "max_seconds": 28.31,
-    "avg_tokens_in": 1994,
-    "avg_tokens_out": 1592,
-    "usd_per_chat": 0.00458,
-    "usd_per_1000_chats": 4.58,
+    "bot_failure_accuracy": 62.5,
+    "chats_with_masked_data": 7,
+    "avg_seconds": 25.84,
+    "max_seconds": 152.33,
+    "avg_tokens_in": 1985,
+    "avg_tokens_out": 1466,
+    "usd_per_chat": 0.00426,
+    "usd_per_1000_chats": 4.26,
     "offline_on_same_chats": {
-      "category_accuracy": 100.0,
-      "churn_risk_accuracy": 100.0,
-      "sentiment_within_1": 100.0,
-      "bot_failure_accuracy": 100.0
+      "category_accuracy": 77.5,
+      "churn_risk_accuracy": 67.5,
+      "sentiment_within_1": 75.0,
+      "bot_failure_accuracy": 67.5
     }
   },
   "rows": [
@@ -134,6 +99,1278 @@
         "risk_ok": true,
         "sentiment_within_1": true,
         "failure_ok": true
+      }
+    },
+    {
+      "id": "T03",
+      "model": "gemini-3.6-flash",
+      "note": "",
+      "expected": {
+        "category": "sim_card",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "not_understood"
+      },
+      "predicted": {
+        "category": "sim_card",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "not_understood"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 122.26,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Nömrənizi eSIM kimi bərpa etmək üçün şəxsiyyət vəsiqənizlə istənilən xidmət mərkəzimizə yaxınlaşmağınız kifayətdir. Əməkdaşlarımız sizə yeni eSIM QR kodu təqdim edəcəklər. Sizə ən yaxın filialımızın ünvanını təqdim edim?",
+      "tokens_in": 1976,
+      "tokens_out": 1655,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T04",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "billing",
+        "churn_risk": "low",
+        "sentiment": 2,
+        "bot_failure": "missing_knowledge"
+      },
+      "predicted": {
+        "category": "billing",
+        "churn_risk": "low",
+        "sentiment": 2,
+        "bot_failure": "loop"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 152.33,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Hesabınızdakı 2 AZN-lik ödənişin hansı xidmətə aid olduğunu dərhal yoxlayıram. Zəhmət olmasa, bir neçə saniyə gözləyin, sizə ətraflı məlumat verəcəyəm.",
+      "tokens_in": 2021,
+      "tokens_out": 1463,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T05",
+      "model": "gemini-3.7-flash",
+      "note": "",
+      "expected": {
+        "category": "internet_speed",
+        "churn_risk": "low",
+        "sentiment": 2,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "internet_speed",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 21.52,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Məlumat verdiyiniz üçün təşəkkür edirik. Nərimanov ərazisindəki ofisinizdə günorta saatlarında internetin zəifləməsi ilə bağlı texniki şöbəmizə sorğu yönləndirirəm. Şəbəkə mütəxəssislərimiz ərazini yoxladıqdan sonra sizə SMS vasitəsilə məlumat veriləcək.",
+      "tokens_in": 1965,
+      "tokens_out": 1540,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T06",
+      "model": "gemini-3.7-flash",
+      "note": "",
+      "expected": {
+        "category": "billing",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "billing",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "loop"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {
+        "TELEFON": 1,
+        "AD": 1
+      },
+      "seconds": 86.09,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Narahatlığınızı başa düşürük və vəziyyəti dərhal aydınlaşdıracağıq. Son 2 gün üzrə xərclərinizin detallı çıxarışını yoxlayıram ki, balansın nəyə çıxıldığını sizə izah edim. Zəhmət olmasa bir neçə dəqiqə xətdə qalın.",
+      "tokens_in": 2011,
+      "tokens_out": 502,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": false,
+        "sentiment_within_1": true,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T07",
+      "model": "gemini-3.6-flash",
+      "note": "",
+      "expected": {
+        "category": "roaming",
+        "churn_risk": "medium",
+        "sentiment": 4,
+        "bot_failure": "wrong_answer"
+      },
+      "predicted": {
+        "category": "roaming",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 116.15,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşandığınız narahatlığa görə üzr istəyirik. Gürcüstan səfəriniz zamanı aktivləşdirdiyiniz rouminq paketini və balansı xərclərini dərhal yoxlayıram. Səhvən çıxarış olubsa, məbləğin qaytarılması üçün müraciət yaradacağam.",
+      "tokens_in": 1981,
+      "tokens_out": 1807,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T08",
+      "model": "gemini-3.7-flash",
+      "note": "",
+      "expected": {
+        "category": "internet_speed",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "loop"
+      },
+      "predicted": {
+        "category": "internet_speed",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 62.94,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! İnternet sürətində yaşadığınız çətinliyə görə üzr istəyirik. Evdən işlədiyiniz üçün internetin vacibliyini anlayırıq və dərhal əraziniz üzrə texniki yoxlama başladırıq. Məsələ araşdırıldıqdan sonra ən qısa zamanda sizə məlumat veriləcək.",
+      "tokens_in": 1997,
+      "tokens_out": 2431,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T09",
+      "model": "gemini-3.6-flash",
+      "note": "",
+      "expected": {
+        "category": "sim_card",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "missing_knowledge"
+      },
+      "predicted": {
+        "category": "sim_card",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {
+        "TELEFON": 1,
+        "AD": 1
+      },
+      "seconds": 26.61,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız narahatlığa görə üzr istəyirik. Təhlükəsizlik qaydalarına uyğun olaraq kimliyinizi təsdiqlədikdən sonra PUK kodunuzu sizə təqdim edəcəyəm. Zəhmət olmasa şəxsiyyət vəsaitinizin seriya nömrəsini qeyd edin.",
+      "tokens_in": 2015,
+      "tokens_out": 1206,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": false,
+        "sentiment_within_1": false,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T10",
+      "model": "gemini-3.6-flash",
+      "note": "",
+      "expected": {
+        "category": "tariff",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "tariff",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 21.89,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaranmış narahatlığa görə üzr istəyirik. Təsdiq SMS-inizi və tarifinizə aid 50%-lik endirim şərtlərini dərhal sistemdə yoxlayıram. Endirimin tətbiq edilməsi və hesabınızın düzəldilməsi üçün lazımi addımları atacağıq.",
+      "tokens_in": 1965,
+      "tokens_out": 2054,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": false,
+        "sentiment_within_1": true,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T11",
+      "model": "gemini-3.6-flash",
+      "note": "",
+      "expected": {
+        "category": "network_coverage",
+        "churn_risk": "medium",
+        "sentiment": 4,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "network_coverage",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 11.01,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız narahatlığa görə üzr istəyirik. Yasamal ərazisi üzrə texniki araşdırma aparılması üçün ünvanınızı dəqiqləşdirmək istərdik. Müraciətiniz dərhal texniki şöbəyə ötürüləcək və gün ərzində sizə geri dönüş olunacaq.",
+      "tokens_in": 1967,
+      "tokens_out": 1784,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T12",
+      "model": "gemini-3.6-flash",
+      "note": "",
+      "expected": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 28.01,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız narahatlığa görə üzr istəyirik. 'Oyun+' xidmətinə görə balansımdan çıxılan 3 AZN məbləğinin qaytarılması üçün müraciət formalaşdırıram. Yoxlanışdan sonra nəticə barədə SMS alacaqsınız.",
+      "tokens_in": 2020,
+      "tokens_out": 2081,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T13",
+      "model": "gemini-3.6-flash",
+      "note": "",
+      "expected": {
+        "category": "roaming",
+        "churn_risk": "medium",
+        "sentiment": 4,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "roaming",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 11.78,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaranmış narahatlığa görə üzr istəyirik. Dubayda olarkən qeydə alınan rouminq trafiki və xərcləri dərhal sistemdə yoxlayıram. Məsələni araşdırıb sizə ətraflı məlumat verəcəyəm.",
+      "tokens_in": 1978,
+      "tokens_out": 1469,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T14",
+      "model": "gemini-3.5-flash",
+      "note": "tricky: sarcasm",
+      "expected": {
+        "category": "internet_speed",
+        "churn_risk": "medium",
+        "sentiment": 4,
+        "bot_failure": "wrong_answer"
+      },
+      "predicted": {
+        "category": "internet_speed",
+        "churn_risk": "medium",
+        "sentiment": 4,
+        "bot_failure": "wrong_answer"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 81.0,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız narahatlığa və botun yanlış cavabına görə çox üzr istəyirik. İnternet probleminizi araşdırmaq üçün dərhal texniki şöbəyə müraciət göndərirəm. Qısa zamanda sizə geri dönüş edəcəyik.",
+      "tokens_in": 2002,
+      "tokens_out": 1772,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": false,
+        "sentiment_within_1": false,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T15",
+      "model": "gemini-3.5-flash",
+      "note": "tricky: two issues in one chat",
+      "expected": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "not_understood"
+      },
+      "predicted": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 11.29,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliklərə görə üzr istəyirik. Sifariş etmədiyiniz SMS paketi üçün çıxılan 7 AZN-in geri qaytarılması üçün müraciət yaradıram, həmçinin Xırdalandakı zəng kəsintilərini araşdırmaq üçün texniki şöbəyə sorğu göndərirəm.",
+      "tokens_in": 1978,
+      "tokens_out": 2431,
+      "offline": {
+        "category_ok": false,
+        "risk_ok": false,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T16",
+      "model": "gemini-3.5-flash",
+      "note": "tricky: threatens to switch operator",
+      "expected": {
+        "category": "internet_speed",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "loop"
+      },
+      "predicted": {
+        "category": "internet_speed",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "loop"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 10.91,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz vəziyyətə görə çox təəssüf edirik. İnternet probleminizi dərhal araşdırmaq üçün texniki şöbəmizə təcili sorğu göndərirəm. Sizi itirmək istəmirik, məsələni ən qısa zamanda həll edib sizə geri dönüş edəcəyik.",
+      "tokens_in": 1991,
+      "tokens_out": 2201,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T17",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "roaming",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "wrong_answer"
+      },
+      "predicted": {
+        "category": "refund",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": false,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 9.65,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz vəziyyətə görə çox təəssüf edirik. Türkiyədə aktiv etdiyiniz rouminq paketinizi və balansınızdan çıxılan 60 AZN-i dərhal yoxlayıram. Məsələni araşdırıb sizə ən qısa zamanda geri dönüş edəcəyəm.",
+      "tokens_in": 1964,
+      "tokens_out": 1657,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T18",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "sim_card",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "sim_card",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {
+        "TELEFON": 1,
+        "AD": 1
+      },
+      "seconds": 11.03,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz vəziyyətə və buraxılmış vacib zəngə görə çox təəssüflənirik. Ezamiyyətdə olduğunuzu nəzərə alaraq, nömrənizin blokunu dərhal yoxlayıb açmaq üçün lazımi tədbirləri görürəm. Zəhmət olmasa, bir neçə dəqiqə xətdə gözləyin.",
+      "tokens_in": 1982,
+      "tokens_out": 1566,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T19",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "tariff",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "not_understood"
+      },
+      "predicted": {
+        "category": "tariff",
+        "churn_risk": "high",
+        "sentiment": 4,
+        "bot_failure": "not_understood"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 15.81,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız narahatlığa görə üzr istəyirik. Tarif şərtlərindəki dəyişikliklər barədə öncədən məlumat göndərilməli idi, bu vəziyyəti mütləq araşdıracağıq. Sizə daha uyğun və sərfəli digər tariflərimizi təklif etmək və ya bu məsələni həll etmək üçün kömək etmək istərdim.",
+      "tokens_in": 1993,
+      "tokens_out": 2576,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T20",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "network_coverage",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "loop"
+      },
+      "predicted": {
+        "category": "network_coverage",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "wrong_answer"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 15.05,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız bu ciddi çətinliyə görə çox üzr istəyirik, ananızın vəziyyətini tam anlayırıq. Ünvanınızı dəqiqləşdirib dərhal texniki komandamızla əlaqə saxlayacağam ki, ərazidəki şəbəkə problemini araşdırsınlar. Sizi xətdə çox saxlamayacağam.",
+      "tokens_in": 1992,
+      "tokens_out": 1643,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T21",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "billing",
+        "churn_risk": "low",
+        "sentiment": 2,
+        "bot_failure": "missing_knowledge"
+      },
+      "predicted": {
+        "category": "billing",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 11.2,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Hesabınızdakı 12 AZN-lik ödənişin hansı xidmətlərə aid olduğunu dərhal yoxlayıram. Zəhmət olmasa, bir neçə saniyə gözləyin, detalları sizə təqdim edəcəyəm.",
+      "tokens_in": 1986,
+      "tokens_out": 1947,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T22",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "not_understood"
+      },
+      "predicted": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "not_understood"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {
+        "TELEFON": 1,
+        "AD": 1
+      },
+      "seconds": 7.87,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz hala görə üzr istəyirik. İstəmədən qoşulduğunuz oyun abunəliyini dərhal ləğv edirik və çıxılan 8 AZN-in geri qaytarılması üçün müraciət yaradırıq. Müraciətiniz qısa zamanda araşdırılacaq və sizə məlumat veriləcək.",
+      "tokens_in": 1992,
+      "tokens_out": 1383,
+      "offline": {
+        "category_ok": false,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T23",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "roaming",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "refund",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": false,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {
+        "KART": 1
+      },
+      "seconds": 16.34,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz vəziyyətə görə çox təəssüf edirik. Telefonunuz uçuş rejimində olduğu halda çıxılan 45 AZN-lik rouminq ödənişini araşdırmaq və geri qaytarılması üçün dərhal sorğu yaradıram. Zəhmət olmasa, qeyd etdiyiniz skrinşotları bura göndərin ki, texniki şöbəmizə təqdim edək.",
+      "tokens_in": 1992,
+      "tokens_out": 2224,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": false,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T24",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "network_coverage",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "network_coverage",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 7.87,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yasamal ərazisində yaşadığınız şəbəkə çətinliyinə görə üzr istəyirik. Qeyd etdiyiniz ünvan üzrə texniki yoxlanış aparılması üçün dərhal müraciət yaradıram. Texniki komandamız məsələni araşdırıb sizə ən qısa zamanda məlumat verəcək.",
+      "tokens_in": 1986,
+      "tokens_out": 1462,
+      "offline": {
+        "category_ok": false,
+        "risk_ok": false,
+        "sentiment_within_1": false,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T25",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "other",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "missing_knowledge"
+      },
+      "predicted": {
+        "category": "sim_card",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "missing_knowledge"
+      },
+      "category_ok": false,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 7.52,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Nömrənin başqa şəxsin adına keçirilməsi onlayn şəkildə mümkün deyil. Həm sizin, həm də atanızın şəxsiyyət vəsiqəsi ilə birlikdə rəsmi xidmət mərkəzlərimizdən birinə yaxınlaşmağınız kifayətdir.",
+      "tokens_in": 1984,
+      "tokens_out": 1450,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T26",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "network_coverage",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "network_coverage",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 11.1,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız bu xoşagəlməz hal üçün səmimi qəlbdən üzr istəyirik. Sumqayıt ərazisindəki şəbəkə problemini dərhal texniki şöbəmizə yönləndirirəm ki, araşdırılsın. Sizi abunəçimiz kimi saxlamaq bizim üçün çox önəmlidir, məsələni şəxsi nəzarətimə götürürəm.",
+      "tokens_in": 1979,
+      "tokens_out": 1847,
+      "offline": {
+        "category_ok": false,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T27",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "sim_card",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "missing_knowledge"
+      },
+      "predicted": {
+        "category": "sim_card",
+        "churn_risk": "medium",
+        "sentiment": 2,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 8.08,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız çətinliyə görə üzr istəyirik. eSIM profilinizi onlayn şəkildə yenidən aktivləşdirmək üçün sizə köməklik göstərəcəyəm. Zəhmət olmasa, təhlükəsizlik yoxlanışı üçün nömrə sahibinin adını və soyadını qeyd edin.",
+      "tokens_in": 1961,
+      "tokens_out": 1661,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": false,
+        "sentiment_within_1": false,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T28",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "tariff",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "missing_knowledge"
+      },
+      "predicted": {
+        "category": "tariff",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "missing_knowledge"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 6.48,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Sizə kömək etməkdən məmnun olaram. Hazırkı 'Sərfəli 10' tarifinizə yaxın qiymətə daha çox internet təklif edən digər tariflərimizi yoxlayaq və sizə ən uyğun olanını seçib aktivləşdirək.",
+      "tokens_in": 1980,
+      "tokens_out": 1287,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T29",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "billing",
+        "churn_risk": "medium",
+        "sentiment": 4,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "billing",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 9.24,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Narahatçılığınızı tam anlayıram. 10 GB internet paketinizin istifadə detallarını yoxlamaq üçün dərhal sistemə baxıram. Xərcləmənin səbəbini müəyyənləşdirib sizə ətraflı məlumat verəcəyəm.",
+      "tokens_in": 1991,
+      "tokens_out": 2043,
+      "offline": {
+        "category_ok": false,
+        "risk_ok": false,
+        "sentiment_within_1": false,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T30",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "roaming",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "missing_knowledge"
+      },
+      "predicted": {
+        "category": "roaming",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "missing_knowledge"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 7.02,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Bəli, 'Roaming Plus' paketi Gürcüstanda keçərlidir və səfəriniz zamanı ondan rahatlıqla istifadə edə bilərsiniz. Sizə xoş səyahətlər arzulayırıq! Başqa bir sualınız varmı?",
+      "tokens_in": 1944,
+      "tokens_out": 1375,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T31",
+      "model": "gemini-3.5-flash",
+      "note": "tricky: complaint about the bot itself, no technical issue named",
+      "expected": {
+        "category": "other",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "loop"
+      },
+      "predicted": {
+        "category": "other",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "loop"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 9.82,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız xoşagəlməz təcrübəyə və botun yaratdığı çətinliyə görə çox üzr istəyirik. Sizə dərhal kömək etmək üçün buradayam, zəhmət olmasa qarşılaşdığınız problemi mənə bildirin.",
+      "tokens_in": 2038,
+      "tokens_out": 1694,
+      "offline": {
+        "category_ok": false,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T32",
+      "model": "gemini-3.5-flash",
+      "note": "",
+      "expected": {
+        "category": "sim_card",
+        "churn_risk": "low",
+        "sentiment": 2,
+        "bot_failure": "missing_knowledge"
+      },
+      "predicted": {
+        "category": "sim_card",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 38.24,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Qayıtmağınız münasibətilə təbrik edirik. SİM kartınızı yenidən aktivləşdirmək üçün sizə PUK kodunu təqdim edə bilərəm. Zəhmət olmasa, təhlükəsizlik məqsədilə nömrə sahibinin adını və soyadını qeyd edin.",
+      "tokens_in": 1949,
+      "tokens_out": 1410,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T33",
+      "model": "gemini-3.5-flash-lite",
+      "note": "tricky: churn hint stated mildly",
+      "expected": {
+        "category": "refund",
+        "churn_risk": "high",
+        "sentiment": 4,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "refund",
+        "churn_risk": "high",
+        "sentiment": 4,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {
+        "FİN": 1
+      },
+      "seconds": 3.76,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşanan narahatçılığa görə çox üzr istəyirik. Qeyd etdiyiniz məbləğin geri qaytarılması üçün müraciətinizi qeydiyyata aldım və dərhal araşdırıb sizə məlumat verəcəyik.",
+      "tokens_in": 1974,
+      "tokens_out": 437,
+      "offline": {
+        "category_ok": false,
+        "risk_ok": false,
+        "sentiment_within_1": true,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T34",
+      "model": "gemini-3.5-flash-lite",
+      "note": "",
+      "expected": {
+        "category": "internet_speed",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "internet_speed",
+        "churn_risk": "low",
+        "sentiment": 3,
+        "bot_failure": "missing_knowledge"
+      },
+      "category_ok": true,
+      "risk_ok": false,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 3.01,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Axşam saatlarında yaşanan sürət aşağı düşməsinə görə üzr istəyirik. Qeyd etdiyiniz problem üzrə texniki şöbəyə müraciət yaradıram ki, ərazinizdəki şəbəkə yüklənməsi yoxlanılsın. Tezliklə nəticə barədə sizə məlumat veriləcək.",
+      "tokens_in": 1980,
+      "tokens_out": 500,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": false,
+        "sentiment_within_1": false,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T35",
+      "model": "gemini-3.5-flash-lite",
+      "note": "",
+      "expected": {
+        "category": "tariff",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "tariff",
+        "churn_risk": "high",
+        "sentiment": 4,
+        "bot_failure": "wrong_answer"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 4.84,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız narazılığa görə üzr istəyirik və 10 illik sədaqətinizi yüksək qiymətləndiririk. Zəhmət olmasa gözləyin, tarif dəyişikliyi ilə bağlı məlumatı yoxlayıb sizə köhnə və ya alternativ uyğun tarifin seçilməsində kömək edəcəyəm.",
+      "tokens_in": 2000,
+      "tokens_out": 482,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T36",
+      "model": "gemini-3.5-flash-lite",
+      "note": "tricky: refund request for the customer's own mistake",
+      "expected": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "refund",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 4.49,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Səhv köçürülən məbləğlə bağlı vəziyyəti başa düşürük və narahatçılığınıza görə üzr istəyirik. Zəhmət olmasa, səhvən köçürdüyünüz nömrəni və ödəniş çekini qeyd edin, müraciətinizi yoxlayaq. Növbəti addım olaraq sorğunuzu araşdırmaya yönəldəcəyik.",
+      "tokens_in": 1955,
+      "tokens_out": 477,
+      "offline": {
+        "category_ok": false,
+        "risk_ok": false,
+        "sentiment_within_1": false,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T37",
+      "model": "gemini-3.5-flash-lite",
+      "note": "",
+      "expected": {
+        "category": "other",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "missing_knowledge"
+      },
+      "predicted": {
+        "category": "sim_card",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": false,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 10.15,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! 14 yaşına çatmış şəxslər öz adlarına şəxsiyyət vəsiqəsi ilə nömrə ala bilərlər. Əgər hələ vəsiqə yoxdursa, nömrəni valideynin şəxsiyyət vəsiqəsi ilə rəsmiləşdirmək mümkündür.",
+      "tokens_in": 1991,
+      "tokens_out": 435,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T38",
+      "model": "gemini-3.5-flash-lite",
+      "note": "tricky: possible fraud, customer is worried rather than threatening",
+      "expected": {
+        "category": "billing",
+        "churn_risk": "medium",
+        "sentiment": 4,
+        "bot_failure": "no_permission"
+      },
+      "predicted": {
+        "category": "billing",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "no_permission"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {
+        "EMAIL": 1
+      },
+      "seconds": 2.97,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız bu narahatlığa görə üzr istəyirik. Beynəlxalq zənglərlə bağlı hesabatı və təhlükəsizlik yoxlanışını dərhal araşdırmağa başlayırıq. E-poçtunuza detallı məlumatın göndərilməsi üçün sorğunuzu qeydiyyata alıram.",
+      "tokens_in": 1976,
+      "tokens_out": 486,
+      "offline": {
+        "category_ok": false,
+        "risk_ok": false,
+        "sentiment_within_1": false,
+        "failure_ok": false
+      }
+    },
+    {
+      "id": "T39",
+      "model": "gemini-3.5-flash-lite",
+      "note": "",
+      "expected": {
+        "category": "roaming",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "missing_knowledge"
+      },
+      "predicted": {
+        "category": "roaming",
+        "churn_risk": "medium",
+        "sentiment": 3,
+        "bot_failure": "missing_knowledge"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 3.67,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Türkiyədə internetlə bağlı yaranan çətinliyə görə üzr istəyirik. Zəhmət olmasa operator şəbəkəsini (operator selection) avtomatikdən əl ilə digər tərəfdaş şəbəkəyə dəyişib yoxlayın. Əgər alınmasa, rouminq internet paketinizin balansını və APN tənzimləmələrini dərhal yoxlayaq.",
+      "tokens_in": 1984,
+      "tokens_out": 464,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": false,
+        "sentiment_within_1": false,
+        "failure_ok": true
+      }
+    },
+    {
+      "id": "T40",
+      "model": "gemini-3.5-flash-lite",
+      "note": "",
+      "expected": {
+        "category": "internet_speed",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "wrong_answer"
+      },
+      "predicted": {
+        "category": "network_coverage",
+        "churn_risk": "high",
+        "sentiment": 5,
+        "bot_failure": "missing_knowledge"
+      },
+      "category_ok": false,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": false,
+      "masked": {},
+      "seconds": 4.5,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Yaşadığınız narahatçılığa görə çox üzr istəyirik, mərkəzdə belə halın baş verməsi qəbuledilməzdir. Məsələni dərhal texniki şöbəyə yönləndirirəm ki, 28 May metrosu ətrafındakı şəbəkə qüllələri yoxlanılsın. Ən qısa zamanda sizinlə əlaqə saxlayacağıq.",
+      "tokens_in": 1975,
+      "tokens_out": 537,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": false
       }
     }
   ]
