@@ -23,7 +23,7 @@ Starnest Academy AI Hackathon 2026 · Track: **AI for Customer Experience & Digi
 - The queue is first-come, first-served. A customer who says "I'm moving to Bakcell" looks the same as a calm question about roaming.
 - Nobody records **why the bot failed**, so the same handover happens again tomorrow.
 
-**Outcome when it is solved:** the agent sees what the customer wants, how upset they are and whether they are about to leave in a few seconds, starts from a ready Azerbaijani reply, handles the customers at risk of leaving first, and the bot team gets a ready FAQ entry for every gap. How much time this saves is measured in [Comparison with today's approach](#comparison-with-todays-approach).
+**Outcome when it is solved:** the agent sees what the customer wants, how upset they are and whether they are about to leave in a few seconds, starts from a ready Azerbaijani reply, handles the customers at risk of leaving first, and the bot team gets a ready FAQ entry for every gap. [Comparison with today's approach](#comparison-with-todays-approach) sets it against how agents work now.
 
 ## Prototype: the core scenario
 
@@ -100,14 +100,16 @@ From Gemini (`results/eval_llm.md` lists every miss; 5 category misses, 1 churn-
 
 ### Comparison with today's approach
 
-Today the agent reads the raw chat and writes a reply from scratch. Protocol: 2–3 people outside the team each handle the same 3 chats twice, once with the raw chat only and once with the copilot, and record the seconds until they have a reply ready plus a 1–5 quality score for the reply (scored by someone who didn't write it).
+Today the agent reads the raw chat and writes a reply from scratch.
 
 | | Raw chat (today) | With Escalation Copilot |
 |---|---|---|
-| Seconds to understand the chat and have a reply ready | _to be measured_ | _to be measured_ |
-| Reply quality (1–5) | _to be measured_ | _to be measured_ |
+| What the agent sees first | The whole Bot ↔ Müştəri conversation | Summary, category, mood and churn risk |
+| Reply | Written from scratch | A ready Azerbaijani draft to edit |
 | Customers at risk of leaving spotted | Only if the agent reads that far | Flagged and moved to the top of the queue |
 | Why the bot failed recorded | No | Reason + FAQ entry for every handover |
+
+**Planned next step: a timed test with agents.** We did not time real agents during the hackathon. The next step is for 2–3 people outside the team to handle the same 3 chats twice, once with the raw chat only and once with the copilot, recording the seconds until a reply is ready and a 1–5 quality score given by someone who didn't write the reply.
 
 ## Feasibility
 
