@@ -27,7 +27,7 @@ RISK_BG = {"low": "#f0fdf4", "medium": "#fffbeb", "high": "#fef2f2"}
 RISK_DOT = {"low": "🟢", "medium": "🟠", "high": "🔴"}
 RISK_WEIGHT = {"low": 100, "medium": 200, "high": 300}
 SENTIMENT_EMOJI = {1: "🙂", 2: "😐", 3: "😕", 4: "😠", 5: "🤬"}
-MODE_LABEL = {"llm": "süni intellekt", "cache": "süni intellekt · yaddaşdan", "offline": "oflayn"}
+MODE_LABEL = {"llm": "🤖 Gemini", "cache": "🤖 Gemini · yaddaşdan", "offline": "⚙️ Oflayn qaydalar"}
 
 PAGES = [
     ("app.py", "Söhbət təhlili", "🔍"),
@@ -124,6 +124,18 @@ def load_tickets() -> list[dict]:
     return json.loads((ROOT / "data" / "tickets.json").read_text(encoding="utf-8"))
 
 
+def source_badge(result) -> str:
+    """Who decided the category, risk, sentiment and bot-failure reason for this result.
+    Inline styles so it looks the same on the main screen, which has its own CSS."""
+    style = ("display:inline-block;border-radius:999px;padding:3px 12px;font-size:.82rem;"
+             "font-weight:600;margin:0 6px 8px 0;")
+    if result.mode == "offline":
+        return (f"<span style='{style}background:#fef3c7;color:#92400e'>"
+                "⚙️ Oflayn açar söz qaydaları · Gemini istifadə olunmayıb</span>")
+    when = "yaddaşdan" if result.mode == "cache" else f"{result.seconds:.1f} san"
+    return f"<span style='{style}background:#ede9fe;color:#5b21b6'>🤖 Gemini ({MODEL}) qərar verdi · {when}</span>"
+
+
 def card(label: str, value: str, sub: str = "", style: str = "", extra_class: str = "") -> str:
     sub_html = f"<div class='sub'>{sub}</div>" if sub else ""
     return (
@@ -190,7 +202,7 @@ def render_insights(result, profile: dict | None, key: str) -> None:
     privacy = f"🔒 Gizlədildi: {hidden}" if hidden else "🔒 Şəxsi məlumat tapılmadı"
     st.markdown(
         f"<div class='reason'><b>Səbəb:</b> {esc(a.risk_reason)}</div>"
-        f"<span class='pill'>⏱ {result.seconds:.1f} san · {MODE_LABEL[result.mode]}</span>"
+        f"{source_badge(result)}"
         f"<span class='pill privacy'>{privacy}</span>",
         unsafe_allow_html=True,
     )

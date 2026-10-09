@@ -71,15 +71,21 @@ Without an API key (or with **Oflayn rejim** switched on in the sidebar) the app
 
 ## Testing
 
-```bash
-python eval.py              # LLM mode (needs GEMINI_API_KEY)
-python eval.py --offline    # keyword baseline
-python eval.py --limit 5    # quick smoke run
+**Who decides what.** With `GEMINI_API_KEY` set, Gemini alone decides the category, churn risk, sentiment and bot-failure reason, from the (masked) chat text only. The keyword rules are used only when there is no key or **Oflayn rejim** is switched on, and every result says which one produced it (🤖 Gemini or ⚙️ Oflayn qaydalar). Each ticket's `expected` block in `data/tickets.json` is the hand-written answer key: only `eval.py` reads it, after the analysis, to score the result. It is never sent to Gemini or shown in the app.
+
+**Gemini eval on Windows (PowerShell):**
+
+```powershell
+$env:GEMINI_API_KEY="your-key"
+python eval.py --limit 5     # quick check on 5 chats
+python eval.py               # all 40 chats, writes results/eval_llm.json and results/eval_llm.md
 ```
 
-`eval.py` runs all 40 tickets in `data/tickets.json`, compares them with the hand-written labels and writes `results/eval_<mode>.md` (ready for the pitch "Proof" slide) plus a JSON file with every prediction and reply.
+On the free tier this takes a few minutes because of the rate limit; the script waits and retries on its own. Without a key, `python eval.py` stops with a message instead of quietly using the keyword rules. `python eval.py --offline` runs the keyword-rule baseline on purpose and writes `results/eval_offline.*`.
 
-**Test set** (`data/tickets.json`): 40 synthetic chats between a customer (`Müştəri:`) and the operator's chatbot (`Bot:`), each ending with the bot handing over to a human. Drafted with an AI assistant (review and edit them as a team before submitting). None are taken from a real operator. Each ticket also has a made-up CRM profile (`customer`: name, years as a customer, tariff, monthly fee, contacts in the last 30 days, minutes waiting) and labels for category, churn risk, sentiment and `bot_failure`. Seven chats contain fake personal data (T06, T09, T18, T22, T23, T33, T38) to test masking.
+`eval.py` runs the tickets in `data/tickets.json`, compares the results with the answer key and writes `results/eval_<mode>.md` (ready for the pitch "Proof" slide) plus a JSON file with every prediction and reply. Once `eval_llm.json` exists, the **AI dəqiqliyi** block in the app shows the Gemini numbers instead of the keyword-rule ones.
+
+**Test set** (`data/tickets.json`): 40 synthetic chats between a customer (`Müştəri:`) and the operator's chatbot (`Bot:`), each ending with the bot handing over to a human. Drafted with an AI assistant (review and edit them as a team before submitting). None are taken from a real operator. Each ticket also has a made-up CRM profile (`customer`: name, years as a customer, tariff, monthly fee, contacts in the last 30 days, minutes waiting) and an `expected` answer key (category, churn risk, sentiment, `bot_failure`) used only for scoring. Seven chats contain fake personal data (T06, T09, T18, T22, T23, T33, T38) to test masking.
 
 - Languages: Azerbaijani, Russian, English and mixed chats
 - Tone: 11 calm, 19 annoyed, 10 furious
@@ -111,7 +117,7 @@ The offline baseline's keywords were written while looking at T01–T20 (95% / 7
 | `offers.py` | Rule-based retention offers from the issue category, churn risk and customer profile |
 | `prompts.py` | System prompt, category/action/bot-failure vocabulary, 2 few-shot examples |
 | `labels_az.py` | Azerbaijani display names for categories, actions, risk levels, sentiment and bot-failure reasons (internal codes stay in English) |
-| `data/tickets.json` | 40 synthetic Bot ↔ Müştəri chats with made-up customer profiles and labels |
+| `data/tickets.json` | 40 synthetic Bot ↔ Müştəri chats with made-up customer profiles and the answer key for scoring |
 | `eval.py` | Runs the test set and writes the accuracy table |
 | `results/` | Eval outputs |
 

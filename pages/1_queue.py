@@ -9,7 +9,7 @@ import streamlit as st
 from labels_az import BOT_FAILURE, BOT_FAILURE_ICON, CATEGORY, RISK
 from offers import suggest
 from ui import (
-    RISK_COLORS, RISK_DOT, SENTIMENT_EMOJI, card, ensure_queue, esc, load_tickets, priority,
+    MODE_LABEL, RISK_COLORS, RISK_DOT, SENTIMENT_EMOJI, card, ensure_queue, esc, load_tickets, priority,
     render_chat, render_insights, render_profile, run_queue, setup_page,
 )
 
@@ -50,6 +50,7 @@ else:
             "Bot niyə ötürdü": f"{BOT_FAILURE_ICON[a.bot_failure]} {BOT_FAILURE[a.bot_failure]}",
             "Gözləyir": f"{p['waiting_min']} dəq",
             "Təklif": "🎁" if suggest(a.category, a.churn_risk, p) else "",
+        "Kim qərar verdi": MODE_LABEL[res.mode],
         })
     high = sum(1 for _, r in ranked if r.analysis.churn_risk == "high")
     k1, k2, k3 = st.columns(3)

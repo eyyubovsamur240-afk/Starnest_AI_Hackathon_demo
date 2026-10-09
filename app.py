@@ -16,7 +16,7 @@ import streamlit as st
 
 from copilot import MODEL, analyze, llm_available
 from labels_az import CATEGORY, LANGUAGE, RISK, SENTIMENT, TONE
-from ui import nav
+from ui import nav, source_badge
 
 ROOT = Path(__file__).parent
 
@@ -168,6 +168,7 @@ with right:
         else:
             a = result.analysis
             rid = str(id(result))
+            st.markdown(source_badge(result), unsafe_allow_html=True)
             lines = [l.strip() for l in a.summary.strip().splitlines() if l.strip()]
             st.markdown(
                 card("Xülasə", "<ul style='font-size:.95rem;font-weight:500'>"
@@ -230,8 +231,10 @@ with m4:
         m4.metric("Cavab keyfiyyəti", "—", help="İnsan qiymətləndirməsi")
         st.caption("Təhlildən sonra ulduzla qiymətləndirin")
 
-if ev:
-    mode = "süni intellekt" if ev["mode"] == "llm" else "oflayn qaydalar"
-    st.caption(f"Kateqoriya və əhval: {ev['tickets']} uydurma söhbət üzrə eval.py nəticəsi ({mode}).")
+if ev and ev["mode"] == "llm":
+    st.caption(f"Kateqoriya və əhval: Gemini, {ev['tickets']} uydurma söhbət üzrə eval.py nəticəsi.")
+elif ev:
+    st.caption(f"Kateqoriya və əhval: {ev['tickets']} uydurma söhbət üzrə **oflayn açar söz qaydalarının** nəticəsi, "
+               "Gemini-nin yox. Gemini-ni yoxlamaq üçün açarla `python eval.py` işə salın.")
 else:
     st.caption("Kateqoriya və əhval üçün əvvəlcə `python eval.py` işə salın.")

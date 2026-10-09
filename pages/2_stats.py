@@ -25,6 +25,8 @@ else:
     avg_wait = sum(by_id[t]["customer"]["waiting_min"] for t in analyses) / n
     fails = pd.Series([BOT_FAILURE[a.bot_failure] for a in analyses.values()]).value_counts()
     masked_chats = sum(1 for r in queue.values() if r.masked)
+    by_gemini = sum(1 for r in queue.values() if r.mode != "offline")
+    st.caption(f"🤖 Gemini qərar verdi: {by_gemini} söhbət · ⚙️ Oflayn qaydalar: {n - by_gemini} söhbət")
 
     k1, k2, k3, k4 = st.columns(4)
     k1.markdown(card("Operatora ötürülən söhbət", str(n)), unsafe_allow_html=True)

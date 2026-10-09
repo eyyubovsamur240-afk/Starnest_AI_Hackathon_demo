@@ -1,5 +1,7 @@
 # Eval results (offline)
 
+Decided by: **keyword rules (offline)**. Expected values come from the hand-written answer key in data/tickets.json.
+
 | Metric | Value |
 |---|---|
 | Tickets | 40 (errors: 0) |
