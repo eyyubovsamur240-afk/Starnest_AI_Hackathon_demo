@@ -6,7 +6,7 @@ Starnest Academy AI Hackathon 2026 · Track: **AI for Customer Experience & Digi
 
 | Submission item | Where |
 |---|---|
-| Demo link | _Streamlit Community Cloud link: to be added_ ([run it locally](#how-to-open-the-demo) in two commands) |
+| Demo link | **[eyyubovsamur240-afk-starnest-ai-hackathon-demo-app-iu2ppq.streamlit.app](https://eyyubovsamur240-afk-starnest-ai-hackathon-demo-app-iu2ppq.streamlit.app/)** (no login or key needed; all 40 sample chats open with saved Gemini answers). Or [run it locally](#how-to-open-the-demo) in two commands |
 | Video (≤ 2 min) | _to be added_ |
 | Pitch deck | Uploaded on the hackathon dashboard |
 | User and problem | [below](#user-and-problem) |
@@ -130,7 +130,7 @@ Most support copilots summarise a chat and suggest a reply. Escalation Copilot i
 
 ## How to open the demo
 
-**Online:** the Streamlit Community Cloud link at the top. Nothing to install.
+**Online:** [https://eyyubovsamur240-afk-starnest-ai-hackathon-demo-app-iu2ppq.streamlit.app/](https://eyyubovsamur240-afk-starnest-ai-hackathon-demo-app-iu2ppq.streamlit.app/). Nothing to install. If the app is asleep, click "Yes, get this app back up!" and wait about a minute. The sample chats show saved Gemini answers (🤖 badge) without spending quota; a pasted new chat uses the live key, or the ⚙️ offline rules if the daily quota is used up.
 
 **Locally** (Python 3.10+). Windows PowerShell:
 
