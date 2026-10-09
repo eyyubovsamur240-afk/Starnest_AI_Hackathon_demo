@@ -24,7 +24,7 @@ import json
 import os
 from pathlib import Path
 
-from copilot import MODEL, QuotaError, SetupError, analyze, llm_available
+from copilot import MODEL, QuotaError, SetupError, analyze, key_description, llm_available
 
 ROOT = Path(__file__).parent
 OUT_DIR = ROOT / "results"
@@ -49,6 +49,8 @@ def main() -> None:
             '  For live calls (PowerShell):  $env:GEMINI_API_KEY="your-key"   then   python eval.py\n'
             "  For the keyword-rule baseline:  python eval.py --offline\n"
         )
+    if live:
+        print(f"API key: {key_description()}")
     decided_by = "keyword rules (offline)" if args.offline else f"Gemini ({MODEL})"
     print(f"Decided by: {decided_by}. The expected values are only used to score the results.\n")
 

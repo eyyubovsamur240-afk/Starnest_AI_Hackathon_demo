@@ -57,17 +57,34 @@ class AnalysisResult(BaseModel):
     tokens_out: int = 0
 
 
-def api_key() -> str | None:
-    """The Gemini key: environment variable first, then Streamlit secrets (Community Cloud)."""
-    key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
-    if key:
-        return key
+KEY_NAMES = ("GEMINI_API_KEY", "GOOGLE_API_KEY")
+
+
+def _key_and_source() -> tuple[str | None, str | None]:
+    """The Gemini key and where it came from: environment variable first, then Streamlit secrets
+    (.streamlit/secrets.toml locally, the app's Secrets on Community Cloud). No .env file is read."""
+    for name in KEY_NAMES:
+        if os.getenv(name):
+            return os.getenv(name), f"{name} environment variable"
     try:
         import streamlit as st
 
-        return st.secrets.get("GEMINI_API_KEY") or st.secrets.get("GOOGLE_API_KEY")
+        for name in KEY_NAMES:
+            if st.secrets.get(name):
+                return st.secrets.get(name), f"{name} in Streamlit secrets"
     except Exception:  # no secrets file, or not running under Streamlit
-        return None
+        pass
+    return None, None
+
+
+def api_key() -> str | None:
+    return _key_and_source()[0]
+
+
+def key_description() -> str:
+    """Which key is in use, safe to print: its source and last 4 characters."""
+    key, source = _key_and_source()
+    return f"{source}, ending in ...{key[-4:]}" if key else "no key set"
 
 
 def llm_available() -> bool:
@@ -148,8 +165,9 @@ def _quota_error(exc: Exception) -> QuotaError | None:
         return None  # per-minute limit: worth waiting and retrying
     hours = f" It resets in about {max(1, round(wait / 3600))} h." if wait else ""
     return QuotaError(
-        f"Gemini's daily free-tier quota for {MODEL} is used up.{hours} "
-        "Cached results still work; enable billing or use another key for more.",
+        f"Gemini's daily free-tier quota for {MODEL} is used up.{hours} The limit is per Google Cloud "
+        "project, so a new key in the same project shares it. Saved answers still work; "
+        "enable billing on the project for more.",
         retry_seconds=wait,
     )
 

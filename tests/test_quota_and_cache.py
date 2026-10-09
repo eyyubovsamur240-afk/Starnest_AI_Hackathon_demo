@@ -127,3 +127,18 @@ def test_eval_writes_a_partial_report_when_the_quota_runs_out(monkeypatch, tmp_p
     summary = json.loads((tmp_path / "eval_llm.json").read_text(encoding="utf-8"))["summary"]
     assert summary["partial"] and summary["tickets"] == 2 and len(summary["not_run"]) == 3
     assert "PARTIAL: 2 of 5" in (tmp_path / "eval_llm.md").read_text(encoding="utf-8")
+
+
+def test_key_description_names_the_source_and_hides_the_key(monkeypatch):
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    monkeypatch.setenv("GEMINI_API_KEY", "AIzaSy-secret-part-WXYZ")
+    text = copilot.key_description()
+    assert text == "GEMINI_API_KEY environment variable, ending in ...WXYZ"
+    assert "secret" not in text
+
+
+def test_gemini_api_key_wins_over_google_api_key(monkeypatch):
+    monkeypatch.setenv("GOOGLE_API_KEY", "old-key-1111")
+    monkeypatch.setenv("GEMINI_API_KEY", "new-key-2222")
+    assert copilot.api_key() == "new-key-2222"
+    assert copilot.key_description().endswith("...2222")
