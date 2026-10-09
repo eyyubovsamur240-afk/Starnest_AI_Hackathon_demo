@@ -53,8 +53,21 @@ class AnalysisResult(BaseModel):
     masked: dict[str, int]
 
 
+def api_key() -> str | None:
+    """The Gemini key: environment variable first, then Streamlit secrets (Community Cloud)."""
+    key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    if key:
+        return key
+    try:
+        import streamlit as st
+
+        return st.secrets.get("GEMINI_API_KEY") or st.secrets.get("GOOGLE_API_KEY")
+    except Exception:  # no secrets file, or not running under Streamlit
+        return None
+
+
 def llm_available() -> bool:
-    return bool(os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY"))
+    return bool(api_key())
 
 
 def _build_contents(chat: str) -> list[dict]:
@@ -76,7 +89,7 @@ def analyze_llm(chat: str, retries: int = 3) -> Analysis:
     from google import genai
     from google.genai import errors, types
 
-    client = genai.Client()  # reads GEMINI_API_KEY (or GOOGLE_API_KEY)
+    client = genai.Client(api_key=api_key())
     for attempt in range(retries + 1):
         try:
             response = client.models.generate_content(
@@ -259,7 +272,7 @@ def analyze(
     """Mask personal data, then analyze. Falls back to offline rules if no API key is configured."""
     start = time.perf_counter()
     masked_chat, masked = mask(chat, known_names)
-    if llm_available() and not force_offline:
+    if not force_offline and llm_available():
         key = _cache_key(masked_chat)
         cached = _cache_load().get(key) if use_cache else None
         if cached:

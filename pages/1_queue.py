@@ -8,7 +8,7 @@ import streamlit as st
 
 from labels_az import BOT_FAILURE, BOT_FAILURE_ICON, CATEGORY, RISK
 from offers import suggest
-from ui import (
+from copilot_ui import (
     MODE_LABEL, RISK_COLORS, RISK_DOT, SENTIMENT_EMOJI, card, ensure_queue, esc, load_tickets, priority,
     render_chat, render_insights, render_profile, run_queue, setup_page,
 )

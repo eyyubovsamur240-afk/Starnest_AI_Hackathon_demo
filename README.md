@@ -67,7 +67,8 @@ Without an API key (or with **Oflayn rejim** switched on in the sidebar) the app
 ### Deploy to Streamlit Community Cloud
 
 1. Push this repo to GitHub and create a new app at share.streamlit.io pointing at `app.py`.
-2. In **Settings → Secrets** add `GEMINI_API_KEY = "your-key"`. Streamlit exposes top-level secrets as environment variables, so no code change is needed.
+2. In the app's **⋮ → Settings → Secrets** add the line `GEMINI_API_KEY = "your-key"` and save. The app reads the key from Streamlit secrets or from the environment variable.
+3. After a new push, if the app shows an old error, use **⋮ → Reboot app**.
 
 ## Testing
 
@@ -111,7 +112,7 @@ The offline baseline's keywords were written while looking at T01–T20 (95% / 7
 | `app.py` | Main screen in Azerbaijani: chat left, analysis right, AI accuracy block below |
 | `pages/1_queue.py` | Priority queue page with the full analysis of the selected chat |
 | `pages/2_stats.py` | Statistics page: charts and FAQ export |
-| `ui.py` | Shared styles, sidebar links and building blocks for the two extra pages |
+| `copilot_ui.py` | Shared styles, sidebar links and building blocks for the two extra pages |
 | `copilot.py` | Masks the chat, calls Gemini with structured JSON output (Pydantic schema), caches results, and holds the offline fallback |
 | `privacy.py` | Rule-based masking of phone numbers, names, card numbers, e-mails and FIN codes |
 | `offers.py` | Rule-based retention offers from the issue category, churn risk and customer profile |

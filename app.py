@@ -16,7 +16,7 @@ import streamlit as st
 
 from copilot import MODEL, analyze, llm_available
 from labels_az import CATEGORY, LANGUAGE, RISK, SENTIMENT, TONE
-from ui import nav, source_badge
+from copilot_ui import nav, source_badge
 
 ROOT = Path(__file__).parent
 
