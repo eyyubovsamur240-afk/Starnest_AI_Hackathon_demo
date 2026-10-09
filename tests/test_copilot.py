@@ -38,7 +38,7 @@ def test_only_the_masked_chat_is_sent_to_gemini(monkeypatch):
 
     def fake_llm(chat):
         sent.append(chat)
-        return copilot.analyze_offline(chat), 100, 50
+        return copilot.analyze_offline(chat), 100, 50, "gemini-test-flash"
 
     monkeypatch.setattr(copilot, "llm_available", lambda: True)
     monkeypatch.setattr(copilot, "analyze_llm", fake_llm)

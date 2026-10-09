@@ -1,13 +1,18 @@
 {
   "summary": {
     "mode": "llm",
-    "decided_by": "Gemini (gemini-3.8-flash)",
+    "decided_by": "Gemini (gemini-3.8-flash on 2)",
+    "models_used": {
+      "gemini-3.8-flash": 2
+    },
     "partial": true,
-    "stop_reason": "Gemini rejected the API key. Check GEMINI_API_KEY.\nGoogle said: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'The caller does not have permission', 'status': 'PERMISSION_DENIED'}}",
+    "stop_reason": null,
     "tickets_in_set": 40,
     "tickets": 2,
-    "errors": 2,
+    "errors": 0,
     "not_run": [
+      "T03",
+      "T04",
       "T05",
       "T06",
       "T07",
@@ -45,7 +50,7 @@
       "T39",
       "T40"
     ],
-    "from_saved_answers": 0,
+    "from_saved_answers": 2,
     "category_accuracy": 100.0,
     "churn_risk_accuracy": 100.0,
     "sentiment_within_1": 100.0,
@@ -56,11 +61,18 @@
     "avg_tokens_in": 1994,
     "avg_tokens_out": 1592,
     "usd_per_chat": 0.00458,
-    "usd_per_1000_chats": 4.58
+    "usd_per_1000_chats": 4.58,
+    "offline_on_same_chats": {
+      "category_accuracy": 100.0,
+      "churn_risk_accuracy": 100.0,
+      "sentiment_within_1": 100.0,
+      "bot_failure_accuracy": 100.0
+    }
   },
   "rows": [
     {
       "id": "T01",
+      "model": "gemini-3.8-flash",
       "note": "",
       "expected": {
         "category": "roaming",
@@ -80,13 +92,20 @@
       "failure_ok": true,
       "masked": {},
       "seconds": 28.31,
-      "mode": "llm",
+      "mode": "cache",
       "suggested_reply_az": "Salam! Türkiyə səfəriniz üçün sizə ən uyğun rouminq paketini seçməkdə məmnuniyyətlə kömək edərəm. Səfər zamanı əsasən internetdən, yoxsa zənglərdən istifadə etməyi planlaşdırırsınız? Seçiminizə uyğun olaraq sizə sərfəli variantı təqdim edim.",
       "tokens_in": 2014,
-      "tokens_out": 1847
+      "tokens_out": 1847,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
+      }
     },
     {
       "id": "T02",
+      "model": "gemini-3.8-flash",
       "note": "",
       "expected": {
         "category": "tariff",
@@ -106,29 +125,15 @@
       "failure_ok": true,
       "masked": {},
       "seconds": 11.95,
-      "mode": "llm",
+      "mode": "cache",
       "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. 30 GB həcmli uyğun tarif paketlərimizi sizə təqdim edə və cari bonus dəqiqələrinizin saxlanılma şərtlərini dərhal yoxlaya bilərəm. Zəhmət olmasa, hansı tarifə keçmək istədiyinizi qeyd edin.",
       "tokens_in": 1975,
-      "tokens_out": 1338
-    },
-    {
-      "id": "T03",
-      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
-      "expected": {
-        "category": "sim_card",
-        "churn_risk": "low",
-        "sentiment": 1,
-        "bot_failure": "not_understood"
-      }
-    },
-    {
-      "id": "T04",
-      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
-      "expected": {
-        "category": "billing",
-        "churn_risk": "low",
-        "sentiment": 2,
-        "bot_failure": "missing_knowledge"
+      "tokens_out": 1338,
+      "offline": {
+        "category_ok": true,
+        "risk_ok": true,
+        "sentiment_within_1": true,
+        "failure_ok": true
       }
     }
   ]

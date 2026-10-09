@@ -1,15 +1,14 @@
-# Eval results (llm, PARTIAL: 2 of 40 chats)
+# Eval results (llm): Gemini on 2 of 40 chats, a sample
 
-**Partial run.** Scored 2 of 40 chats; 36 not run, 2 failed with an error.
-Stopped because: Gemini rejected the API key. Check GEMINI_API_KEY.
-Google said: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'The caller does not have permission', 'status': 'PERMISSION_DENIED'}}
+**Sample, not the full set.** Scored 2 of 40 chats; 38 not run, 0 failed with an error.
+
 Run `python eval.py` again later: chats with a saved Gemini answer are not sent again.
 
-Decided by: **Gemini (gemini-3.8-flash)**. Expected values come from the hand-written answer key in data/tickets.json.
+Decided by: **Gemini (gemini-3.8-flash on 2)**. Expected values come from the hand-written answer key in data/tickets.json.
 
 | Metric | Value |
 |---|---|
-| Tickets scored | 2 of 40 (errors: 2, not run: 36) |
+| Tickets scored | 2 of 40 (errors: 0, not run: 38) |
 | Category accuracy | 100.0% |
 | Churn-risk accuracy | 100.0% |
 | Sentiment within ±1 | 100.0% |
@@ -19,8 +18,17 @@ Decided by: **Gemini (gemini-3.8-flash)**. Expected values come from the hand-wr
 | Avg tokens per chat (in / out) | 1994 / 1592 |
 | Cost per chat / per 1,000 chats (paid tier) | $0.00458 / $4.58 |
 
+## Gemini vs keyword rules on the same 2 chats
+
+| Metric | Gemini (2 chats) | Keyword rules (same 2 chats) |
+|---|---|---|
+| Category accuracy | 100.0% | 100.0% |
+| Churn-risk accuracy | 100.0% | 100.0% |
+| Sentiment within ±1 | 100.0% | 100.0% |
+| Bot-failure reason accuracy | 100.0% | 100.0% |
+
 ## Misses
 
-| Ticket | Expected | Predicted | Note |
-|---|---|---|---|
-| none | | | |
+| Ticket | Expected | Predicted | Model | Note |
+|---|---|---|---|---|
+| none | | | | |

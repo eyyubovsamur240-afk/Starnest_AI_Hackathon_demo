@@ -12,3 +12,4 @@ def _temp_gemini_cache(monkeypatch, tmp_path):
     import copilot
 
     monkeypatch.setattr(copilot, "CACHE_FILE", tmp_path / "gemini_cache.json")
+    monkeypatch.setattr(copilot, "_skip_until", {})

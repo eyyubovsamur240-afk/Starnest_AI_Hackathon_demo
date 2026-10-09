@@ -2,6 +2,7 @@
   "summary": {
     "mode": "offline",
     "decided_by": "keyword rules (offline)",
+    "models_used": {},
     "partial": false,
     "stop_reason": null,
     "tickets_in_set": 40,
@@ -24,6 +25,7 @@
   "rows": [
     {
       "id": "T01",
+      "model": null,
       "note": "",
       "expected": {
         "category": "roaming",
@@ -50,6 +52,7 @@
     },
     {
       "id": "T02",
+      "model": null,
       "note": "",
       "expected": {
         "category": "tariff",
@@ -76,6 +79,7 @@
     },
     {
       "id": "T03",
+      "model": null,
       "note": "",
       "expected": {
         "category": "sim_card",
@@ -102,6 +106,7 @@
     },
     {
       "id": "T04",
+      "model": null,
       "note": "",
       "expected": {
         "category": "billing",
@@ -128,6 +133,7 @@
     },
     {
       "id": "T05",
+      "model": null,
       "note": "",
       "expected": {
         "category": "internet_speed",
@@ -154,6 +160,7 @@
     },
     {
       "id": "T06",
+      "model": null,
       "note": "",
       "expected": {
         "category": "billing",
@@ -183,6 +190,7 @@
     },
     {
       "id": "T07",
+      "model": null,
       "note": "",
       "expected": {
         "category": "roaming",
@@ -209,6 +217,7 @@
     },
     {
       "id": "T08",
+      "model": null,
       "note": "",
       "expected": {
         "category": "internet_speed",
@@ -235,6 +244,7 @@
     },
     {
       "id": "T09",
+      "model": null,
       "note": "",
       "expected": {
         "category": "sim_card",
@@ -264,6 +274,7 @@
     },
     {
       "id": "T10",
+      "model": null,
       "note": "",
       "expected": {
         "category": "tariff",
@@ -290,6 +301,7 @@
     },
     {
       "id": "T11",
+      "model": null,
       "note": "",
       "expected": {
         "category": "network_coverage",
@@ -316,6 +328,7 @@
     },
     {
       "id": "T12",
+      "model": null,
       "note": "",
       "expected": {
         "category": "refund",
@@ -342,6 +355,7 @@
     },
     {
       "id": "T13",
+      "model": null,
       "note": "",
       "expected": {
         "category": "roaming",
@@ -368,6 +382,7 @@
     },
     {
       "id": "T14",
+      "model": null,
       "note": "tricky: sarcasm",
       "expected": {
         "category": "internet_speed",
@@ -394,6 +409,7 @@
     },
     {
       "id": "T15",
+      "model": null,
       "note": "tricky: two issues in one chat",
       "expected": {
         "category": "refund",
@@ -420,6 +436,7 @@
     },
     {
       "id": "T16",
+      "model": null,
       "note": "tricky: threatens to switch operator",
       "expected": {
         "category": "internet_speed",
@@ -446,6 +463,7 @@
     },
     {
       "id": "T17",
+      "model": null,
       "note": "",
       "expected": {
         "category": "roaming",
@@ -472,6 +490,7 @@
     },
     {
       "id": "T18",
+      "model": null,
       "note": "",
       "expected": {
         "category": "sim_card",
@@ -501,6 +520,7 @@
     },
     {
       "id": "T19",
+      "model": null,
       "note": "",
       "expected": {
         "category": "tariff",
@@ -527,6 +547,7 @@
     },
     {
       "id": "T20",
+      "model": null,
       "note": "",
       "expected": {
         "category": "network_coverage",
@@ -553,6 +574,7 @@
     },
     {
       "id": "T21",
+      "model": null,
       "note": "",
       "expected": {
         "category": "billing",
@@ -579,6 +601,7 @@
     },
     {
       "id": "T22",
+      "model": null,
       "note": "",
       "expected": {
         "category": "refund",
@@ -608,6 +631,7 @@
     },
     {
       "id": "T23",
+      "model": null,
       "note": "",
       "expected": {
         "category": "roaming",
@@ -636,6 +660,7 @@
     },
     {
       "id": "T24",
+      "model": null,
       "note": "",
       "expected": {
         "category": "network_coverage",
@@ -662,6 +687,7 @@
     },
     {
       "id": "T25",
+      "model": null,
       "note": "",
       "expected": {
         "category": "other",
@@ -688,6 +714,7 @@
     },
     {
       "id": "T26",
+      "model": null,
       "note": "",
       "expected": {
         "category": "network_coverage",
@@ -714,6 +741,7 @@
     },
     {
       "id": "T27",
+      "model": null,
       "note": "",
       "expected": {
         "category": "sim_card",
@@ -740,6 +768,7 @@
     },
     {
       "id": "T28",
+      "model": null,
       "note": "",
       "expected": {
         "category": "tariff",
@@ -766,6 +795,7 @@
     },
     {
       "id": "T29",
+      "model": null,
       "note": "",
       "expected": {
         "category": "billing",
@@ -792,6 +822,7 @@
     },
     {
       "id": "T30",
+      "model": null,
       "note": "",
       "expected": {
         "category": "roaming",
@@ -818,6 +849,7 @@
     },
     {
       "id": "T31",
+      "model": null,
       "note": "tricky: complaint about the bot itself, no technical issue named",
       "expected": {
         "category": "other",
@@ -844,6 +876,7 @@
     },
     {
       "id": "T32",
+      "model": null,
       "note": "",
       "expected": {
         "category": "sim_card",
@@ -870,6 +903,7 @@
     },
     {
       "id": "T33",
+      "model": null,
       "note": "tricky: churn hint stated mildly",
       "expected": {
         "category": "refund",
@@ -898,6 +932,7 @@
     },
     {
       "id": "T34",
+      "model": null,
       "note": "",
       "expected": {
         "category": "internet_speed",
@@ -924,6 +959,7 @@
     },
     {
       "id": "T35",
+      "model": null,
       "note": "",
       "expected": {
         "category": "tariff",
@@ -950,6 +986,7 @@
     },
     {
       "id": "T36",
+      "model": null,
       "note": "tricky: refund request for the customer's own mistake",
       "expected": {
         "category": "refund",
@@ -976,6 +1013,7 @@
     },
     {
       "id": "T37",
+      "model": null,
       "note": "",
       "expected": {
         "category": "other",
@@ -1002,6 +1040,7 @@
     },
     {
       "id": "T38",
+      "model": null,
       "note": "tricky: possible fraud, customer is worried rather than threatening",
       "expected": {
         "category": "billing",
@@ -1030,6 +1069,7 @@
     },
     {
       "id": "T39",
+      "model": null,
       "note": "",
       "expected": {
         "category": "roaming",
@@ -1056,6 +1096,7 @@
     },
     {
       "id": "T40",
+      "model": null,
       "note": "",
       "expected": {
         "category": "internet_speed",

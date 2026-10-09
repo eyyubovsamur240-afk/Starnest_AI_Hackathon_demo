@@ -57,12 +57,12 @@ The answer key in `data/tickets.json` (`expected`) is only read by `eval.py` aft
 
 ### Automated tests
 
-`pytest` (75 tests, run in CI on every push):
+`pytest` (82 tests, run in CI on every push):
 
 - `tests/test_privacy.py`: every phone format, card, e-mail, FIN code and name pattern is masked; all 7 test chats with personal data come out with no name or phone left.
 - `tests/test_offers.py`: no offer at low risk; medium risk only for loyal or high-value customers; high risk always gets a priced offer.
 - `tests/test_copilot.py`: the test set is well formed; the output always fits the schema; only the masked chat is sent to Gemini; the answer key never reaches the prompt.
-- `tests/test_quota_and_cache.py`: each chat costs one Gemini request and is never sent twice; a daily-quota 429 stops at once (no retries), a 503 is retried once, and an interrupted eval still writes a report marked partial.
+- `tests/test_quota_and_cache.py`: each chat costs one Gemini request and is never sent twice; a daily-quota 429 stops at once (no retries), a 503 is retried after 5, 15 and 30 s, the next model in `GEMINI_MODEL` takes over when one runs out or stays busy, and an interrupted eval still writes a report marked as a sample.
 
 ### Accuracy (`python eval.py`)
 
@@ -103,7 +103,7 @@ Today the agent reads the raw chat and writes a reply from scratch. Protocol: 2�
 
 **Running costs.** The demo runs on the Gemini free tier, so it costs nothing. On the paid tier, `eval.py` records the tokens Gemini reports for every chat and prints the cost per chat and per 1,000 chats at the price set in `GEMINI_PRICE_IN` / `GEMINI_PRICE_OUT` (USD per 1M tokens; the defaults are the older gemini-2.5-flash list price of $0.30 / $2.50, so set the current price for your model from [ai.google.dev/pricing](https://ai.google.dev/pricing)). One chat costs **one** Gemini request (one call returns every field), and every answer is saved to `results/gemini_cache.json`, so re-opening a chat or re-running the eval costs nothing. Hosting is a single Streamlit app.
 
-**Free-tier limit.** On the free tier Google allows only **20 requests a day** for `gemini-3.8-flash` (quota `GenerateRequestsPerDayPerProjectPerModel-FreeTier`), so the 40-chat eval needs two days or a billed key. When the limit is hit, `eval.py` stops with one message and writes a report from the chats that finished, marked partial, and the app shows a message in Azerbaijani and switches to the ⚙️ offline rules. Saved answers keep working either way.
+**Free-tier limit.** On the free tier Google allows only **20 requests a day** for `gemini-3.8-flash` (quota `GenerateRequestsPerDayPerProjectPerModel-FreeTier`), so the 40-chat eval needs two days or a billed key. When the limit is hit, `eval.py` stops with one message and writes a report from the chats that finished, marked partial, and the app shows a message in Azerbaijani and switches to the ⚙️ offline rules. Saved answers keep working either way. The limit is per Google Cloud project and per model, so a second key in the same project shares it; `eval.py` prints which key it uses (source and last 4 characters). Because each model has its own quota, `GEMINI_MODEL` takes a comma-separated fallback list (`python eval.py --list-models` shows what the key can use): when one model's daily limit is used up, or it stays busy (503) after its retries, the next model answers. The saved answer and the report record which model answered each chat, and the report shows the keyword rules on the same chats next to Gemini, so a partial run is still a fair, labelled sample.
 
 **Next step.** A 2-week shadow pilot with one support team: the copilot runs next to the agents on real escalated chats, agents rate each summary and reply in the app, and we compare handling time and the bot's handover rate before and after adding the generated FAQ entries.
 
@@ -143,10 +143,11 @@ Open http://localhost:8501, pick a sample chat and click **Təhlil et**. Without
 **Tests and eval:**
 
 ```bash
-python -m pytest -q          # 75 automated tests, no key needed
+python -m pytest -q          # 82 automated tests, no key needed
 python eval.py --offline     # keyword baseline -> results/eval_offline.*
 python eval.py               # Gemini -> results/eval_llm.*; only chats without a saved answer call the API
 python eval.py --limit 5     # quick Gemini check on 5 chats
+python eval.py --list-models # models this key can use; chain them: GEMINI_MODEL="model-a,model-b"
 ```
 
 ## Disclosure: models, data, components and AI assistants
