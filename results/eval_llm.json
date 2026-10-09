@@ -1,0 +1,135 @@
+{
+  "summary": {
+    "mode": "llm",
+    "decided_by": "Gemini (gemini-3.8-flash)",
+    "partial": true,
+    "stop_reason": "Gemini rejected the API key. Check GEMINI_API_KEY.\nGoogle said: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'The caller does not have permission', 'status': 'PERMISSION_DENIED'}}",
+    "tickets_in_set": 40,
+    "tickets": 2,
+    "errors": 2,
+    "not_run": [
+      "T05",
+      "T06",
+      "T07",
+      "T08",
+      "T09",
+      "T10",
+      "T11",
+      "T12",
+      "T13",
+      "T14",
+      "T15",
+      "T16",
+      "T17",
+      "T18",
+      "T19",
+      "T20",
+      "T21",
+      "T22",
+      "T23",
+      "T24",
+      "T25",
+      "T26",
+      "T27",
+      "T28",
+      "T29",
+      "T30",
+      "T31",
+      "T32",
+      "T33",
+      "T34",
+      "T35",
+      "T36",
+      "T37",
+      "T38",
+      "T39",
+      "T40"
+    ],
+    "from_saved_answers": 0,
+    "category_accuracy": 100.0,
+    "churn_risk_accuracy": 100.0,
+    "sentiment_within_1": 100.0,
+    "bot_failure_accuracy": 100.0,
+    "chats_with_masked_data": 0,
+    "avg_seconds": 20.13,
+    "max_seconds": 28.31,
+    "avg_tokens_in": 1994,
+    "avg_tokens_out": 1592,
+    "usd_per_chat": 0.00458,
+    "usd_per_1000_chats": 4.58
+  },
+  "rows": [
+    {
+      "id": "T01",
+      "note": "",
+      "expected": {
+        "category": "roaming",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "not_understood"
+      },
+      "predicted": {
+        "category": "roaming",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "not_understood"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 28.31,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Türkiyə səfəriniz üçün sizə ən uyğun rouminq paketini seçməkdə məmnuniyyətlə kömək edərəm. Səfər zamanı əsasən internetdən, yoxsa zənglərdən istifadə etməyi planlaşdırırsınız? Seçiminizə uyğun olaraq sizə sərfəli variantı təqdim edim.",
+      "tokens_in": 2014,
+      "tokens_out": 1847
+    },
+    {
+      "id": "T02",
+      "note": "",
+      "expected": {
+        "category": "tariff",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "not_understood"
+      },
+      "predicted": {
+        "category": "tariff",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "not_understood"
+      },
+      "category_ok": true,
+      "risk_ok": true,
+      "sentiment_within_1": true,
+      "failure_ok": true,
+      "masked": {},
+      "seconds": 11.95,
+      "mode": "llm",
+      "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. 30 GB həcmli uyğun tarif paketlərimizi sizə təqdim edə və cari bonus dəqiqələrinizin saxlanılma şərtlərini dərhal yoxlaya bilərəm. Zəhmət olmasa, hansı tarifə keçmək istədiyinizi qeyd edin.",
+      "tokens_in": 1975,
+      "tokens_out": 1338
+    },
+    {
+      "id": "T03",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "expected": {
+        "category": "sim_card",
+        "churn_risk": "low",
+        "sentiment": 1,
+        "bot_failure": "not_understood"
+      }
+    },
+    {
+      "id": "T04",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "expected": {
+        "category": "billing",
+        "churn_risk": "low",
+        "sentiment": 2,
+        "bot_failure": "missing_knowledge"
+      }
+    }
+  ]
+}
