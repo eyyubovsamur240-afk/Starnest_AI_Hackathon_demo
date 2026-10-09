@@ -1,0 +1,26 @@
+# Eval results (llm, PARTIAL: 2 of 40 chats)
+
+**Partial run.** Scored 2 of 40 chats; 36 not run, 2 failed with an error.
+Stopped because: Gemini rejected the API key. Check GEMINI_API_KEY.
+Google said: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'The caller does not have permission', 'status': 'PERMISSION_DENIED'}}
+Run `python eval.py` again later: chats with a saved Gemini answer are not sent again.
+
+Decided by: **Gemini (gemini-3.8-flash)**. Expected values come from the hand-written answer key in data/tickets.json.
+
+| Metric | Value |
+|---|---|
+| Tickets scored | 2 of 40 (errors: 2, not run: 36) |
+| Category accuracy | 100.0% |
+| Churn-risk accuracy | 100.0% |
+| Sentiment within ±1 | 100.0% |
+| Bot-failure reason accuracy | 100.0% |
+| Chats with personal data masked | 0 |
+| Avg / max response time | 20.13s / 28.31s |
+| Avg tokens per chat (in / out) | 1994 / 1592 |
+| Cost per chat / per 1,000 chats (paid tier) | $0.00458 / $4.58 |
+
+## Misses
+
+| Ticket | Expected | Predicted | Note |
+|---|---|---|---|
+| none | | | |

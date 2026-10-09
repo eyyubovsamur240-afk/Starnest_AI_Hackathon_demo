@@ -1,0 +1,40 @@
+{
+ "6fd048d2cfb26cfa7123eb9002ed3656ba6a94eb9f028ec2223c1b801c988eb6": {
+  "analysis": {
+   "bot_failure": "not_understood",
+   "bot_failure_reason": "Bot müştərinin Türkiyə üçün sərfəli paket sorğusunu anlamadı və 'Bağışlayın, sualınızı başa düşmədim' cavabını verdi.",
+   "category": "roaming",
+   "churn_risk": "low",
+   "faq_answer": "Türkiyə istiqamətində ehtiyacınıza uyğun gündəlik və həftəlik sərfəli internet və danışıq paketlərimiz mövcuddur. Paketlərin şərtləri və aktivasiya qaydaları ilə mobil tətbiqimizdən və ya *150# yığaraq tanış ola bilərsiniz.",
+   "faq_question": "Türkiyə üçün hansı rouminq paketi daha sərfəlidir?",
+   "next_action": "no_action",
+   "risk_reason": "Müştəri sakit və nəzakətlə məlumat almaq istəyir, heç bir narazılıq və ya xidmətdən imtina bildirməyib.",
+   "sentiment": 1,
+   "suggested_reply_az": "Salam! Türkiyə səfəriniz üçün sizə ən uyğun rouminq paketini seçməkdə məmnuniyyətlə kömək edərəm. Səfər zamanı əsasən internetdən, yoxsa zənglərdən istifadə etməyi planlaşdırırsınız? Seçiminizə uyğun olaraq sizə sərfəli variantı təqdim edim.",
+   "summary": "Müştəri Türkiyə səfəri üçün ən sərfəli rouminq paketini öyrənmək istəyir.\nBot müştəriyə *150# kodunu yığmağı təklif etdi, ardınca sualı anlamadığını bildirdi.\nMüştəriyə uyğun rouminq paketi seçilməyib və məlumat verilməyib."
+  },
+  "model": "gemini-3.8-flash",
+  "seconds": 28.31,
+  "tokens_in": 2014,
+  "tokens_out": 1847
+ },
+ "78b7d9a235fc1e25b37194a4828f08136d63f829f18c9ba627ae692f0ec5b9cd": {
+  "analysis": {
+   "bot_failure": "not_understood",
+   "bot_failure_reason": "Bot müştərinin bonus dəqiqələrin taleyi ilə bağlı sualını anlamadığını bildirdi ('I did not understand your question').",
+   "category": "tariff",
+   "churn_risk": "low",
+   "faq_answer": "Əksər hallarda tarif dəyişdirildikdə cari bonus dəqiqələri sıfırlanır və yeni paketin şərtləri tətbiq olunur. Keçid etmək istədiyiniz konkret tarifin qaydalarını dəqiqləşdirmək üçün operatorla əlaqə saxlaya bilərsiniz.",
+   "faq_question": "Yeni tarifə keçid edəndə cari bonus dəqiqələrim saxlanılır?",
+   "next_action": "tariff_change",
+   "risk_reason": "Müştəri heç bir narazılıq və ya operatoru dəyişmək niyyəti bildirmədən sakit tərzdə məlumat istəyir ('no rush').",
+   "sentiment": 1,
+   "suggested_reply_az": "Salam! Müraciətiniz üçün təşəkkür edirik. 30 GB həcmli uyğun tarif paketlərimizi sizə təqdim edə və cari bonus dəqiqələrinizin saxlanılma şərtlərini dərhal yoxlaya bilərəm. Zəhmət olmasa, hansı tarifə keçmək istədiyinizi qeyd edin.",
+   "summary": "Müştəri 30 GB internet paketi olan yeni tarifə keçmək və cari bonus dəqiqələrinin qalıb-qalmayacağını bilmək istəyir.\nBot müştərini veb-sayta yönləndirdi və növbəti sualı anlamadığını bildirdi.\nTarif dəyişikliyi və bonus dəqiqələrin yeni tarifə köçürülüb-köçürülməməsi məsələsi hələ cavablandırılmayıb."
+  },
+  "model": "gemini-3.8-flash",
+  "seconds": 11.95,
+  "tokens_in": 1975,
+  "tokens_out": 1338
+ }
+}
