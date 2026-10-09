@@ -1,0 +1,809 @@
+[
+  {
+    "id": "T01",
+    "language": "az",
+    "tone": "calm",
+    "chat": "Müştəri: Salam, Türkiyəyə gedirəm gələn həftə. Rouminq paketi necə qoşulur?\nBot: Rouminq paketləri haqqında məlumat üçün *150# yığın.\nMüştəri: yığdım, amma Türkiyə üçün hansının sərfəli olduğunu başa düşmədim\nBot: Bağışlayın, sualınızı başa düşmədim.\nMüştəri: operatorla danışa bilərəm? təşəkkürlər\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "roaming",
+      "churn_risk": "low",
+      "sentiment": 1,
+      "bot_failure": "not_understood"
+    },
+    "customer": {
+      "name": "Könül Həsənova",
+      "tenure_years": 12,
+      "tariff": "Smart 15",
+      "monthly_azn": 15,
+      "contacts_30d": 1,
+      "waiting_min": 15
+    }
+  },
+  {
+    "id": "T02",
+    "language": "en",
+    "tone": "calm",
+    "chat": "Müştəri: Hi, I'd like to switch from my current tariff to a bigger internet package, maybe 30GB\nBot: You can see all tariffs on our website.\nMüştəri: I checked, but I want to keep my bonus minutes. Can someone confirm if they carry over?\nBot: I did not understand your question.\nMüştəri: ok, please connect me to an agent, no rush\nBot: I'm transferring you to a human agent, please wait.",
+    "expected": {
+      "category": "tariff",
+      "churn_risk": "low",
+      "sentiment": 1,
+      "bot_failure": "not_understood"
+    },
+    "customer": {
+      "name": "Zeynəb Məmmədova",
+      "tenure_years": 4,
+      "tariff": "Sərfəli 10",
+      "monthly_azn": 10,
+      "contacts_30d": 0,
+      "waiting_min": 16
+    }
+  },
+  {
+    "id": "T03",
+    "language": "ru",
+    "tone": "calm",
+    "chat": "Müştəri: Добрый день. Потеряла телефон, нужно восстановить сим-карту с тем же номером\nBot: Для блокировки SIM-карты наберите 0909.\nMüştəri: заблокировала уже, спасибо. Где можно получить новую? Можно ли eSIM?\nBot: Пожалуйста, уточните ваш вопрос.\nMüştəri: хочу eSIM на тот же номер, подскажите что нужно\nBot: Перевожу вас на оператора, пожалуйста, подождите.",
+    "expected": {
+      "category": "sim_card",
+      "churn_risk": "low",
+      "sentiment": 1,
+      "bot_failure": "not_understood"
+    },
+    "customer": {
+      "name": "Lalə İsmayılova",
+      "tenure_years": 4,
+      "tariff": "Biznes 25",
+      "monthly_azn": 25,
+      "contacts_30d": 1,
+      "waiting_min": 17
+    }
+  },
+  {
+    "id": "T04",
+    "language": "az",
+    "tone": "calm",
+    "chat": "Müştəri: Salam. Bu ayın hesabında 2 AZN 'əlavə xidmət' görürəm, nədir bu?\nBot: Hesab detallarını Kabinetdə görə bilərsiniz.\nMüştəri: baxdım orda sadəcə 'əlavə xidmət' yazılıb. nə xidmətidir bilmək istəyirəm\nBot: Əlavə xidmətlər bölməsinə keçin.\nMüştəri: ok, sadəcə izah etsəniz yaxşı olar\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "billing",
+      "churn_risk": "low",
+      "sentiment": 2,
+      "bot_failure": "missing_knowledge"
+    },
+    "customer": {
+      "name": "Fərid Məmmədov",
+      "tenure_years": 12,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 1,
+      "waiting_min": 5
+    }
+  },
+  {
+    "id": "T05",
+    "language": "en",
+    "tone": "calm",
+    "chat": "Müştəri: Hello, mobile internet at my office in Nərimanov is a bit slow in the afternoons\nBot: Please restart your device and check network settings.\nMüştəri: did that, it's fine at home, only the office. Just wanted to report it\nBot: Thank you for your message.\nMüştəri: will someone check the area? thanks\nBot: I'm transferring you to a human agent, please wait.",
+    "expected": {
+      "category": "internet_speed",
+      "churn_risk": "low",
+      "sentiment": 2,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Samir Nəsirov",
+      "tenure_years": 6,
+      "tariff": "Sərfəli 10",
+      "monthly_azn": 10,
+      "contacts_30d": 1,
+      "waiting_min": 3
+    }
+  },
+  {
+    "id": "T06",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Müştəri: salam balansima 10 manat yuklemisem 2 gune bitib\nMüştəri: adım Elvin Kərimov, nömrəm 050 312 45 67\nBot: Balans məlumatı üçün *100# yığın.\nMüştəri: bilirem balansi, sual odur ki NIYE bitib? zeng etmemisem demek olar\nBot: Xərclərinizi Kabinetdə görə bilərsiniz.\nMüştəri: kabinet acilmir. kim izah edecek bunu?\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "billing",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Elvin Kərimov",
+      "tenure_years": 7,
+      "tariff": "Sərfəli 10",
+      "monthly_azn": 10,
+      "contacts_30d": 2,
+      "waiting_min": 14
+    }
+  },
+  {
+    "id": "T07",
+    "language": "ru",
+    "tone": "annoyed",
+    "chat": "Müştəri: Вернулась из Грузии, с меня списали 25 манат за роуминг\nBot: Тарифы роуминга указаны на сайте.\nMüştəri: я включила пакет роуминга заранее! он должен был покрывать интернет\nBot: Пожалуйста, подождите.\nMüştəri: жду уже 20 минут. верните деньги или объясните за что списали\nBot: Перевожу вас на оператора, пожалуйста, подождите.",
+    "expected": {
+      "category": "roaming",
+      "churn_risk": "medium",
+      "sentiment": 4,
+      "bot_failure": "wrong_answer"
+    },
+    "customer": {
+      "name": "Zeynəb Qasımova",
+      "tenure_years": 12,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 3,
+      "waiting_min": 20
+    }
+  },
+  {
+    "id": "T08",
+    "language": "mixed",
+    "tone": "annoyed",
+    "chat": "Müştəri: salam, internet çox yavaşdır, 0.5 mb/s\nBot: Telefonunuzu yenidən başladın.\nMüştəri: başlatdım. dünən də yazmışdım eyni şeyi deyirsiniz\nMüştəri: работаю из дома, мне нужен нормальный интернет\nBot: Müraciətiniz qeydə alındı.\nMüştəri: qeydə alındı nə deməkdir, nə vaxt düzələcək?\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "internet_speed",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "loop"
+    },
+    "customer": {
+      "name": "Emil Həsənov",
+      "tenure_years": 7,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 1,
+      "waiting_min": 8
+    }
+  },
+  {
+    "id": "T09",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Müştəri: SIM kartim bloklanib, PUK soruşur\nMüştəri: Mən Leyla Məmmədova, nömrə +994 55 201 33 08\nBot: PUK kodu SIM kartın paketində yazılıb.\nMüştəri: paket yoxdur 5 il qabaq almışam. işim var telefonsuz qalmışam\nBot: Ən yaxın xidmət mərkəzinə yaxınlaşın.\nMüştəri: işdəyəm gedə bilmirəm, onlayn həll yoxdur?\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "sim_card",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "missing_knowledge"
+    },
+    "customer": {
+      "name": "Leyla Məmmədova",
+      "tenure_years": 5,
+      "tariff": "Biznes 25",
+      "monthly_azn": 25,
+      "contacts_30d": 3,
+      "waiting_min": 10
+    }
+  },
+  {
+    "id": "T10",
+    "language": "en",
+    "tone": "annoyed",
+    "chat": "Müştəri: I was promised 50% off my tariff for 6 months when I renewed. Bill is full price\nBot: Discounts are applied according to tariff conditions.\nMüştəri: the agent in the store literally told me 50%. I have the SMS confirmation\nBot: Please provide more details.\nMüştəri: I just did. Fix my tariff please\nBot: I'm transferring you to a human agent, please wait.",
+    "expected": {
+      "category": "tariff",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Emil Qasımov",
+      "tenure_years": 7,
+      "tariff": "Biznes 25",
+      "monthly_azn": 25,
+      "contacts_30d": 2,
+      "waiting_min": 1
+    }
+  },
+  {
+    "id": "T11",
+    "language": "ru",
+    "tone": "annoyed",
+    "chat": "Müştəri: Почему у меня в квартире нет сигнала? Ясамал, 9 этаж\nBot: Проверьте покрытие сети на сайте.\nMüştəri: на сайте показывает отличное покрытие. а по факту звонки обрываются\nMüştəri: уже месяц так\nBot: Мы передадим информацию.\nMüştəri: кому передадите? когда ответ будет?\nBot: Перевожу вас на оператора, пожалуйста, подождите.",
+    "expected": {
+      "category": "network_coverage",
+      "churn_risk": "medium",
+      "sentiment": 4,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Zeynəb Əhmədova",
+      "tenure_years": 8,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 1,
+      "waiting_min": 16
+    }
+  },
+  {
+    "id": "T12",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Müştəri: 'Oyun+' abunəliyi üçün 3 AZN çıxılıb, mən heç vaxt qoşmamışam\nBot: Abunəlikləri *777# vasitəsilə idarə edə bilərsiniz.\nMüştəri: ləğv etdim, amma pulu qaytarın, bu mənim günahım deyil\nBot: Geri qaytarma şərtləri saytda göstərilib.\nMüştəri: sayta baxmaq istəmirəm, pulumu qaytarın\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "refund",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Nigar Səfərova",
+      "tenure_years": 1,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 2,
+      "waiting_min": 4
+    }
+  },
+  {
+    "id": "T13",
+    "language": "mixed",
+    "tone": "annoyed",
+    "chat": "Müştəri: hi, roaming was activated automatically in Dubai, I never asked\nMüştəri: indi 40 AZN borcum var balansda\nBot: Roaming is activated when you connect to a foreign network.\nMüştəri: I turned off data roaming! check your system\nBot: Please wait for an operator.\nMüştəri: waiting. this is a lot of money for me\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "roaming",
+      "churn_risk": "medium",
+      "sentiment": 4,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Könül Hüseynova",
+      "tenure_years": 2,
+      "tariff": "Biznes 25",
+      "monthly_azn": 25,
+      "contacts_30d": 3,
+      "waiting_min": 3
+    }
+  },
+  {
+    "id": "T14",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Müştəri: Wow, əla xidmətdir, 3 gündür internet yoxdur, çox sağ olun 👏\nBot: Müsbət rəyiniz üçün təşəkkür edirik!\nMüştəri: rəy müsbət deyildi. İNTERNET YOXDUR\nBot: Telefonu yenidən başladın.\nMüştəri: hə, əlbəttə, bu dəfə mütləq kömək edəcək...\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "internet_speed",
+      "churn_risk": "medium",
+      "sentiment": 4,
+      "bot_failure": "wrong_answer"
+    },
+    "note": "tricky: sarcasm",
+    "customer": {
+      "name": "Ruslan Mustafayev",
+      "tenure_years": 3,
+      "tariff": "Sərfəli 10",
+      "monthly_azn": 10,
+      "contacts_30d": 1,
+      "waiting_min": 1
+    }
+  },
+  {
+    "id": "T15",
+    "language": "en",
+    "tone": "annoyed",
+    "chat": "Müştəri: Two problems. First, my calls keep dropping at home in Xırdalan\nMüştəri: second, I was charged 7 AZN for an SMS package I didn't order\nBot: Please choose one topic.\nMüştəri: the money one first then, I want those 7 AZN back\nBot: Refunds are reviewed within 5 business days.\nMüştəri: and the calls? nobody answered that\nBot: I'm transferring you to a human agent, please wait.",
+    "expected": {
+      "category": "refund",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "not_understood"
+    },
+    "note": "tricky: two issues in one chat",
+    "customer": {
+      "name": "Nigar Məmmədova",
+      "tenure_years": 3,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 1,
+      "waiting_min": 18
+    }
+  },
+  {
+    "id": "T16",
+    "language": "az",
+    "tone": "furious",
+    "chat": "Müştəri: 3cü dəfədir yazıram!!! internet 1 həftədir işləmir\nBot: Telefonu yenidən başladın.\nMüştəri: REZALƏTDİR! hər dəfə eyni cavab\nMüştəri: Bakcell-ə keçəcəm nömrəmlə birlikdə, bezdim sizdən\nBot: Müraciətiniz qeydə alındı.\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "internet_speed",
+      "churn_risk": "high",
+      "sentiment": 5,
+      "bot_failure": "loop"
+    },
+    "note": "tricky: threatens to switch operator",
+    "customer": {
+      "name": "Fərid Babayev",
+      "tenure_years": 6,
+      "tariff": "Sərfəli 10",
+      "monthly_azn": 10,
+      "contacts_30d": 3,
+      "waiting_min": 18
+    }
+  },
+  {
+    "id": "T17",
+    "language": "ru",
+    "tone": "furious",
+    "chat": "Müştəri: Это позор!!! С меня списали 60 манат за роуминг в Турции, хотя у меня был пакет\nBot: Тарифы роуминга указаны на сайте.\nMüştəri: Я 10 лет ваш клиент. Если деньги не вернёте, расторгаю договор\nMüştəri: и пишу жалобу в министерство\nBot: Пожалуйста, подождите оператора.",
+    "expected": {
+      "category": "roaming",
+      "churn_risk": "high",
+      "sentiment": 5,
+      "bot_failure": "wrong_answer"
+    },
+    "customer": {
+      "name": "Orxan Qasımov",
+      "tenure_years": 10,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 5,
+      "waiting_min": 6
+    }
+  },
+  {
+    "id": "T18",
+    "language": "en",
+    "tone": "furious",
+    "chat": "Müştəri: This is the WORST service. My SIM was blocked for no reason during a business trip\nMüştəri: My name is Rəşad Əliyev, number +994 70 555 12 34\nBot: SIM cards may be blocked for security reasons.\nMüştəri: I missed a client call because of you!!! unblock it NOW\nMüştəri: I'm posting this on Instagram and moving to Nar tomorrow\nBot: Please visit a service center with your ID.\nBot: I'm transferring you to a human agent, please wait.",
+    "expected": {
+      "category": "sim_card",
+      "churn_risk": "high",
+      "sentiment": 5,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Rəşad Əliyev",
+      "tenure_years": 7,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 3,
+      "waiting_min": 13
+    }
+  },
+  {
+    "id": "T19",
+    "language": "mixed",
+    "tone": "furious",
+    "chat": "Müştəri: tarif dəyişmisiniz mənə xəbər vermədən!!! 15 AZN idi oldu 22\nBot: Tarif şərtləri dəyişə bilər.\nMüştəri: это обман! мне никто не сообщал\nMüştəri: ya köhnə tarifi qaytarın ya da nömrəni ləğv edirəm\nBot: Sualınızı başa düşmədim.\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "tariff",
+      "churn_risk": "high",
+      "sentiment": 5,
+      "bot_failure": "not_understood"
+    },
+    "customer": {
+      "name": "Rəşad Həsənov",
+      "tenure_years": 1,
+      "tariff": "Smart 22",
+      "monthly_azn": 22,
+      "contacts_30d": 4,
+      "waiting_min": 1
+    }
+  },
+  {
+    "id": "T20",
+    "language": "az",
+    "tone": "furious",
+    "chat": "Müştəri: Evdə siqnal yoxdur, zənglər kəsilir, anam xəstədir mənə zəng edə bilmir!!!\nBot: Şəbəkə əhatəsini saytda yoxlayın.\nMüştəri: sayt sayt sayt!!! İNSANLA DANIŞMAQ İSTƏYİRƏM\nMüştəri: bu axırıncı dəfədir, sabah başqa operatora keçirəm\nBot: Operator tezliklə qoşulacaq.",
+    "expected": {
+      "category": "network_coverage",
+      "churn_risk": "high",
+      "sentiment": 5,
+      "bot_failure": "loop"
+    },
+    "customer": {
+      "name": "Nigar Abbasova",
+      "tenure_years": 8,
+      "tariff": "Smart 22",
+      "monthly_azn": 22,
+      "contacts_30d": 5,
+      "waiting_min": 15
+    }
+  },
+  {
+    "id": "T21",
+    "language": "az",
+    "tone": "calm",
+    "chat": "Müştəri: Salam, ötən ayın hesabında 12 AZN 'əlavə xidmətlər' yazılıb. Bu nədir?\nBot: Hesabınızın detallarını Kabinetdə görə bilərsiniz.\nMüştəri: baxdım, orada da sadəcə 'əlavə xidmətlər' yazılıb. Zəhmət olmasa izah edin.\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "billing",
+      "churn_risk": "low",
+      "sentiment": 2,
+      "bot_failure": "missing_knowledge"
+    },
+    "customer": {
+      "name": "Elvin Babayev",
+      "tenure_years": 12,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 0,
+      "waiting_min": 15
+    }
+  },
+  {
+    "id": "T22",
+    "language": "ru",
+    "tone": "annoyed",
+    "chat": "Müştəri: Добрый день. С меня списали 8 манат за подписку на игры, я её не подключала\nMüştəri: меня зовут Наргиз, номер 051 444 22 11\nBot: Чтобы отключить подписку, отправьте STOP на 8080.\nMüştəri: отключить я и сама могу. Верните деньги за этот месяц\nBot: Извините, я не понял ваш вопрос.\nMüştəri: мне нужен живой оператор\nBot: Перевожу вас на оператора, пожалуйста, подождите.",
+    "expected": {
+      "category": "refund",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "not_understood"
+    },
+    "customer": {
+      "name": "Nərgiz Babayeva",
+      "tenure_years": 12,
+      "tariff": "Sərfəli 10",
+      "monthly_azn": 10,
+      "contacts_30d": 1,
+      "waiting_min": 6
+    }
+  },
+  {
+    "id": "T23",
+    "language": "en",
+    "tone": "furious",
+    "chat": "Müştəri: I was charged 45 AZN for roaming while my phone was in flight mode the whole trip\nBot: Roaming charges apply when your device connects to a foreign network.\nMüştəri: IT WAS IN FLIGHT MODE. I have screenshots.\nMüştəri: I even paid the roaming top-up with my card 4169 0000 1234 5678\nMüştəri: refund this today or I'm porting my number to Nar and posting this everywhere\nBot: Your request has been registered.\nBot: I'm transferring you to a human agent, please wait.",
+    "expected": {
+      "category": "roaming",
+      "churn_risk": "high",
+      "sentiment": 5,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Könül Əliyeva",
+      "tenure_years": 3,
+      "tariff": "Biznes 25",
+      "monthly_azn": 25,
+      "contacts_30d": 2,
+      "waiting_min": 5
+    }
+  },
+  {
+    "id": "T24",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Müştəri: evdə zəng edəndə səs kəsilir, 2 həftədir belədir\nBot: Zəhmət olmasa, telefonunuzu yenidən başladın.\nMüştəri: başlatmışam, telefonu da dəyişmişəm, problem şəbəkədədir\nMüştəri: Yasamalda yaşayıram, qonşularda da eyni problem var\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "network_coverage",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Orxan Babayev",
+      "tenure_years": 2,
+      "tariff": "Smart 15",
+      "monthly_azn": 15,
+      "contacts_30d": 2,
+      "waiting_min": 18
+    }
+  },
+  {
+    "id": "T25",
+    "language": "mixed",
+    "tone": "calm",
+    "chat": "Müştəri: Salam, nömrəmi başqa adama keçirmək istəyirəm (atama). Bunu necə edə bilərəm?\nBot: Nömrənin keçirilməsi üçün xidmət mərkəzinə yaxınlaşın.\nMüştəri: ok, amma hansı sənədlər lazımdır? Также можно ли это сделать онлайн?\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "other",
+      "churn_risk": "low",
+      "sentiment": 1,
+      "bot_failure": "missing_knowledge"
+    },
+    "customer": {
+      "name": "Leyla Cəfərova",
+      "tenure_years": 2,
+      "tariff": "Smart 22",
+      "monthly_azn": 22,
+      "contacts_30d": 1,
+      "waiting_min": 15
+    }
+  },
+  {
+    "id": "T26",
+    "language": "ru",
+    "tone": "furious",
+    "chat": "Müştəri: Это уже четвёртый раз за месяц!!! Нет связи вообще в Сумгаите\nBot: Приносим извинения за неудобства.\nMüştəri: ваши извинения мне не нужны. Я плачу 25 манат за тариф и не могу позвонить\nMüştəri: расторгаю договор, завтра иду в Bakcell\nBot: Ваше обращение передано специалистам.\nBot: Перевожу вас на оператора, пожалуйста, подождите.",
+    "expected": {
+      "category": "network_coverage",
+      "churn_risk": "high",
+      "sentiment": 5,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Ruslan Səfərov",
+      "tenure_years": 8,
+      "tariff": "Biznes 25",
+      "monthly_azn": 25,
+      "contacts_30d": 5,
+      "waiting_min": 15
+    }
+  },
+  {
+    "id": "T27",
+    "language": "en",
+    "tone": "annoyed",
+    "chat": "Müştəri: hi, my eSIM stopped working after I updated my iPhone\nBot: Please restart your device.\nMüştəri: did that 3 times. It shows 'No Service'. I need it for work\nBot: For eSIM issues please visit a service center.\nMüştəri: I can't leave work today, is there no other way?\nBot: I'm transferring you to a human agent, please wait.",
+    "expected": {
+      "category": "sim_card",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "missing_knowledge"
+    },
+    "customer": {
+      "name": "Könül Hüseynova",
+      "tenure_years": 3,
+      "tariff": "Sərfəli 10",
+      "monthly_azn": 10,
+      "contacts_30d": 1,
+      "waiting_min": 15
+    }
+  },
+  {
+    "id": "T28",
+    "language": "az",
+    "tone": "calm",
+    "chat": "Müştəri: Salam! Hazırda 'Sərfəli 10' tarifindəyəm. Daha çox internet olan paket varmı, amma qiyməti çox fərqlənməsin?\nBot: Tariflər haqqında məlumat üçün saytımıza baxın.\nMüştəri: baxdım, çox seçim var, hansını tövsiyə edirsiniz?\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "tariff",
+      "churn_risk": "low",
+      "sentiment": 1,
+      "bot_failure": "missing_knowledge"
+    },
+    "customer": {
+      "name": "Murad Kərimov",
+      "tenure_years": 6,
+      "tariff": "Sərfəli 10",
+      "monthly_azn": 10,
+      "contacts_30d": 0,
+      "waiting_min": 4
+    }
+  },
+  {
+    "id": "T29",
+    "language": "mixed",
+    "tone": "annoyed",
+    "chat": "Müştəri: privet, internet paketim bitib amma 2 gün qabaq 10GB almışdım\nBot: Paketinizin qalığını *100# ilə yoxlaya bilərsiniz.\nMüştəri: yoxladım 0 göstərir. Как 10 гигов за 2 дня закончились?? Mən YouTube belə açmıram\nMüştəri: bu pulu kim qaytaracaq?\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "billing",
+      "churn_risk": "medium",
+      "sentiment": 4,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Kamran İsmayılov",
+      "tenure_years": 4,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 3,
+      "waiting_min": 4
+    }
+  },
+  {
+    "id": "T30",
+    "language": "en",
+    "tone": "calm",
+    "chat": "Müştəri: Hello, I'm travelling to Georgia next week. Will my 'Roaming Plus' package work there?\nBot: Roaming Plus is available in selected countries.\nMüştəri: Is Georgia one of them? I couldn't find the list on the website.\nBot: I'm transferring you to a human agent, please wait.",
+    "expected": {
+      "category": "roaming",
+      "churn_risk": "low",
+      "sentiment": 1,
+      "bot_failure": "missing_knowledge"
+    },
+    "customer": {
+      "name": "Tural Səfərov",
+      "tenure_years": 1,
+      "tariff": "Smart 15",
+      "monthly_azn": 15,
+      "contacts_30d": 0,
+      "waiting_min": 4
+    }
+  },
+  {
+    "id": "T31",
+    "language": "az",
+    "tone": "furious",
+    "chat": "Müştəri: SİZİN BOTUNUZ MƏNİ DƏLİ EDİR!!! 20 dəqiqədir eyni sualları verir\nBot: Zəhmət olmasa, mövzunu seçin: 1) Balans 2) Tarif 3) İnternet\nMüştəri: heç biri deyil! İNSANLA danışmaq istəyirəm\nBot: Zəhmət olmasa, mövzunu seçin: 1) Balans 2) Tarif 3) İnternet\nMüştəri: nazirliyə şikayət yazacam və nömrəmi bağlayıram\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "other",
+      "churn_risk": "high",
+      "sentiment": 5,
+      "bot_failure": "loop"
+    },
+    "note": "tricky: complaint about the bot itself, no technical issue named",
+    "customer": {
+      "name": "Kamran Məmmədov",
+      "tenure_years": 6,
+      "tariff": "Smart 22",
+      "monthly_azn": 22,
+      "contacts_30d": 4,
+      "waiting_min": 3
+    }
+  },
+  {
+    "id": "T32",
+    "language": "ru",
+    "tone": "calm",
+    "chat": "Müştəri: Здравствуйте, вернулась из отпуска, а сим-карта заблокирована. Наверное, долго не пользовалась\nBot: Для разблокировки введите PUK-код.\nMüştəri: PUK у меня нет, карточку я потеряла. Как быть?\nBot: Перевожу вас на оператора, пожалуйста, подождите.",
+    "expected": {
+      "category": "sim_card",
+      "churn_risk": "low",
+      "sentiment": 2,
+      "bot_failure": "missing_knowledge"
+    },
+    "customer": {
+      "name": "Aysel Səfərova",
+      "tenure_years": 7,
+      "tariff": "Smart 22",
+      "monthly_azn": 22,
+      "contacts_30d": 0,
+      "waiting_min": 8
+    }
+  },
+  {
+    "id": "T33",
+    "language": "en",
+    "tone": "annoyed",
+    "chat": "Müştəri: I cancelled my 'Music Max' subscription last month but you charged me again this month\nMüştəri: my FIN is 5ZK8T2P if you need it\nBot: You can manage subscriptions in My Account.\nMüştəri: I KNOW, that's where I cancelled it. I want the 5 AZN back\nMüştəri: this is the second time this happens, honestly thinking about switching\nBot: I'm transferring you to a human agent, please wait.",
+    "expected": {
+      "category": "refund",
+      "churn_risk": "high",
+      "sentiment": 4,
+      "bot_failure": "no_permission"
+    },
+    "note": "tricky: churn hint stated mildly",
+    "customer": {
+      "name": "Leyla Həsənova",
+      "tenure_years": 6,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 2,
+      "waiting_min": 13
+    }
+  },
+  {
+    "id": "T34",
+    "language": "az",
+    "tone": "annoyed",
+    "chat": "Müştəri: axşamlar internet çox yavaşlayır, saat 20:00-dan sonra heç video açılmır\nBot: Şəbəkənin yüklənməsi səbəbindən sürət azala bilər.\nMüştəri: yəni hər axşam belə olacaq? Mən tam sürət üçün pul ödəyirəm\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "internet_speed",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Günel Əhmədova",
+      "tenure_years": 1,
+      "tariff": "Biznes 25",
+      "monthly_azn": 25,
+      "contacts_30d": 3,
+      "waiting_min": 13
+    }
+  },
+  {
+    "id": "T35",
+    "language": "mixed",
+    "tone": "furious",
+    "chat": "Müştəri: tarifimi mənim xəbərim olmadan dəyişmisiniz!! Было 15 манат, стало 22\nBot: Tarif şərtləri operator tərəfindən yenilənə bilər.\nMüştəri: yenilənə bilər?? Mənə heç SMS gəlmədi\nMüştəri: köhnə tarifi qaytarmasanız, Nar-a keçirəm, 10 ildir sizinləyəm\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "tariff",
+      "churn_risk": "high",
+      "sentiment": 5,
+      "bot_failure": "no_permission"
+    },
+    "customer": {
+      "name": "Kamran Mustafayev",
+      "tenure_years": 10,
+      "tariff": "Smart 22",
+      "monthly_azn": 22,
+      "contacts_30d": 4,
+      "waiting_min": 10
+    }
+  },
+  {
+    "id": "T36",
+    "language": "ru",
+    "tone": "annoyed",
+    "chat": "Müştəri: Я перевела 20 манат на чужой номер по ошибке, можно вернуть?\nBot: Переводы баланса не подлежат отмене.\nMüştəri: но это же ошибка, номер отличается на одну цифру\nMüştəri: помогите пожалуйста, это большие деньги для меня\nBot: Перевожу вас на оператора, пожалуйста, подождите.",
+    "expected": {
+      "category": "refund",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "no_permission"
+    },
+    "note": "tricky: refund request for the customer's own mistake",
+    "customer": {
+      "name": "Leyla Nəsirova",
+      "tenure_years": 6,
+      "tariff": "Biznes 25",
+      "monthly_azn": 25,
+      "contacts_30d": 3,
+      "waiting_min": 7
+    }
+  },
+  {
+    "id": "T37",
+    "language": "az",
+    "tone": "calm",
+    "chat": "Müştəri: Salam, qızım üçün yeni nömrə almaq istəyirəm, 14 yaşı var. Onun adına rəsmiləşdirmək olar?\nBot: Nömrə almaq üçün şəxsiyyət vəsiqəsi tələb olunur.\nMüştəri: onun hələ şəxsiyyət vəsiqəsi yoxdur, doğum haqqında şəhadətnaməsi var\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "other",
+      "churn_risk": "low",
+      "sentiment": 1,
+      "bot_failure": "missing_knowledge"
+    },
+    "customer": {
+      "name": "Tural Kərimov",
+      "tenure_years": 1,
+      "tariff": "Premium 35",
+      "monthly_azn": 35,
+      "contacts_30d": 0,
+      "waiting_min": 17
+    }
+  },
+  {
+    "id": "T38",
+    "language": "en",
+    "tone": "annoyed",
+    "chat": "Müştəri: the bill says I used 300 minutes of international calls. I never call abroad\nBot: Please check your call history in the app.\nMüştəri: the history shows calls to a number in Somalia at 3am. I was asleep. Someone hacked my number?\nMüştəri: email me the details at tural.h@example.com\nBot: I'm sorry, I can't help with that.\nBot: I'm transferring you to a human agent, please wait.",
+    "expected": {
+      "category": "billing",
+      "churn_risk": "medium",
+      "sentiment": 4,
+      "bot_failure": "no_permission"
+    },
+    "note": "tricky: possible fraud, customer is worried rather than threatening",
+    "customer": {
+      "name": "Tural Həsənov",
+      "tenure_years": 7,
+      "tariff": "Sərfəli 10",
+      "monthly_azn": 10,
+      "contacts_30d": 2,
+      "waiting_min": 13
+    }
+  },
+  {
+    "id": "T39",
+    "language": "mixed",
+    "tone": "annoyed",
+    "chat": "Müştəri: salam, mən Türkiyədəyəm, rouminq aktivdir amma internet işləmir\nBot: Mobil məlumatın rouminq rejimini telefon ayarlarından aktiv edin.\nMüştəri: aktivdir, already checked. Zəng gəlir, amma internet yoxdur\nMüştəri: işimlə bağlı təcili e-poçt göndərməliyəm\nBot: Sizi operatora yönləndirirəm, zəhmət olmasa gözləyin.",
+    "expected": {
+      "category": "roaming",
+      "churn_risk": "medium",
+      "sentiment": 3,
+      "bot_failure": "missing_knowledge"
+    },
+    "customer": {
+      "name": "Aynur Rzayeva",
+      "tenure_years": 2,
+      "tariff": "Smart 15",
+      "monthly_azn": 15,
+      "contacts_30d": 3,
+      "waiting_min": 9
+    }
+  },
+  {
+    "id": "T40",
+    "language": "ru",
+    "tone": "furious",
+    "chat": "Müştəri: Интернет 5G обещали, а у меня даже 4G нет, одна буква E\nBot: Покрытие 5G доступно в центральной части Баку.\nMüştəri: я живу в центре!!! Возле метро 28 Мая\nMüştəri: месяц так. Это обман клиентов. Пишу жалобу в ANAS и ухожу\nBot: Спасибо за обращение.\nBot: Перевожу вас на оператора, пожалуйста, подождите.",
+    "expected": {
+      "category": "internet_speed",
+      "churn_risk": "high",
+      "sentiment": 5,
+      "bot_failure": "wrong_answer"
+    },
+    "customer": {
+      "name": "Orxan Quliyev",
+      "tenure_years": 4,
+      "tariff": "Sərfəli 10",
+      "monthly_azn": 10,
+      "contacts_30d": 4,
+      "waiting_min": 11
+    }
+  }
+]

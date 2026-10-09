@@ -1,0 +1,13 @@
+[theme]
+base = "light"
+primaryColor = "#6d28d9"
+backgroundColor = "#f7f6fb"
+secondaryBackgroundColor = "#efecf8"
+textColor = "#1f2937"
+
+[server]
+headless = true
+
+[client]
+# The sidebar shows our own Azerbaijani page links (copilot_ui.nav) instead of file names.
+showSidebarNavigation = false
