@@ -2,8 +2,13 @@
   "summary": {
     "mode": "offline",
     "decided_by": "keyword rules (offline)",
+    "partial": false,
+    "stop_reason": null,
+    "tickets_in_set": 40,
     "tickets": 40,
     "errors": 0,
+    "not_run": [],
+    "from_saved_answers": 0,
     "category_accuracy": 77.5,
     "churn_risk_accuracy": 67.5,
     "sentiment_within_1": 75.0,

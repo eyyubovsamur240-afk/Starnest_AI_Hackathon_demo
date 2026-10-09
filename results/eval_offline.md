@@ -4,7 +4,7 @@ Decided by: **keyword rules (offline)**. Expected values come from the hand-writ
 
 | Metric | Value |
 |---|---|
-| Tickets | 40 (errors: 0) |
+| Tickets scored | 40 of 40 (errors: 0, not run: 0) |
 | Category accuracy | 77.5% |
 | Churn-risk accuracy | 67.5% |
 | Sentiment within ±1 | 75.0% |

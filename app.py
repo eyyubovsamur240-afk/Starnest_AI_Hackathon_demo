@@ -14,8 +14,8 @@ from pathlib import Path
 
 import streamlit as st
 
-from copilot import MODEL, analyze, llm_available
-from copilot_ui import nav, source_badge
+from copilot import QuotaError, SetupError, analyze
+from copilot_ui import gemini_problem_az, mode_sidebar, nav, source_badge
 from labels_az import CATEGORY, LANGUAGE, RISK, SENTIMENT, TONE
 
 ROOT = Path(__file__).parent
@@ -105,12 +105,7 @@ with st.sidebar:
     st.markdown("## 🛟 Eskalasiya Köməkçisi")
     nav()  # links to the queue and statistics pages
     st.divider()
-    if llm_available():
-        st.success(f"Canlı rejim: {MODEL}")
-        offline = st.toggle("Oflayn rejim", value=False, help="Süni intellekt əvəzinə açar söz qaydaları")
-    else:
-        st.warning("Oflayn rejim: real təhlil üçün GEMINI_API_KEY təyin edin.")
-        offline = True
+    offline = mode_sidebar()
     st.caption("Demo yalnız uydurma söhbətlərdən istifadə edir.")
 
 st.markdown(
@@ -151,7 +146,11 @@ with right:
                 try:
                     # The sample's CRM name is masked too, so it never reaches Gemini.
                     names = [sample["customer"]["name"]] if choice != options[0] else None
-                    st.session_state.result = analyze(chat, force_offline=offline, known_names=names)
+                    try:  # a saved Gemini answer is used first, so sample chats cost no quota
+                        st.session_state.result = analyze(chat, force_offline=offline, known_names=names)
+                    except (QuotaError, SetupError) as exc:
+                        st.warning(gemini_problem_az(exc))
+                        st.session_state.result = analyze(chat, force_offline=True, known_names=names)
                     st.session_state.result_chat = chat
                 except Exception as exc:
                     st.session_state.result = None
@@ -232,7 +231,8 @@ with m4:
         st.caption("Təhlildən sonra ulduzla qiymətləndirin")
 
 if ev and ev["mode"] == "llm":
-    st.caption(f"Kateqoriya və əhval: Gemini, {ev['tickets']} uydurma söhbət üzrə eval.py nəticəsi.")
+    part = f" (qismən: {ev['tickets_in_set']} söhbətdən {ev['tickets']})" if ev.get("partial") else ""
+    st.caption(f"Kateqoriya və əhval: Gemini, {ev['tickets']} uydurma söhbət üzrə eval.py nəticəsi{part}.")
 elif ev:
     st.caption(f"Kateqoriya və əhval: {ev['tickets']} uydurma söhbət üzrə **oflayn açar söz qaydalarının** nəticəsi, "
                "Gemini-nin yox. Gemini-ni yoxlamaq üçün açarla `python eval.py` işə salın.")
