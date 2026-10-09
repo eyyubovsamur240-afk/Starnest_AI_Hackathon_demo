@@ -14,7 +14,14 @@ import streamlit as st
 
 from copilot import MODEL, analyze, llm_available
 from labels_az import (
-    ACTION, ACTION_ICON, BOT_FAILURE, BOT_FAILURE_FIX, BOT_FAILURE_ICON, CATEGORY, RISK, SENTIMENT,
+    ACTION,
+    ACTION_ICON,
+    BOT_FAILURE,
+    BOT_FAILURE_FIX,
+    BOT_FAILURE_ICON,
+    CATEGORY,
+    RISK,
+    SENTIMENT,
 )
 from offers import suggest
 from privacy import describe

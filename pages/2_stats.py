@@ -6,8 +6,8 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
-from labels_az import BOT_FAILURE, CATEGORY, RISK
 from copilot_ui import RISK_COLORS, bar_chart, card, ensure_queue, load_tickets, setup_page
+from labels_az import BOT_FAILURE, CATEGORY, RISK
 
 offline = setup_page("📈 Statistika")
 tickets = load_tickets()

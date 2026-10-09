@@ -6,12 +6,24 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
+from copilot_ui import (
+    MODE_LABEL,
+    RISK_COLORS,
+    RISK_DOT,
+    SENTIMENT_EMOJI,
+    card,
+    ensure_queue,
+    esc,
+    load_tickets,
+    priority,
+    render_chat,
+    render_insights,
+    render_profile,
+    run_queue,
+    setup_page,
+)
 from labels_az import BOT_FAILURE, BOT_FAILURE_ICON, CATEGORY, RISK
 from offers import suggest
-from copilot_ui import (
-    MODE_LABEL, RISK_COLORS, RISK_DOT, SENTIMENT_EMOJI, card, ensure_queue, esc, load_tickets, priority,
-    render_chat, render_insights, render_profile, run_queue, setup_page,
-)
 
 offline = setup_page("📥 Prioritet növbəsi")
 tickets = load_tickets()

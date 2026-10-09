@@ -15,8 +15,8 @@ from pathlib import Path
 import streamlit as st
 
 from copilot import MODEL, analyze, llm_available
-from labels_az import CATEGORY, LANGUAGE, RISK, SENTIMENT, TONE
 from copilot_ui import nav, source_badge
+from labels_az import CATEGORY, LANGUAGE, RISK, SENTIMENT, TONE
 
 ROOT = Path(__file__).parent
 
