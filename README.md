@@ -7,7 +7,7 @@ Starnest Academy AI Hackathon 2026 · Track: **AI for Customer Experience & Digi
 | Submission item | Where |
 |---|---|
 | Demo link | **[eyyubovsamur240-afk-starnest-ai-hackathon-demo-app-iu2ppq.streamlit.app](https://eyyubovsamur240-afk-starnest-ai-hackathon-demo-app-iu2ppq.streamlit.app/)** (no login or key needed; all 40 sample chats open with saved Gemini answers). Or [run it locally](#how-to-open-the-demo) in two commands |
-| Video (≤ 2 min) | _to be added_ |
+| Video (≤ 2 min) | **[Demo video, 1:47](https://docs.google.com/videos/d/1OI_G8kQJHxKT0tulXC3SASjEf-z5srrIVBTKPuioSEw/play?usp=sharing)** |
 | Pitch deck | Uploaded on the hackathon dashboard |
 | User and problem | [below](#user-and-problem) |
 | Quality testing results | [below](#quality-testing) · `results/` · `tests/` |
