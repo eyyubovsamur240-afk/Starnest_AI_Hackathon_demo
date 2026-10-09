@@ -22,8 +22,9 @@ from prompts import FEW_SHOT, SYSTEM_PROMPT
 
 DEFAULT_MODEL = "gemini-3.8-flash"  # gemini-2.5-flash is closed to new API keys (404 NOT_FOUND)
 PROMPT_VERSION = "v3"  # bump when the prompt or schema changes so old cached answers are ignored
-# Every Gemini answer is saved here, keyed by model + prompt version + masked chat. The file is committed,
-# so the sample chats show real Gemini output without spending the free-tier quota (20 requests a day).
+# Every Gemini answer is saved here, keyed by prompt version + masked chat, with the model that answered.
+# The file is committed, so the sample chats show real Gemini output without spending the free-tier quota
+# (20 requests a day per model).
 CACHE_FILE = Path(__file__).parent / "results" / "gemini_cache.json"
 
 
@@ -55,6 +56,7 @@ class AnalysisResult(BaseModel):
     masked: dict[str, int]
     tokens_in: int = 0  # Gemini prompt tokens (0 offline or from cache), used for the cost estimate
     tokens_out: int = 0
+    model: str | None = None  # the Gemini model that answered (None offline)
 
 
 KEY_NAMES = ("GEMINI_API_KEY", "GOOGLE_API_KEY")
@@ -91,24 +93,37 @@ def llm_available() -> bool:
     return bool(api_key())
 
 
-def _model_name() -> str:
-    """The Gemini model: GEMINI_MODEL (or the older COPILOT_MODEL) env var, then Streamlit secrets."""
-    name = os.getenv("GEMINI_MODEL") or os.getenv("COPILOT_MODEL")
-    if not name:
+def _model_names() -> list[str]:
+    """The Gemini models to use, in order: GEMINI_MODEL (or the older COPILOT_MODEL) env var, then
+    Streamlit secrets. A comma-separated list is a fallback chain: each model has its own free-tier quota."""
+    raw = os.getenv("GEMINI_MODEL") or os.getenv("COPILOT_MODEL")
+    if not raw:
         try:
             import streamlit as st
 
-            name = st.secrets.get("GEMINI_MODEL")
+            raw = st.secrets.get("GEMINI_MODEL")
         except Exception:  # no secrets file, or not running under Streamlit
-            name = None
-    return (name or DEFAULT_MODEL).strip().removeprefix("models/")
+            raw = None
+    names = [n.strip().removeprefix("models/") for n in (raw or DEFAULT_MODEL).split(",") if n.strip()]
+    return list(dict.fromkeys(names)) or [DEFAULT_MODEL]
 
 
-MODEL = _model_name()
+def _model_name() -> str:
+    return _model_names()[0]
+
+
+MODELS = _model_names()
+MODEL = MODELS[0]  # the first choice, shown in the UI
+# Models that hit their daily quota (or don't exist for this key) are skipped until this time.
+_skip_until: dict[str, float] = {}
 
 
 class SetupError(RuntimeError):
     """The model or the key is wrong, so every chat will fail the same way: stop instead of retrying."""
+
+    def __init__(self, message: str, model_only: bool = False):
+        super().__init__(message)
+        self.model_only = model_only  # True: only this model is missing, another one may work
 
 
 class QuotaError(RuntimeError):
@@ -119,15 +134,17 @@ class QuotaError(RuntimeError):
         self.retry_seconds = retry_seconds
 
 
-def _setup_error(exc: Exception) -> SetupError | None:
+def _setup_error(exc: Exception, model: str | None = None) -> SetupError | None:
     code = getattr(exc, "code", None)
     text = str(exc)
     if code == 404 or "NOT_FOUND" in text:
         return SetupError(
-            f"Gemini model '{MODEL}' is not available for this API key. Set another model, e.g.\n"
+            f"Gemini model '{model or MODEL}' is not available for this API key. "
+            "See the models it can use with  python eval.py --list-models  and set one, e.g.\n"
             '  PowerShell:  $env:GEMINI_MODEL="gemini-3.8-flash"\n'
             '  Streamlit Cloud secrets:  GEMINI_MODEL = "gemini-3.8-flash"\n'
-            f"Google said: {text[:300]}"
+            f"Google said: {text[:300]}",
+            model_only=True,
         )
     if code in (400, 401, 403) and any(w in text for w in ("API key", "API_KEY", "PERMISSION_DENIED", "UNAUTHENTICATED")):
         return SetupError(f"Gemini rejected the API key. Check GEMINI_API_KEY.\nGoogle said: {text[:300]}")
@@ -155,7 +172,7 @@ def _retry_seconds(text: str) -> float | None:
     return None
 
 
-def _quota_error(exc: Exception) -> QuotaError | None:
+def _quota_error(exc: Exception, model: str | None = None) -> QuotaError | None:
     """A 429 that will not clear within a few minutes (the free tier's daily limit)."""
     if getattr(exc, "code", None) != 429:
         return None
@@ -165,16 +182,20 @@ def _quota_error(exc: Exception) -> QuotaError | None:
         return None  # per-minute limit: worth waiting and retrying
     hours = f" It resets in about {max(1, round(wait / 3600))} h." if wait else ""
     return QuotaError(
-        f"Gemini's daily free-tier quota for {MODEL} is used up.{hours} The limit is per Google Cloud "
-        "project, so a new key in the same project shares it. Saved answers still work; "
-        "enable billing on the project for more.",
+        f"Gemini's daily free-tier quota for {model or MODEL} is used up.{hours} The limit is per Google "
+        "Cloud project and model, so a new key in the same project shares it. Saved answers still work. "
+        "For more, add another model to GEMINI_MODEL (see  python eval.py --list-models) or enable billing.",
         retry_seconds=wait,
     )
 
 
-def _call_with_retries(call, minute_retries: int = 3, unavailable_retries: int = 1):
-    """Run one Gemini request. Wait and retry on a per-minute 429 (up to 3 times) or a 503
-    (once, 'high demand'); stop at once on a daily quota, a missing model or a bad key."""
+UNAVAILABLE_WAITS = (5.0, 15.0, 30.0)  # seconds between retries of a 503 "high demand"
+
+
+def _call_with_retries(call, minute_retries: int = 3, unavailable_retries: int = len(UNAVAILABLE_WAITS),
+                       model: str | None = None):
+    """Run one Gemini request. Wait and retry on a per-minute 429 (up to 3 times) or a 503 'high demand'
+    (after 5, 15 and 30 s); stop at once on a daily quota, a missing model or a bad key."""
     attempts = {429: 0, 503: 0}
     while True:
         try:
@@ -183,28 +204,29 @@ def _call_with_retries(call, minute_retries: int = 3, unavailable_retries: int =
             code = getattr(exc, "code", None)
             if code is None:
                 raise
-            setup = _setup_error(exc)
+            setup = _setup_error(exc, model)
             if setup:
                 raise setup from exc
-            quota = _quota_error(exc)
+            quota = _quota_error(exc, model)
             if quota:
                 raise quota from exc
             limit = {429: minute_retries, 503: unavailable_retries}.get(code)
             if limit is None or attempts[code] >= limit:
                 raise
             attempts[code] += 1
-            wait = _retry_seconds(str(exc)) if code == 429 else None
-            time.sleep(min(60.0, wait + 1 if wait else 5.0 * 2 ** attempts[code]))
+            if code == 503:
+                time.sleep(UNAVAILABLE_WAITS[min(attempts[code], len(UNAVAILABLE_WAITS)) - 1])
+            else:
+                wait = _retry_seconds(str(exc))
+                time.sleep(min(60.0, wait + 1 if wait else 5.0 * 2 ** attempts[code]))
 
 
-def analyze_llm(chat: str) -> tuple[Analysis, int, int]:
-    """One Gemini request per chat. Returns the analysis plus the prompt and output token counts."""
-    from google import genai
+def _ask_model(client, model: str, chat: str) -> tuple[Analysis, int, int]:
+    """One Gemini request to one model. Returns the analysis plus the prompt and output token counts."""
     from google.genai import types
 
-    client = genai.Client(api_key=api_key())
     response = _call_with_retries(lambda: client.models.generate_content(
-        model=MODEL,
+        model=model,
         contents=_build_contents(chat),
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,
@@ -212,7 +234,7 @@ def analyze_llm(chat: str) -> tuple[Analysis, int, int]:
             response_schema=Analysis,
             temperature=0.2,
         ),
-    ))
+    ), model=model)
     usage = response.usage_metadata
     tokens_in = (usage.prompt_token_count or 0) if usage else 0
     tokens_out = ((usage.candidates_token_count or 0) + (usage.thoughts_token_count or 0)) if usage else 0
@@ -223,8 +245,64 @@ def analyze_llm(chat: str) -> tuple[Analysis, int, int]:
     raise RuntimeError("Model returned no analysis (empty or blocked response)")
 
 
+def analyze_llm(chat: str) -> tuple[Analysis, int, int, str]:
+    """Ask the models in GEMINI_MODEL in order. A model whose daily quota is used up (or that doesn't
+    exist for this key) is skipped from then on; one still busy (503) after its retries is passed over
+    for this chat only. Returns the analysis, token counts and the model that answered."""
+    from google import genai
+
+    client = genai.Client(api_key=api_key())
+    last_exc: Exception | None = None
+    for model in MODELS:
+        if _skip_until.get(model, 0) > time.time():
+            continue
+        try:
+            analysis, tokens_in, tokens_out = _ask_model(client, model, chat)
+            return analysis, tokens_in, tokens_out, model
+        except QuotaError as exc:
+            _skip_until[model] = time.time() + (exc.retry_seconds or 3600)
+            last_exc = exc
+        except SetupError as exc:
+            if not exc.model_only:  # a bad key fails for every model
+                raise
+            _skip_until[model] = time.time() + 24 * 3600
+            last_exc = exc
+        except Exception as exc:
+            if getattr(exc, "code", None) != 503:
+                raise
+            last_exc = exc  # busy: try the next model for this chat
+    if all(_skip_until.get(m, 0) > time.time() for m in MODELS) and not isinstance(last_exc, SetupError):
+        waits = [_skip_until[m] - time.time() for m in MODELS]
+        hours = max(1, round(min(waits) / 3600))
+        raise QuotaError(
+            f"Gemini's daily free-tier quota is used up for every model in GEMINI_MODEL ({', '.join(MODELS)}). "
+            f"The first one resets in about {hours} h. Saved answers still work. To go on today, add a model "
+            "with its own quota (see  python eval.py --list-models) or enable billing.",
+            retry_seconds=min(waits),
+        ) from last_exc
+    raise last_exc or RuntimeError("No Gemini model configured")
+
+
+def list_models() -> list[str]:
+    """Models this key can call with generateContent (for picking a GEMINI_MODEL fallback)."""
+    from google import genai
+
+    client = genai.Client(api_key=api_key())
+    names = []
+    for m in client.models.list():
+        if "generateContent" in (m.supported_actions or []):
+            names.append((m.name or "").removeprefix("models/"))
+    return sorted(n for n in names if n)
+
+
 def _cache_key(masked_chat: str) -> str:
-    return hashlib.sha256(f"{MODEL}|{PROMPT_VERSION}|{masked_chat}".encode()).hexdigest()
+    return hashlib.sha256(f"{PROMPT_VERSION}|{masked_chat}".encode()).hexdigest()
+
+
+def _legacy_cache_keys(masked_chat: str) -> list[str]:
+    """Answers saved before the model fallback were keyed by model too."""
+    return [hashlib.sha256(f"{m}|{PROMPT_VERSION}|{masked_chat}".encode()).hexdigest()
+            for m in dict.fromkeys([*MODELS, DEFAULT_MODEL])]
 
 
 def _cache_load() -> dict:
@@ -234,17 +312,20 @@ def _cache_load() -> dict:
         return {}
 
 
-def _cache_get(key: str) -> dict | None:
-    entry = _cache_load().get(key)
-    if entry and "analysis" not in entry:  # older cache files stored the bare analysis
-        entry = {"analysis": entry}
-    return entry
+def _cache_get(masked_chat: str) -> dict | None:
+    data = _cache_load()
+    for key in [_cache_key(masked_chat), *_legacy_cache_keys(masked_chat)]:
+        entry = data.get(key)
+        if entry:
+            return entry if "analysis" in entry else {"analysis": entry}  # oldest files: bare analysis
+    return None
 
 
-def _cache_save(key: str, analysis: Analysis, seconds: float, tokens_in: int, tokens_out: int) -> None:
+def _cache_save(key: str, analysis: Analysis, seconds: float, tokens_in: int, tokens_out: int,
+                model: str) -> None:
     data = _cache_load()
     data[key] = {
-        "model": MODEL,
+        "model": model,
         "analysis": analysis.model_dump(),
         "seconds": seconds,
         "tokens_in": tokens_in,
@@ -404,24 +485,25 @@ def analyze(
     """
     start = time.perf_counter()
     masked_chat, masked = mask(chat, known_names)
-    key = _cache_key(masked_chat)
     tokens_in = tokens_out = 0
-    seconds = None
-    cached = _cache_get(key) if use_cache and not force_offline else None
+    seconds = model = None
+    cached = _cache_get(masked_chat) if use_cache and not force_offline else None
     if cached:
         analysis, mode = Analysis.model_validate(cached["analysis"]), "cache"
         tokens_in, tokens_out = cached.get("tokens_in", 0), cached.get("tokens_out", 0)
-        seconds = cached.get("seconds")
+        seconds, model = cached.get("seconds"), cached.get("model")
     elif not force_offline and live and llm_available():
-        (analysis, tokens_in, tokens_out), mode = analyze_llm(masked_chat), "llm"
+        analysis, tokens_in, tokens_out, model = analyze_llm(masked_chat)
+        mode = "llm"
         seconds = round(time.perf_counter() - start, 2)
         if use_cache:
-            _cache_save(key, analysis, seconds, tokens_in, tokens_out)
+            _cache_save(_cache_key(masked_chat), analysis, seconds, tokens_in, tokens_out, model)
     else:
         analysis, mode = analyze_offline(masked_chat), "offline"
     return AnalysisResult(
         analysis=analysis, seconds=seconds if seconds is not None else round(time.perf_counter() - start, 2),
         mode=mode, masked_chat=masked_chat, masked=masked, tokens_in=tokens_in, tokens_out=tokens_out,
+        model=model,
     )
 
 

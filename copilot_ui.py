@@ -12,7 +12,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from copilot import MODEL, QuotaError, SetupError, analyze, cached_count, llm_available
+from copilot import MODEL, MODELS, QuotaError, SetupError, analyze, cached_count, llm_available
 from labels_az import (
     ACTION,
     ACTION_ICON,
@@ -105,7 +105,7 @@ def mode_sidebar() -> bool:
     Without a key, saved Gemini answers are still shown and the other chats use the offline rules."""
     saved = cached_count()
     if llm_available():
-        st.success(f"Canlı rejim: {MODEL}")
+        st.success(f"Canlı rejim: {', '.join(MODELS)}")
         offline = st.toggle("Oflayn rejim", value=False, help="Süni intellekt əvəzinə açar söz qaydaları")
     else:
         st.warning("API açarı yoxdur: yeni söhbətlər ⚙️ oflayn qaydalarla təhlil olunur. "
@@ -160,7 +160,7 @@ def source_badge(result) -> str:
         return (f"<span style='{style}background:#fef3c7;color:#92400e'>"
                 "⚙️ Oflayn açar söz qaydaları · Gemini istifadə olunmayıb</span>")
     when = "yaddaşdan" if result.mode == "cache" else f"{result.seconds:.1f} san"
-    return f"<span style='{style}background:#ede9fe;color:#5b21b6'>🤖 Gemini ({MODEL}) qərar verdi · {when}</span>"
+    return f"<span style='{style}background:#ede9fe;color:#5b21b6'>🤖 Gemini ({result.model or MODEL}) qərar verdi · {when}</span>"
 
 
 def card(label: str, value: str, sub: str = "", style: str = "", extra_class: str = "") -> str:
