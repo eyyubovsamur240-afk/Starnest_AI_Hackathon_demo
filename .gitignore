@@ -13,3 +13,6 @@ venv/
 .vscode/
 .idea/
 .DS_Store
+
+# Cached Gemini answers
+.cache/
