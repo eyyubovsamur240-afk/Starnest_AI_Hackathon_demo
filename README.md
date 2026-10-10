@@ -27,7 +27,7 @@ Starnest Academy AI Hackathon 2026 · Track: **AI for Customer Experience & Digi
 
 ## Prototype: the core scenario
 
-Three pages in the sidebar; the whole interface is in Azerbaijani.
+Three pages in the sidebar. The interface is in Azerbaijani by default; the **AZ / EN** switch at the top of the sidebar shows every page in English. The AI-written text (summary, reasons, FAQ entry and the reply to the customer) stays in Azerbaijani in both, because the agent answers the customer in Azerbaijani and translating it would cost extra Gemini requests.
 
 1. **🔍 Söhbət təhlili (main screen).** Pick an escalated chat (or paste one) and click **Təhlil et**. The agent gets a 3-line summary, sentiment (1–5), churn risk with the reason, the issue category and an editable reply in Azerbaijani. Below it, the **AI dəqiqliyi** block shows the eval scores and lets the agent rate the summary (👍/👎) and reply (stars).
 2. **📥 Prioritet növbəsi (priority queue).** Every escalated chat analysed and ordered by churn risk, then sentiment, then waiting time. Opening a row shows the customer profile, why the bot failed, a new FAQ entry for the bot, the next action and, for customers at risk, a retention offer.
@@ -57,12 +57,13 @@ The answer key in `data/tickets.json` (`expected`) is only read by `eval.py` aft
 
 ### Automated tests
 
-`pytest` (82 tests, run in CI on every push):
+`pytest` (92 tests, run in CI on every push):
 
 - `tests/test_privacy.py`: every phone format, card, e-mail, FIN code and name pattern is masked; all 7 test chats with personal data come out with no name or phone left.
 - `tests/test_offers.py`: no offer at low risk; medium risk only for loyal or high-value customers; high risk always gets a priced offer.
 - `tests/test_copilot.py`: the test set is well formed; the output always fits the schema; only the masked chat is sent to Gemini; the answer key never reaches the prompt.
 - `tests/test_quota_and_cache.py`: each chat costs one Gemini request and is never sent twice; a daily-quota 429 stops at once (no retries), a 503 is retried after 5, 15 and 30 s, the next model in `GEMINI_MODEL` takes over when one runs out or stays busy, and an interrupted eval still writes a report marked as a sample.
+- `tests/test_i18n.py`: every UI text and label exists in Azerbaijani and English, all three pages render in both languages, and switching language keeps the selected chat.
 
 ### Accuracy (`python eval.py`)
 
@@ -157,7 +158,7 @@ Open http://localhost:8501, pick a sample chat and click **Təhlil et**. Without
 **Tests and eval:**
 
 ```bash
-python -m pytest -q          # 82 automated tests, no key needed
+python -m pytest -q          # 92 automated tests, no key needed
 python eval.py --offline     # keyword baseline -> results/eval_offline.*
 python eval.py               # Gemini -> results/eval_llm.*; only chats without a saved answer call the API
 python eval.py --limit 5     # quick Gemini check on 5 chats

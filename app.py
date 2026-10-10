@@ -1,4 +1,4 @@
-"""Escalation Copilot: Streamlit UI (Azerbaijani).
+"""Escalation Copilot: Streamlit UI (Azerbaijani by default, English with the sidebar switch).
 
 Main screen: the bot <-> customer chat on the left, the analysis on the right,
 and the AI accuracy block underneath.
@@ -15,8 +15,8 @@ from pathlib import Path
 import streamlit as st
 
 from copilot import QuotaError, SetupError, analyze
-from copilot_ui import gemini_problem_az, mode_sidebar, nav, source_badge
-from labels_az import CATEGORY, LANGUAGE, RISK, SENTIMENT, TONE
+from copilot_ui import ai_text_note, gemini_problem, mode_sidebar, sidebar_top, source_badge
+from i18n import labels, t
 
 ROOT = Path(__file__).parent
 
@@ -25,7 +25,8 @@ RISK_BG = {"low": "#f0fdf4", "medium": "#fffbeb", "high": "#fef2f2"}
 SENTIMENT_EMOJI = {1: "🙂", 2: "😐", 3: "😕", 4: "😠", 5: "🤬"}
 CUSTOMER_PREFIXES = ("customer", "müştəri", "клиент")
 
-st.set_page_config(page_title="Eskalasiya Köməkçisi", page_icon="🛟", layout="wide")
+L = labels()
+st.set_page_config(page_title=t("app_name"), page_icon="🛟", layout="wide")
 
 st.markdown(
     """
@@ -88,7 +89,7 @@ def chat_bubbles(chat: str) -> str:
             continue
         speaker, sep, text = line.partition(":")
         if sep and speaker.strip().lower() in CUSTOMER_PREFIXES:
-            who, cls = "Müştəri", "customer"
+            who, cls = t("customer"), "customer"
         elif sep and speaker.strip().lower() == "bot":
             who, cls = "Bot", "bot"
         else:
@@ -102,110 +103,119 @@ for key, default in (("reply_ratings", {}), ("summary_ratings", {}), ("result", 
     st.session_state.setdefault(key, default)
 
 with st.sidebar:
-    st.markdown("## 🛟 Eskalasiya Köməkçisi")
-    nav()  # links to the queue and statistics pages
+    sidebar_top()  # name, AZ / EN switch, links to the queue and statistics pages
     st.divider()
     offline = mode_sidebar()
-    st.caption("Demo yalnız uydurma söhbətlərdən istifadə edir.")
+    st.caption(t("demo_data"))
 
 st.markdown(
-    "<div class='hero'><h1>🛟 Eskalasiya Köməkçisi</h1>"
-    "<p>Botun həll edə bilmədiyi söhbət, bir baxışda.</p></div>",
+    f"<div class='hero'><h1>🛟 {t('app_name')}</h1><p>{t('tagline')}</p></div>",
     unsafe_allow_html=True,
 )
 
 tickets = load_tickets()
-options = ["(öz söhbətinizi yapışdırın)"] + [
-    f"{t['id']} · {TONE.get(t['tone'], t['tone'])} · {LANGUAGE.get(t['language'], t['language'])}"
-    for t in tickets
-]
+# Options are ticket ids ("" = paste your own); option_label shows them in the UI language.
+by_id = {tk["id"]: tk for tk in tickets}
+options = [""] + list(by_id)
+
+
+def option_label(tid: str) -> str:
+    if not tid:
+        return t("paste_own")
+    tk = by_id[tid]
+    return f"{tid} · {L.TONE.get(tk['tone'], tk['tone'])} · {L.LANGUAGE.get(tk['language'], tk['language'])}"
+
 
 left, right = st.columns(2, gap="large")
 
 # --- Left: customer conversation -------------------------------------------
 with left:
     with st.container(border=True):
-        st.markdown("<div class='col-title'>💬 Müştəri söhbəti</div>", unsafe_allow_html=True)
-        choice = st.selectbox("Söhbət", options, index=min(16, len(options) - 1), label_visibility="collapsed")
-        if choice == options[0]:
+        st.markdown(f"<div class='col-title'>{t('customer_chat')}</div>", unsafe_allow_html=True)
+        # The pick is kept in a plain session key: the widget itself resets when its labels change language.
+        st.session_state.setdefault("chat_id", options[min(16, len(options) - 1)])
+        choice = st.selectbox("Söhbət / Chat", options, index=options.index(st.session_state.chat_id),
+                              format_func=option_label, label_visibility="collapsed")
+        st.session_state.chat_id = choice
+        if not choice:
             chat = st.text_area(
-                "Söhbət", height=420, key="own_chat", label_visibility="collapsed",
-                placeholder="Bot ilə müştərinin yazışmasını bura yapışdırın...\nMüştəri: ...\nBot: ...",
+                "Söhbət / Chat", height=420, key="own_chat", label_visibility="collapsed",
+                placeholder=t("paste_placeholder"),
             )
         else:
-            sample = tickets[options.index(choice) - 1]
+            sample = by_id[choice]
             chat = sample["chat"]
             st.markdown(chat_bubbles(chat), unsafe_allow_html=True)
 
 # --- Right: analysis ---------------------------------------------------------
 with right:
     with st.container(border=True):
-        st.markdown("<div class='col-title'>🔍 Təhlil</div>", unsafe_allow_html=True)
-        if st.button("Təhlil et", type="primary", width="stretch", disabled=not chat.strip()):
-            with st.spinner("Söhbət oxunur..."):
+        st.markdown(f"<div class='col-title'>{t('analysis')}</div>", unsafe_allow_html=True)
+        if st.button(t("analyze_btn"), type="primary", width="stretch", disabled=not chat.strip()):
+            with st.spinner(t("reading")):
                 try:
                     # The sample's CRM name is masked too, so it never reaches Gemini.
-                    names = [sample["customer"]["name"]] if choice != options[0] else None
+                    names = [sample["customer"]["name"]] if choice else None
                     try:  # a saved Gemini answer is used first, so sample chats cost no quota
                         st.session_state.result = analyze(chat, force_offline=offline, known_names=names)
                     except (QuotaError, SetupError) as exc:
-                        st.warning(gemini_problem_az(exc))
+                        st.warning(gemini_problem(exc))
                         st.session_state.result = analyze(chat, force_offline=True, known_names=names)
                     st.session_state.result_chat = chat
                 except Exception as exc:
                     st.session_state.result = None
-                    st.error(f"Təhlil alınmadı: {exc}. Yan paneldə \"Oflayn rejim\"i yoxlayın.")
+                    st.error(t("analysis_failed", exc=exc))
 
         # Hide an old result once a different chat is selected.
         result = st.session_state.result if st.session_state.get("result_chat") == chat else None
         if result is None:
             st.markdown(
-                "<div class='empty'><div style='font-size:2rem'>🧭</div>"
-                "Söhbəti seçin və <b>Təhlil et</b> düyməsini basın.</div>",
+                f"<div class='empty'><div style='font-size:2rem'>🧭</div>{t('pick_chat')}</div>",
                 unsafe_allow_html=True,
             )
         else:
             a = result.analysis
             rid = str(id(result))
             st.markdown(source_badge(result), unsafe_allow_html=True)
+            ai_text_note()
             lines = [l.strip() for l in a.summary.strip().splitlines() if l.strip()]
             st.markdown(
-                card("Xülasə", "<ul style='font-size:.95rem;font-weight:500'>"
+                card(t("summary"), "<ul style='font-size:.95rem;font-weight:500'>"
                      + "".join(f"<li>{html.escape(l)}</li>" for l in lines) + "</ul>"),
                 unsafe_allow_html=True,
             )
             c1, c2, c3 = st.columns(3)
             c1.markdown(
-                card("Əhval", f"{SENTIMENT_EMOJI[a.sentiment]} {a.sentiment}/5", SENTIMENT[a.sentiment]),
+                card(t("mood"), f"{SENTIMENT_EMOJI[a.sentiment]} {a.sentiment}/5", L.SENTIMENT[a.sentiment]),
                 unsafe_allow_html=True,
             )
             color = RISK_COLORS[a.churn_risk]
             c2.markdown(
-                card("Müştərini itirmə riski", f"<span style='color:{color}'>{RISK[a.churn_risk]}</span>",
+                card(t("churn_risk"), f"<span style='color:{color}'>{L.RISK[a.churn_risk]}</span>",
                      style=f"border:2px solid {color};background:{RISK_BG[a.churn_risk]}"),
                 unsafe_allow_html=True,
             )
-            c3.markdown(card("Problem kateqoriyası", CATEGORY[a.category]), unsafe_allow_html=True)
+            c3.markdown(card(t("issue_category"), L.CATEGORY[a.category]), unsafe_allow_html=True)
 
             st.markdown("<div class='card' style='border:none;padding:4px 2px;margin:0'>"
-                        "<div class='label'>Təklif olunan cavab</div></div>", unsafe_allow_html=True)
-            st.text_area("Təklif olunan cavab", value=a.suggested_reply_az, height=130,
+                        f"<div class='label'>{t('suggested_reply')}</div></div>", unsafe_allow_html=True)
+            st.text_area(t("suggested_reply"), value=a.suggested_reply_az, height=130,
                          key=f"reply_{rid}", label_visibility="collapsed")
 
             r1, r2 = st.columns(2)
             with r1:
-                st.caption("Xülasə dəqiqdir?")
+                st.caption(t("summary_ok"))
                 s = st.feedback("thumbs", key=f"sum_fb_{rid}")
                 if s is not None:
                     st.session_state.summary_ratings[rid] = s
             with r2:
-                st.caption("Cavabın keyfiyyəti")
+                st.caption(t("reply_quality"))
                 r = st.feedback("stars", key=f"reply_fb_{rid}")
                 if r is not None:
                     st.session_state.reply_ratings[rid] = r + 1
 
 # --- Below: AI accuracy -------------------------------------------------------
-st.markdown("<div class='acc-title'>📊 AI dəqiqliyi</div>", unsafe_allow_html=True)
+st.markdown(f"<div class='acc-title'>{t('ai_accuracy')}</div>", unsafe_allow_html=True)
 ev = load_eval()
 sums = list(st.session_state.summary_ratings.values())
 stars = list(st.session_state.reply_ratings.values())
@@ -213,28 +223,27 @@ stars = list(st.session_state.reply_ratings.values())
 m1, m2, m3, m4 = st.columns(4)
 with m1:
     if sums:
-        m1.metric("Xülasə", f"{round(100 * sum(sums) / len(sums))}% 👍", help="İnsan qiymətləndirməsi")
-        st.caption(f"{len(sums)} xülasə yoxlanılıb")
+        m1.metric(t("summary"), f"{round(100 * sum(sums) / len(sums))}% 👍", help=t("human_rating"))
+        st.caption(t("summaries_checked", n=len(sums)))
     else:
-        m1.metric("Xülasə", "—", help="İnsan qiymətləndirməsi")
-        st.caption("Təhlildən sonra 👍/👎 ilə qiymətləndirin")
+        m1.metric(t("summary"), "—", help=t("human_rating"))
+        st.caption(t("rate_thumbs"))
 with m2:
-    m2.metric("Kateqoriya", f"{ev['category_accuracy']:.0f}%" if ev else "—")
+    m2.metric(t("category"), f"{ev['category_accuracy']:.0f}%" if ev else "—")
 with m3:
-    m3.metric("Əhval", f"{ev['sentiment_within_1']:.0f}%" if ev else "—", help="±1 bal fərqlə düzgün")
+    m3.metric(t("mood"), f"{ev['sentiment_within_1']:.0f}%" if ev else "—", help=t("within_1"))
 with m4:
     if stars:
-        m4.metric("Cavab keyfiyyəti", f"{sum(stars) / len(stars):.1f} / 5 ⭐", help="İnsan qiymətləndirməsi")
-        st.caption(f"{len(stars)} cavab qiymətləndirilib")
+        m4.metric(t("reply_quality_metric"), f"{sum(stars) / len(stars):.1f} / 5 ⭐", help=t("human_rating"))
+        st.caption(t("replies_rated", n=len(stars)))
     else:
-        m4.metric("Cavab keyfiyyəti", "—", help="İnsan qiymətləndirməsi")
-        st.caption("Təhlildən sonra ulduzla qiymətləndirin")
+        m4.metric(t("reply_quality_metric"), "—", help=t("human_rating"))
+        st.caption(t("rate_stars"))
 
 if ev and ev["mode"] == "llm":
-    part = f" (qismən: {ev['tickets_in_set']} söhbətdən {ev['tickets']})" if ev.get("partial") else ""
-    st.caption(f"Kateqoriya və əhval: Gemini, {ev['tickets']} uydurma söhbət üzrə eval.py nəticəsi{part}.")
+    part = t("eval_partial", total=ev["tickets_in_set"], n=ev["tickets"]) if ev.get("partial") else ""
+    st.caption(t("eval_llm", n=ev["tickets"], part=part))
 elif ev:
-    st.caption(f"Kateqoriya və əhval: {ev['tickets']} uydurma söhbət üzrə **oflayn açar söz qaydalarının** nəticəsi, "
-               "Gemini-nin yox. Gemini-ni yoxlamaq üçün açarla `python eval.py` işə salın.")
+    st.caption(t("eval_offline", n=ev["tickets"]))
 else:
-    st.caption("Kateqoriya və əhval üçün əvvəlcə `python eval.py` işə salın.")
+    st.caption(t("eval_none"))

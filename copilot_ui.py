@@ -13,16 +13,7 @@ import pandas as pd
 import streamlit as st
 
 from copilot import MODEL, MODELS, QuotaError, SetupError, analyze, cached_count, llm_available
-from labels_az import (
-    ACTION,
-    ACTION_ICON,
-    BOT_FAILURE,
-    BOT_FAILURE_FIX,
-    BOT_FAILURE_ICON,
-    CATEGORY,
-    RISK,
-    SENTIMENT,
-)
+from i18n import labels, lang, language_switch, t
 from offers import suggest
 from privacy import describe
 
@@ -34,12 +25,10 @@ RISK_BG = {"low": "#f0fdf4", "medium": "#fffbeb", "high": "#fef2f2"}
 RISK_DOT = {"low": "🟢", "medium": "🟠", "high": "🔴"}
 RISK_WEIGHT = {"low": 100, "medium": 200, "high": 300}
 SENTIMENT_EMOJI = {1: "🙂", 2: "😐", 3: "😕", 4: "😠", 5: "🤬"}
-MODE_LABEL = {"llm": "🤖 Gemini", "cache": "🤖 Gemini · yaddaşdan", "offline": "⚙️ Oflayn qaydalar"}
-
 PAGES = [
-    ("app.py", "Söhbət təhlili", "🔍"),
-    ("pages/1_queue.py", "Prioritet növbəsi", "📥"),
-    ("pages/2_stats.py", "Statistika", "📈"),
+    ("app.py", "page_analysis", "🔍"),
+    ("pages/1_queue.py", "page_queue", "📥"),
+    ("pages/2_stats.py", "page_stats", "📈"),
 ]
 
 CSS = """
@@ -94,10 +83,22 @@ CSS = """
 """
 
 
+def mode_label(mode: str) -> str:
+    """Short 'who decided' label for a table cell."""
+    return t(f"mode_{mode}")
+
+
 def nav() -> None:
-    """Sidebar links between the pages, with Azerbaijani names."""
-    for path, label, icon in PAGES:
-        st.page_link(path, label=label, icon=icon)
+    """Sidebar links between the pages, in the current language."""
+    for path, key, icon in PAGES:
+        st.page_link(path, label=t(key), icon=icon)
+
+
+def sidebar_top() -> None:
+    """App name, language switch and page links at the top of every page's sidebar."""
+    st.markdown(f"## 🛟 {t('app_name')}")
+    language_switch()
+    nav()
 
 
 def mode_sidebar() -> bool:
@@ -105,38 +106,35 @@ def mode_sidebar() -> bool:
     Without a key, saved Gemini answers are still shown and the other chats use the offline rules."""
     saved = cached_count()
     if llm_available():
-        st.success(f"Canlı rejim: {', '.join(MODELS)}")
-        offline = st.toggle("Oflayn rejim", value=False, help="Süni intellekt əvəzinə açar söz qaydaları")
+        st.success(t("live_mode", models=", ".join(MODELS)))
+        offline = st.toggle(t("offline_mode"), value=False, help=t("offline_help"))
     else:
-        st.warning("API açarı yoxdur: yeni söhbətlər ⚙️ oflayn qaydalarla təhlil olunur. "
-                   "Canlı təhlil üçün GEMINI_API_KEY təyin edin.")
+        st.warning(t("no_key"))
         offline = False
-    st.caption(f"💾 Yaddaşda {saved} hazır Gemini cavabı var: bu söhbətlər limit xərcləmədən açılır.")
+    st.caption(t("saved_answers", n=saved))
     return offline
 
 
 def setup_page(title: str) -> bool:
     """Page config, styles and sidebar. Returns True when the app runs offline."""
-    st.set_page_config(page_title=f"{title} · Eskalasiya Köməkçisi", page_icon="🛟", layout="wide")
+    st.set_page_config(page_title=f"{title} · {t('app_name')}", page_icon="🛟", layout="wide")
     st.markdown(CSS, unsafe_allow_html=True)
     with st.sidebar:
-        st.markdown("## 🛟 Eskalasiya Köməkçisi")
-        nav()
+        sidebar_top()
         st.divider()
         offline = mode_sidebar()
-        st.caption("🔒 Telefon, ad, kart, e-poçt və FİN kod süni intellektə göndərilməzdən əvvəl gizlədilir.")
-        st.caption("Demo yalnız uydurma söhbət və profillərdən istifadə edir.")
+        st.caption(t("privacy_note"))
+        st.caption(t("demo_data_profiles"))
     st.markdown(f"<div class='hero'><h1>{title}</h1></div>", unsafe_allow_html=True)
     return offline
 
 
-def gemini_problem_az(exc: Exception) -> str:
-    """Azerbaijani explanation for the agent when Gemini can't be used right now."""
+def gemini_problem(exc: Exception) -> str:
+    """Explanation for the agent, in the UI language, when Gemini can't be used right now."""
     if isinstance(exc, QuotaError):
-        hours = f" Limit təxminən {max(1, round(exc.retry_seconds / 3600))} saatdan sonra yenilənir." if exc.retry_seconds else ""
-        return ("⏳ Gemini-nin gündəlik pulsuz sorğu limiti bitib." + hours +
-                " Yadda saxlanmış Gemini cavabları göstərilir, qalanları ⚙️ oflayn qaydalarla təhlil olunur.")
-    return f"⚠️ Gemini işləmir (model və ya API açarı problemi), ⚙️ oflayn qaydalar istifadə olunur.\n\n{exc}"
+        hours = t("quota_hours", h=max(1, round(exc.retry_seconds / 3600))) if exc.retry_seconds else ""
+        return t("quota_out", hours=hours)
+    return t("gemini_broken", exc=exc)
 
 
 def ensure_queue(tickets: list[dict], offline: bool) -> None:
@@ -157,10 +155,16 @@ def source_badge(result) -> str:
     style = ("display:inline-block;border-radius:999px;padding:3px 12px;font-size:.82rem;"
              "font-weight:600;margin:0 6px 8px 0;")
     if result.mode == "offline":
-        return (f"<span style='{style}background:#fef3c7;color:#92400e'>"
-                "⚙️ Oflayn açar söz qaydaları · Gemini istifadə olunmayıb</span>")
-    when = "yaddaşdan" if result.mode == "cache" else f"{result.seconds:.1f} san"
-    return f"<span style='{style}background:#ede9fe;color:#5b21b6'>🤖 Gemini ({result.model or MODEL}) qərar verdi · {when}</span>"
+        return f"<span style='{style}background:#fef3c7;color:#92400e'>{t('badge_offline')}</span>"
+    when = t("badge_saved") if result.mode == "cache" else t("badge_seconds", s=result.seconds)
+    return (f"<span style='{style}background:#ede9fe;color:#5b21b6'>"
+            f"{t('badge_gemini', model=result.model or MODEL, when=when)}</span>")
+
+
+def ai_text_note() -> None:
+    """In English, say why the AI-written text is in Azerbaijani."""
+    if lang() == "en":
+        st.caption(t("ai_text_az"))
 
 
 def card(label: str, value: str, sub: str = "", style: str = "", extra_class: str = "") -> str:
@@ -195,16 +199,16 @@ def render_chat(text: str) -> None:
         elif who.strip().lower() == "bot":
             parts.append(f"<div class='msg bot'><div class='who'>🤖 BOT</div>{body}</div>")
         else:
-            parts.append(f"<div class='msg cust'><div class='who'>MÜŞTƏRİ</div>{body}</div>")
+            parts.append(f"<div class='msg cust'><div class='who'>{t('customer').upper()}</div>{body}</div>")
     st.markdown("<div class='chat'>" + "".join(parts) + "</div>", unsafe_allow_html=True)
 
 
 def render_profile(p: dict) -> None:
     st.markdown(
-        f"<div class='profile'><div class='muted'>Müştəri profili (CRM · uydurma məlumat)</div>"
+        f"<div class='profile'><div class='muted'>{t('crm_profile')}</div>"
         f"<div class='name'>👤 {esc(p['name'])}</div>"
-        f"<div class='row'>🗓 {p['tenure_years']} ildir müştəridir · 📱 {esc(p['tariff'])} ({p['monthly_azn']} AZN/ay)</div>"
-        f"<div class='row'>📞 Son 30 gündə {p['contacts_30d']} müraciət · ⏳ Növbədə {p['waiting_min']} dəq</div></div>",
+        f"<div class='row'>{t('profile_tenure', years=p['tenure_years'], tariff=esc(p['tariff']), azn=p['monthly_azn'])}</div>"
+        f"<div class='row'>{t('profile_contacts', n=p['contacts_30d'], m=p['waiting_min'])}</div></div>",
         unsafe_allow_html=True,
     )
 
@@ -212,68 +216,69 @@ def render_profile(p: dict) -> None:
 def render_insights(result, profile: dict | None, key: str) -> None:
     """Everything the agent needs after the handoff, for one analyzed chat."""
     a = result.analysis
+    L = labels()
     color = RISK_COLORS[a.churn_risk]
 
     c1, c2, c3 = st.columns(3)
     c1.markdown(
-        card("Müştərini itirmə riski", f"<span style='color:{color}'>{RISK[a.churn_risk]}</span>",
+        card(t("churn_risk"), f"<span style='color:{color}'>{L.RISK[a.churn_risk]}</span>",
              style=f"border-color:{color};background:{RISK_BG[a.churn_risk]}", extra_class="risk-card"),
         unsafe_allow_html=True,
     )
-    c2.markdown(card("Kateqoriya", CATEGORY[a.category]), unsafe_allow_html=True)
+    c2.markdown(card(t("category"), L.CATEGORY[a.category]), unsafe_allow_html=True)
     c3.markdown(
-        card("Əhval", f"{SENTIMENT_EMOJI[a.sentiment]} {a.sentiment}/5", SENTIMENT[a.sentiment]),
+        card(t("mood"), f"{SENTIMENT_EMOJI[a.sentiment]} {a.sentiment}/5", L.SENTIMENT[a.sentiment]),
         unsafe_allow_html=True,
     )
-    hidden = describe(result.masked)
-    privacy = f"🔒 Gizlədildi: {hidden}" if hidden else "🔒 Şəxsi məlumat tapılmadı"
+    hidden = describe(result.masked, lang())
+    privacy = t("masked", what=hidden) if hidden else t("no_personal")
     st.markdown(
-        f"<div class='reason'><b>Səbəb:</b> {esc(a.risk_reason)}</div>"
+        f"<div class='reason'><b>{t('reason')}:</b> {esc(a.risk_reason)}</div>"
         f"{source_badge(result)}"
         f"<span class='pill privacy'>{privacy}</span>",
         unsafe_allow_html=True,
     )
 
-    st.markdown("<div class='section-title'>📝 Xülasə</div>", unsafe_allow_html=True)
+    ai_text_note()
+    st.markdown(f"<div class='section-title'>📝 {t('summary')}</div>", unsafe_allow_html=True)
     lines = [l.strip() for l in a.summary.strip().splitlines() if l.strip()]
     st.markdown("<ul class='summary'>" + "".join(f"<li>{esc(l)}</li>" for l in lines) + "</ul>",
                 unsafe_allow_html=True)
 
-    st.markdown("<div class='section-title'>🤖 Bot niyə operatora ötürdü?</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='section-title'>{t('why_handover')}</div>", unsafe_allow_html=True)
     st.markdown(
-        f"<div class='box fail'><b class='t'>{BOT_FAILURE_ICON[a.bot_failure]} {BOT_FAILURE[a.bot_failure]}</b>"
-        f"{esc(a.bot_failure_reason)}<div class='muted' style='margin-top:6px'>🔧 {BOT_FAILURE_FIX[a.bot_failure]}</div></div>"
-        f"<div class='box faq'><b class='t'>📚 Bot üçün yeni bilik bazası cavabı</b>"
-        f"<b>S:</b> {esc(a.faq_question)}<br><b>C:</b> {esc(a.faq_answer)}</div>",
+        f"<div class='box fail'><b class='t'>{L.BOT_FAILURE_ICON[a.bot_failure]} {L.BOT_FAILURE[a.bot_failure]}</b>"
+        f"{esc(a.bot_failure_reason)}<div class='muted' style='margin-top:6px'>🔧 {L.BOT_FAILURE_FIX[a.bot_failure]}</div></div>"
+        f"<div class='box faq'><b class='t'>{t('new_faq')}</b>"
+        f"<b>{t('faq_q')}:</b> {esc(a.faq_question)}<br><b>{t('faq_a')}:</b> {esc(a.faq_answer)}</div>",
         unsafe_allow_html=True,
     )
 
-    st.markdown("<div class='section-title'>➡️ Növbəti addım</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='section-title'>{t('next_step')}</div>", unsafe_allow_html=True)
     st.markdown(
-        f"<div class='action'><span style='font-size:1.4rem'>{ACTION_ICON[a.next_action]}</span>"
-        f"{ACTION[a.next_action]}</div>",
+        f"<div class='action'><span style='font-size:1.4rem'>{L.ACTION_ICON[a.next_action]}</span>"
+        f"{L.ACTION[a.next_action]}</div>",
         unsafe_allow_html=True,
     )
 
-    st.markdown("<div class='section-title'>🎁 Müştərini saxlamaq üçün təklif</div>", unsafe_allow_html=True)
-    offer = suggest(a.category, a.churn_risk, profile)
+    st.markdown(f"<div class='section-title'>{t('retention')}</div>", unsafe_allow_html=True)
+    offer = suggest(a.category, a.churn_risk, profile, lang())
     if offer:
-        value = f" · müştərinin illik dəyəri ~{offer.customer_value_azn:.0f} AZN" if offer.customer_value_azn else ""
+        value = t("offer_value", v=offer.customer_value_azn) if offer.customer_value_azn else ""
         items = "".join(f"<li>{esc(i)}</li>" for i in offer.items)
         st.markdown(
             f"<div class='box offer'><b class='t'>{offer.title}</b><ul style='margin:0 0 6px 18px'>{items}</ul>"
-            f"<div class='muted'>Təxmini xərc ~{offer.cost_azn:.0f} AZN{value}. {esc(offer.why)}</div></div>",
+            f"<div class='muted'>{t('offer_cost', c=offer.cost_azn, value=value, why=esc(offer.why))}</div></div>",
             unsafe_allow_html=True,
         )
     else:
-        st.markdown("<div class='box nooffer'>Risk aşağıdır, xüsusi təklif tələb olunmur.</div>",
-                    unsafe_allow_html=True)
+        st.markdown(f"<div class='box nooffer'>{t('no_offer')}</div>", unsafe_allow_html=True)
 
-    st.markdown("<div class='section-title'>✉️ Təklif olunan cavab</div>", unsafe_allow_html=True)
-    reply = st.text_area("Göndərməzdən əvvəl redaktə edin", value=a.suggested_reply_az, height=130,
+    st.markdown(f"<div class='section-title'>{t('reply_section')}</div>", unsafe_allow_html=True)
+    reply = st.text_area(t("edit_before_send"), value=a.suggested_reply_az, height=130,
                          key=f"reply_{key}_{id(result)}")
     st.code(reply, language=None, wrap_lines=True)
-    st.caption("Cavabı kopyalamaq üçün yuxarıdakı qutunun küncündəki ikona basın.")
+    st.caption(t("copy_hint"))
 
 
 def priority(result, profile: dict) -> int:
@@ -283,25 +288,25 @@ def priority(result, profile: dict) -> int:
 
 def run_queue(tickets: list[dict], offline: bool, live: bool = True) -> None:
     results, fallbacks, setup_error = {}, 0, None
-    bar = st.progress(0.0, text="Növbə təhlil edilir...")
-    for i, t in enumerate(tickets, start=1):
-        names = [t["customer"]["name"]]
+    bar = st.progress(0.0, text=t("queue_running"))
+    for i, tk in enumerate(tickets, start=1):
+        names = [tk["customer"]["name"]]
         try:
-            res = analyze(t["chat"], force_offline=offline, known_names=names, live=live and not setup_error)
+            res = analyze(tk["chat"], force_offline=offline, known_names=names, live=live and not setup_error)
         except (SetupError, QuotaError) as exc:  # don't call Gemini again; saved answers still work
             setup_error = exc
-            res = analyze(t["chat"], force_offline=offline, known_names=names, live=False)
+            res = analyze(tk["chat"], force_offline=offline, known_names=names, live=False)
         except Exception:  # keep the queue usable if one call fails (quota, network)
-            res = analyze(t["chat"], force_offline=True, known_names=names)
+            res = analyze(tk["chat"], force_offline=True, known_names=names)
             fallbacks += 1
-        results[t["id"]] = res
-        bar.progress(i / len(tickets), text=f"{i}/{len(tickets)} söhbət təhlil edildi")
+        results[tk["id"]] = res
+        bar.progress(i / len(tickets), text=t("queue_progress", i=i, n=len(tickets)))
     bar.empty()
     st.session_state.queue = results
     if setup_error:
-        st.warning(gemini_problem_az(setup_error))
+        st.warning(gemini_problem(setup_error))
     elif fallbacks:
-        st.warning(f"{fallbacks} söhbət üçün süni intellekt cavab vermədi, oflayn qaydalar istifadə olundu.")
+        st.warning(t("queue_fallbacks", n=fallbacks))
 
 
 def bar_chart(df: pd.DataFrame, label: str, value: str, colors: dict[str, str] | None = None,
@@ -312,7 +317,7 @@ def bar_chart(df: pd.DataFrame, label: str, value: str, colors: dict[str, str] |
                 axis=alt.Axis(labelLimit=240, labelColor="#374151", labelFontSize=12, domain=False, ticks=False)),
         x=alt.X(f"{value}:Q", title=None,
                 axis=alt.Axis(grid=True, gridColor="#efecf8", labelColor="#6b7280", tickMinStep=1, domain=False)),
-        tooltip=[alt.Tooltip(f"{label}:N", title="Qrup"), alt.Tooltip(f"{value}:Q", title="Söhbət")],
+        tooltip=[alt.Tooltip(f"{label}:N", title=t("tooltip_group")), alt.Tooltip(f"{value}:Q", title=t("chats_col"))],
     )
     if colors:
         bars = base.mark_bar(cornerRadiusEnd=4, size=20).encode(

@@ -17,6 +17,8 @@ LABELS = {
     "AD": "ad",
 }
 
+LABELS_EN = {"TELEFON": "phone", "KART": "card number", "EMAIL": "e-mail", "FİN": "FIN code", "AD": "name"}
+
 _EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 _CARD = re.compile(r"\b\d{4}[ -]?\d{4}[ -]?\d{4}[ -]?\d{4}\b")
 # +994 50 123 45 67, 050 123 45 67, (050) 123-45-67, 0501234567
@@ -56,6 +58,7 @@ def mask(text: str, known_names: list[str] | None = None) -> tuple[str, dict[str
     return out, counts
 
 
-def describe(counts: dict[str, int]) -> str:
-    """Azerbaijani one-liner, e.g. '1 telefon, 2 ad'."""
-    return ", ".join(f"{n} {LABELS[tag]}" for tag, n in counts.items() if n)
+def describe(counts: dict[str, int], lang: str = "az") -> str:
+    """One-liner, e.g. '1 telefon, 2 ad' (or '1 phone, 2 name' with lang="en")."""
+    labels = LABELS_EN if lang == "en" else LABELS
+    return ", ".join(f"{n} {labels[tag]}" for tag, n in counts.items() if n)
