@@ -7,7 +7,6 @@ import pandas as pd
 import streamlit as st
 
 from copilot_ui import (
-    MODE_LABEL,
     RISK_COLORS,
     RISK_DOT,
     SENTIMENT_EMOJI,
@@ -15,6 +14,7 @@ from copilot_ui import (
     ensure_queue,
     esc,
     load_tickets,
+    mode_label,
     priority,
     render_chat,
     render_insights,
@@ -22,29 +22,27 @@ from copilot_ui import (
     run_queue,
     setup_page,
 )
-from labels_az import BOT_FAILURE, BOT_FAILURE_ICON, CATEGORY, RISK
+from i18n import labels, lang, t
 from offers import suggest
 
-offline = setup_page("📥 Prioritet növbəsi")
+offline = setup_page(f"📥 {t('page_queue')}")
+L = labels()
 tickets = load_tickets()
 by_id = {t["id"]: t for t in tickets}
 ensure_queue(tickets, offline)
 
 ctrl1, ctrl2 = st.columns([3, 1], vertical_alignment="bottom")
 with ctrl1:
-    count = st.slider("Növbədəki söhbət sayı", 5, len(tickets), len(tickets) if offline else 15,
-                      help="Pulsuz Gemini planında gündə 20 sorğu limiti var. Yadda saxlanmış cavabı olan söhbətlər "
-                           "limit xərcləmir, yalnız yeni söhbətlər Gemini-yə göndərilir.")
+    count = st.slider(t("queue_size"), 5, len(tickets), len(tickets) if offline else 15, help=t("queue_size_help"))
 with ctrl2:
-    if st.button("▶ Növbəni təhlil et", type="primary", width="stretch"):
+    if st.button(t("queue_btn"), type="primary", width="stretch"):
         run_queue(tickets[:count], offline)
 
 queue = st.session_state.get("queue")
 if not queue:
     st.markdown(
         "<div class='empty'><div style='font-size:2.2rem'>📥</div>"
-        "<div style='font-weight:600;margin:6px 0'>Növbə hələ təhlil edilməyib</div>"
-        "Söhbət sayını seçin və <b>Növbəni təhlil et</b> düyməsini basın.</div>",
+        f"<div style='font-weight:600;margin:6px 0'>{t('queue_empty_title')}</div>{t('queue_empty')}</div>",
         unsafe_allow_html=True,
     )
 else:
@@ -55,28 +53,29 @@ else:
         rows.append({
             "#": rank,
             "ID": tid,
-            "Müştəri": p["name"],
-            "Risk": f"{RISK_DOT[a.churn_risk]} {RISK[a.churn_risk]}",
-            "Əhval": f"{SENTIMENT_EMOJI[a.sentiment]} {a.sentiment}/5",
-            "Kateqoriya": CATEGORY[a.category],
-            "Bot niyə ötürdü": f"{BOT_FAILURE_ICON[a.bot_failure]} {BOT_FAILURE[a.bot_failure]}",
-            "Gözləyir": f"{p['waiting_min']} dəq",
-            "Təklif": "🎁" if suggest(a.category, a.churn_risk, p) else "",
-        "Kim qərar verdi": MODE_LABEL[res.mode],
+            t("customer"): p["name"],
+            t("col_risk"): f"{RISK_DOT[a.churn_risk]} {L.RISK[a.churn_risk]}",
+            t("mood"): f"{SENTIMENT_EMOJI[a.sentiment]} {a.sentiment}/5",
+            t("category"): L.CATEGORY[a.category],
+            t("col_why"): f"{L.BOT_FAILURE_ICON[a.bot_failure]} {L.BOT_FAILURE[a.bot_failure]}",
+            t("col_waiting"): t("minutes", m=p["waiting_min"]),
+            t("col_offer"): "🎁" if suggest(a.category, a.churn_risk, p, lang()) else "",
+            t("col_who"): mode_label(res.mode),
         })
     high = sum(1 for _, r in ranked if r.analysis.churn_risk == "high")
     k1, k2, k3 = st.columns(3)
-    k1.markdown(card("Növbədə", f"{len(ranked)} söhbət"), unsafe_allow_html=True)
-    k2.markdown(card("Yüksək risk", f"<span style='color:{RISK_COLORS['high']}'>{high}</span>",
-                     "birinci bunlara cavab verin"), unsafe_allow_html=True)
-    k3.markdown(card("Növbəti müştəri", esc(rows[0]["Müştəri"]), f"{rows[0]['Risk']} · {rows[0]['Gözləyir']}"),
+    k1.markdown(card(t("in_queue"), t("n_chats", n=len(ranked))), unsafe_allow_html=True)
+    k2.markdown(card(t("high_risk"), f"<span style='color:{RISK_COLORS['high']}'>{high}</span>",
+                     t("answer_first")), unsafe_allow_html=True)
+    top = rows[0]
+    k3.markdown(card(t("next_customer"), esc(top[t("customer")]), f"{top[t('col_risk')]} · {top[t('col_waiting')]}"),
                 unsafe_allow_html=True)
-    st.caption("Sıralama: əvvəl risk, sonra əhval, sonra gözləmə vaxtı. Ətraflı baxmaq üçün sətrə klikləyin.")
+    st.caption(t("queue_order"))
     event = st.dataframe(
         pd.DataFrame(rows), hide_index=True, width="stretch", height=min(38 * len(rows) + 40, 420),
         on_select="rerun", selection_mode="single-row", key="queue_table",
         column_config={"#": st.column_config.NumberColumn(width="small"),
-                       "Təklif": st.column_config.TextColumn(width="small")},
+                       t("col_offer"): st.column_config.TextColumn(width="small")},
     )
     picked = event.selection.rows[0] if event.selection.rows else 0
     tid = rows[picked]["ID"]
@@ -87,7 +86,7 @@ else:
     left, right = st.columns([5, 6], gap="large")
     with left:
         render_profile(ticket["customer"])
-        show_masked = st.toggle("Süni intellektə göndərilən (gizlədilmiş) mətni göstər", key=f"mask_{tid}")
+        show_masked = st.toggle(t("show_masked"), key=f"mask_{tid}")
         render_chat(res.masked_chat if show_masked else ticket["chat"])
     with right:
         render_insights(res, ticket["customer"], key=tid)
